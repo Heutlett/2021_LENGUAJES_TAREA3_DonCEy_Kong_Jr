@@ -1,8 +1,7 @@
-package sockets;
+package socket;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import model.Fruit;
-import model.Snapjaw;
 
 import java.io.IOException;
 
@@ -17,7 +16,6 @@ public class Serializer {
     public static <SnapJaw> String serializeSnapJaw(SnapJaw snapjaw) throws IOException {
         ObjectMapper snapjawMapper = new ObjectMapper();
         return snapjawMapper.writeValueAsString(snapjaw);
-
     }
 
     /**

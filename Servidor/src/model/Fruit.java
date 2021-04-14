@@ -2,7 +2,6 @@ package model;
 
 public class Fruit extends Entity {
 
-
     // Constructor
     public Fruit(Integer i, Integer j){
         super(i, j);

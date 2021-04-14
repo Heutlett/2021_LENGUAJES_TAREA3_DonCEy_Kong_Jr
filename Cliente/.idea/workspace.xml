@@ -11,7 +11,22 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="741a9a24-7a2d-45d9-ace1-65439f230add" name="Default Changelist" comment="" />
+    <list default="true" id="741a9a24-7a2d-45d9-ace1-65439f230add" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/sockets/Sockets.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/sockets/Sockets.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/sockets/cJson.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/sockets/cJson.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Servidor/src/Start.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Servidor/src/socket/Host.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Servidor/src/socket/Sockets.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Servidor/files/lianas.json" beforeDir="false" afterPath="$PROJECT_DIR$/../Servidor/files/lianas.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Servidor/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Servidor/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Servidor/src/model/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Servidor/src/model/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Servidor/src/sockets/Serializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Servidor/src/socket/Serializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Servidor/src/utility/ReadFile.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Servidor/src/utility/ReadFile.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -20,11 +35,21 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="ProjectId" id="1r76yW5zOJFJDCUFl4dca1CN8NT" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -37,6 +62,7 @@
     <property name="cf.first.check.clang-format" value="false" />
     <property name="cidr.known.project.marker" value="true" />
     <property name="cmake.loaded.for.project" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/CMakeLists.txt" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -44,14 +70,19 @@
     </key>
   </component>
   <component name="RunManager">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Cliente" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Cliente" TARGET_NAME="Cliente" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Cliente" RUN_TARGET_NAME="Cliente">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
-        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
   </component>
@@ -67,6 +98,7 @@
       <workItem from="1618318220440" duration="221000" />
       <workItem from="1618318499699" duration="27000" />
       <workItem from="1618379340455" duration="10000" />
+      <workItem from="1618386857632" duration="1529000" />
     </task>
     <servers />
   </component>

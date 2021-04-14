@@ -5,19 +5,24 @@ import java.io.FileNotFoundException;  // Import this class to handle errors
 import java.util.Scanner; // Import the Scanner class to read text files
 
 public class ReadFile {
-    private static String filename = "lianas.txt";
-    public static void main(String[] args) {
+
+    public ReadFile() {
+    }
+
+    public static String getData(String file) {
         try {
-            File myObj = new File(filename);
+            File myObj = new File(file);
+            StringBuilder data = new StringBuilder();
             Scanner myReader = new Scanner(myObj);
             while (myReader.hasNextLine()) {
-                String data = myReader.nextLine();
-                System.out.println(data);
+                data.append(myReader.nextLine());
             }
             myReader.close();
+            return data.toString();
         } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
+            System.out.printf("An error occurred reading %s%n.", file);
             e.printStackTrace();
         }
+        return "";
     }
 }

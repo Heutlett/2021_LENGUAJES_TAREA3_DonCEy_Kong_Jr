@@ -3,7 +3,7 @@ package model;
 import java.util.Random;
 
 public enum EnumFruit {
-    cherry(100), apple(200), orange(300), banana(400);
+    APPLE(200), MANGO(300), BANANA(400);
 
     // Constructor
     private EnumFruit(int value) {

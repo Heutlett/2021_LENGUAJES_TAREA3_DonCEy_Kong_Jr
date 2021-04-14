@@ -1,5 +1,7 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Liana extends Entity {
 
     // Constructor
@@ -7,6 +9,7 @@ public class Liana extends Entity {
         super(i, j);
         this.id = ++counter;
         this.length = length;
+        this.speed=0;
     }
 
     // Attributes
