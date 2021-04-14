@@ -3,41 +3,53 @@ package model;
 //Factory.
 public abstract class Entity {
 
-    protected Integer velocity;
-    protected Double posx;
-    protected Double posy;
-    protected String id;
-    protected boolean hide;
-
     // Constructor
-    public Entity(Double x, Double y){
-        this.posx = x;
-        this.posy = y;
-        this.velocity = 1;
+    public Entity(Integer i, Integer j){
+        this.i = i;
+        this.i = j;
+        this.speed = 1; //  default speed
+        this.onScreen = true;
     }
 
-    public Integer getVelocity() {
-        return velocity;
+    // Attributes
+    protected String id;
+    protected int i;
+    protected int j;
+    protected Integer speed;
+    protected boolean onScreen;
+
+    // Methods
+    public int getI() {
+        return i;
     }
 
-    public void setVelocity(Integer velocity) {
-        this.velocity = velocity;
+    public void setI(int i) {
+        this.i = i;
     }
 
-    public Double getPosx() {
-        return posx;
+    public int getJ() {
+        return j;
     }
 
-    public void setPosx(Double posx) {
-        this.posx = posx;
+    public void setJ(int j) {
+        this.j = j;
     }
 
-    public Double getPosy() {
-        return posy;
+    public Integer getSpeed() {
+        return speed;
     }
 
-    public void setPosy(Double posy) {
-        this.posy = posy;
+    public void setSpeed(Integer speed) {
+        this.speed = speed;
     }
+
+    public boolean isOnScreen() {
+        return onScreen;
+    }
+
+    public void setOnScreen(boolean onScreen) {
+        this.onScreen = onScreen;
+    }
+
 
 }

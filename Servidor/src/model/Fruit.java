@@ -2,32 +2,28 @@ package model;
 
 public class Fruit extends Entity {
 
-    private EnumFruit type;
-    private Integer value;
 
     // Constructor
-    public Fruit(double posx, double posy){
-        super(posx, posy);
+    public Fruit(Integer i, Integer j){
+        super(i, j);
+        this.id = ++counter;
         this.type = EnumFruit.getType();
         this.value = type.getValue();
-        this.id = "3"; // Fruits id is 3.
-        this.hide = false;
     }
 
+    // Attributes
+    private static int counter = 0;
+    private final int id;
+    private final EnumFruit type;
+    private final Integer value;
+
+    // Methods
     public EnumFruit getType() {
         return type;
     }
 
-    public void setType(EnumFruit type) {
-        this.type = type;
-    }
-
     public Integer getValue() {
         return value;
-    }
-
-    public void setValue(Integer value) {
-        this.value = value;
     }
 
 }

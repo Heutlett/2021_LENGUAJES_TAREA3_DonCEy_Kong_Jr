@@ -3,8 +3,8 @@ package model;
 public class SnapjawRed extends Snapjaw{
 
     // Constructor
-    public SnapjawRed(double x, double y) {
-        super(x, y);
+    public SnapjawRed(Integer i, Integer j, Liana liana) {
+        super(i, j, liana);
     }
 
     @Override

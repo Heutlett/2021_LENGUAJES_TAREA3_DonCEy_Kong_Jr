@@ -3,18 +3,20 @@ package model;
 import java.util.Random;
 
 public enum EnumFruit {
-    cherry(1), banana(2), apple(3), orange(4);
+    cherry(100), apple(200), orange(300), banana(400);
 
-    private int value;
-    private static final Random RANDOM = new Random();
-
+    // Constructor
     private EnumFruit(int value) {
         this.value = value;
     }
 
+    // Attributes
+    private final int value;
+    private static final Random RANDOM = new Random();
+
+    // Methods
     public static EnumFruit getType()  {
-        EnumFruit type = values()[RANDOM.nextInt(values().length)];
-        return type;
+        return values()[RANDOM.nextInt(values().length)];
     }
 
     public int getValue() {
