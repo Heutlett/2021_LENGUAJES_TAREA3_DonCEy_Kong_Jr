@@ -1,0 +1,12 @@
+Empieza de izquierda a derecha y la ultima liana es la de arriba
+
+liana1  = inicio: (11,3)   fin: (40,3):  tamaño: 30
+liana2  = inicio: (11,7)   fin: (40,7):  tamaño: 30
+liana3  = inicio: (22,12)  fin: (40,12): tamaño: 19  (contando base)
+liana4  = inicio: (11,21)  fin: (39,21): tamaño: 29
+liana5  = inicio: (11,28)  fin: (30,28): tamaño: 20
+liana6  = inicio: (13,33)  fin: (38,33): tamaño: 26
+liana7  = inicio: (13,38)  fin: (33,38): tamaño: 21
+liana8  = inicio: (6,42)   fin: (38,42): tamaño: 33  (contando base)
+liana9  = inicio: (4,47)   fin: (38,47): tamaño: 33  (contando base)
+liana10 = inicio: (3,19)   fin: (5,19):  tamaño: 3
