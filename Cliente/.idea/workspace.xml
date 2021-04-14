@@ -11,21 +11,43 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="741a9a24-7a2d-45d9-ace1-65439f230add" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/sockets/Sockets.c" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/sockets/Sockets.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/sockets/cJson.c" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/sockets/cJson.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Servidor/src/Start.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Servidor/src/socket/Host.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Servidor/src/socket/Sockets.java" afterDir="false" />
+    <list default="true" id="26b51e0d-46e1-4dc3-b7e1-366b52842335" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/client.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ServidorNuevo/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ServidorNuevo/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ServidorNuevo/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ServidorNuevo/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ServidorNuevo/ServidorNuevo.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ServidorNuevo/files/data.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ServidorNuevo/files/lianas.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ServidorNuevo/libraries/jackson-annotations-2.10.0.pr2.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ServidorNuevo/libraries/jackson-core-2.10.0.pr2.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ServidorNuevo/libraries/jackson-databind-2.10.0.pr2.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ServidorNuevo/libraries/json-20190722.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ServidorNuevo/src/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ServidorNuevo/src/MyClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ServidorNuevo/src/model/Entity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ServidorNuevo/src/model/EnumFruit.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ServidorNuevo/src/model/Fruit.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ServidorNuevo/src/model/Game.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ServidorNuevo/src/model/Liana.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ServidorNuevo/src/model/Snapjaw.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ServidorNuevo/src/model/SnapjawBlue.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ServidorNuevo/src/model/SnapjawRed.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ServidorNuevo/src/socket/Data.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ServidorNuevo/src/socket/Host.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ServidorNuevo/src/socket/HostManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ServidorNuevo/src/socket/Serializer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ServidorNuevo/src/socket/Sockets.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ServidorNuevo/src/structures/Pair.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ServidorNuevo/src/utility/ReadFile.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Servidor/files/lianas.json" beforeDir="false" afterPath="$PROJECT_DIR$/../Servidor/files/lianas.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Servidor/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Servidor/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Servidor/src/model/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Servidor/src/model/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Servidor/src/sockets/Serializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Servidor/src/socket/Serializer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Servidor/src/utility/ReadFile.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Servidor/src/utility/ReadFile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sockets/Sockets.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sockets/Sockets.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sockets/cJson.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sockets/cJson.h" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,20 +58,11 @@
     <option name="formatViaClangd" value="false" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Python Script" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="ProjectId" id="1r76yW5zOJFJDCUFl4dca1CN8NT" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
-    <ConfirmationsSetting value="1" id="Add" />
-  </component>
+  <component name="ProjectId" id="1rAoJwOaPrLfs4kaaJ936uh0zBv" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -62,11 +75,11 @@
     <property name="cf.first.check.clang-format" value="false" />
     <property name="cidr.known.project.marker" value="true" />
     <property name="cmake.loaded.for.project" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/CMakeLists.txt" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\jeyki\OneDrive\01. SEMESTERS\2021 - Semestre I\Lenguajes y Compiladores\Lenguajes\02 - Progras\Progra 3 - DonCEy Kong\Cliente\src" />
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
     </key>
   </component>
   <component name="RunManager">
@@ -80,25 +93,21 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="741a9a24-7a2d-45d9-ace1-65439f230add" name="Default Changelist" comment="" />
-      <created>1618315035525</created>
+      <changelist id="26b51e0d-46e1-4dc3-b7e1-366b52842335" name="Default Changelist" comment="" />
+      <created>1618428187393</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1618315035525</updated>
-      <workItem from="1618315037070" duration="63000" />
-      <workItem from="1618318220440" duration="221000" />
-      <workItem from="1618318499699" duration="27000" />
-      <workItem from="1618379340455" duration="10000" />
-      <workItem from="1618386857632" duration="1529000" />
+      <updated>1618428187393</updated>
+      <workItem from="1618428189047" duration="83000" />
     </task>
     <servers />
   </component>
@@ -115,6 +124,5 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>
