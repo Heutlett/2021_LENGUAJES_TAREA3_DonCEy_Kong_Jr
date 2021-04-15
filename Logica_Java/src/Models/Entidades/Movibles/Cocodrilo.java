@@ -4,6 +4,8 @@ import Models.Entidades.Utils.PuntoMatriz;
 
 
 public class Cocodrilo extends EntidadMovible {
+
+
     public enum TipoCocodrilo {
         ROJO,
         AZUL
@@ -11,11 +13,25 @@ public class Cocodrilo extends EntidadMovible {
     protected double velocidad;
     protected TipoCocodrilo tipoCocodrilo;
 
-    public Cocodrilo(String id, PuntoMatriz posicion, PuntoMatriz[] area, double velocidad, TipoCocodrilo tipoCocodrilo) {
-        super(id, posicion, area);
+    public Cocodrilo(String id, PuntoMatriz posicion, PuntoMatriz[] area, Direccion direccion, double velocidad) {
+        super(id, posicion, area, direccion);
         this.velocidad = velocidad;
-        this.tipoCocodrilo = tipoCocodrilo;
     }
+
+    @Override
+    public void mover(PuntoMatriz nuevaPosicion) {
+
+    }
+
+    @Override
+    public void actualizarArea() {
+
+    }
+
+    /**#################################################################################################
+     * SETTERS AND GETTERS
+     * #################################################################################################
+     */
 
     public double getVelocidad() {
         return velocidad;
