@@ -1,5 +1,6 @@
 package Models.Entidades.Movibles;
 
+import Logica.GameManager;
 import Models.Entidades.Utils.PuntoMatriz;
 
 
@@ -18,16 +19,16 @@ public class Mono extends EntidadMovible{
 
     public void mover(Direccion direccion){
 
-        if(direccion == Direccion.DERECHA){
+        if(direccion == Direccion.DERECHA && (this.posicion.getColumna()+3 < GameManager.TAMANO_MATRIZ) ){
             mover(new PuntoMatriz(this.posicion.getFila(), this.posicion.getColumna()+1));
         }
-        if(direccion == Direccion.IZQUIERDA){
+        if(direccion == Direccion.IZQUIERDA && (this.posicion.getColumna()-1 > 0) ){
             mover(new PuntoMatriz(this.posicion.getFila(), this.posicion.getColumna()-1));
         }
-        if(direccion == Direccion.ARRIBA){
+        if(direccion == Direccion.ARRIBA && (this.posicion.getFila()-2 > 0) ){
             mover(new PuntoMatriz(this.posicion.getFila()-1, this.posicion.getColumna()));
         }
-        if(direccion == Direccion.ABAJO){
+        if(direccion == Direccion.ABAJO && (this.posicion.getFila()+2 < GameManager.TAMANO_MATRIZ) ){
             mover(new PuntoMatriz(this.posicion.getFila()+1, this.posicion.getColumna()));
         }
 

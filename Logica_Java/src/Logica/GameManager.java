@@ -29,8 +29,8 @@ public class GameManager {
     private EntidadEstatica[] plataformas;
 
     private Entidad[][] matriz;
-    public static int TAMANO_MATRIZ = 50;
-    public static PuntoMatriz POSICION_INICIAL = new PuntoMatriz(43,1);
+    public static int TAMANO_MATRIZ = 100;
+    public static PuntoMatriz POSICION_INICIAL = new PuntoMatriz(93,1);
 
     private GameManager(){
         donkeyKongJr = new Mono("dkjr", null, null);
@@ -85,7 +85,9 @@ public class GameManager {
         System.out.println();
     }
 
-
+    public Entidad[][] getMatriz() {
+        return matriz;
+    }
 
     public static void main(String[] args) {
 
