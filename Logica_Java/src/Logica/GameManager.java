@@ -21,7 +21,7 @@ public class GameManager {
         return single_instance;
     }
 
-    private EntidadMovible donkeyKongJr;
+    private Mono donkeyKongJr;
     private EntidadEstatica donkeyKong;
     private ArrayList<Cocodrilo> cocodrilos;
     private ArrayList<Fruta> frutas;
@@ -29,25 +29,91 @@ public class GameManager {
     private EntidadEstatica[] plataformas;
 
     private Entidad[][] matriz;
+    public static int TAMANO_MATRIZ = 50;
+    public static PuntoMatriz POSICION_INICIAL = new PuntoMatriz(43,1);
 
     private GameManager(){
-        donkeyKongJr = new Mono("donkeyKongJr", null, null, null);
-        donkeyKong = new EntidadEstatica("donkeyKong", null, null, EntidadEstatica.TipoSuperficie.DONKEYKONG );
+        donkeyKongJr = new Mono("dkjr", null, null);
+        donkeyKong = new EntidadEstatica("dk", null, null, EntidadEstatica.TipoSuperficie.DONKEYKONG );
         cocodrilos =  new ArrayList<>();
         frutas = new ArrayList<>();
         lianas = new EntidadEstatica[10];
         plataformas = new EntidadEstatica[6];
-        matriz = new Entidad[50][50];
+        setCondicionesIniciales();
     }
 
     private void setCondicionesIniciales(){
-        donkeyKongJr.setPosicion(new PuntoMatriz(43,1));
-        //PuntoMatriz[] areaDonkeyKongJr = {new PuntoMatriz(44,0)}
-        //donkeyKongJr.setArea();
+        donkeyKongJr.setPosicion(POSICION_INICIAL);
+        donkeyKongJr.setDireccion(EntidadMovible.Direccion.DERECHA);
+        donkeyKongJr.actualizarArea();
+
+        actualizarMatriz();
+    }
+
+    private void actualizarMatriz(){
+        matriz = new Entidad[TAMANO_MATRIZ][TAMANO_MATRIZ];
+        actualizarMono();
+
+    }
+
+    private void actualizarMono(){
+        for(int i = 0; i < Mono.TAMANO_AREA; i++){
+            if(donkeyKongJr.getArea()[i] != null){
+                matriz[donkeyKongJr.getArea()[i].getFila()][donkeyKongJr.getArea()[i].getColumna()] = donkeyKongJr;
+            }
+        }
+    }
+
+    public void moverMono(EntidadMovible.Direccion direccion){
+        donkeyKongJr.mover(direccion);
+        actualizarMatriz();
+    }
+
+
+    public void imprimirMatriz(){
+
+        for(int i = 0; i < TAMANO_MATRIZ; i++){
+            for(int e = 0; e < TAMANO_MATRIZ; e++){
+                if(matriz[i][e] == null){
+                    System.out.print(" ⬜ ");
+                }else{
+                    System.out.print(" ⬛ ");
+                }
+            }
+            System.out.println();
+        }
+        System.out.println();
     }
 
 
 
+    public static void main(String[] args) {
 
+        GameManager gameManager = GameManager.getInstance();
+        gameManager.imprimirMatriz();
+
+        System.out.println("DERECHA");
+        for(int i = 0; i < 10; i++){
+            gameManager.moverMono(EntidadMovible.Direccion.DERECHA);
+            gameManager.imprimirMatriz();
+        }
+        System.out.println("ARRIBA");
+        for(int i = 0; i < 10; i++){
+            gameManager.moverMono(EntidadMovible.Direccion.ARRIBA);
+            gameManager.imprimirMatriz();
+        }
+        System.out.println("IZQUIERDA");
+        for(int i = 0; i < 10; i++){
+            gameManager.moverMono(EntidadMovible.Direccion.IZQUIERDA);
+            gameManager.imprimirMatriz();
+        }
+        System.out.println("ABAJO");
+        for(int i = 0; i < 10; i++){
+            gameManager.moverMono(EntidadMovible.Direccion.ABAJO);
+            gameManager.imprimirMatriz();
+        }
+
+
+    }
 
 }

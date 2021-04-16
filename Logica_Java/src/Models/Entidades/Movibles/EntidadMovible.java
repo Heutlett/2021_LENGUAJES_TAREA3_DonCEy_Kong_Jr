@@ -25,25 +25,7 @@ public abstract class EntidadMovible extends Entidad {
         actualizarArea();
     }
 
-    private void actualizarDireccion(PuntoMatriz nuevaPosicion){
-
-        //Izquierda o derecha
-        if(this.posicion.getFila() == nuevaPosicion.getFila()){
-            // Derecha
-            if(this.posicion.getColumna() < nuevaPosicion.getColumna()){
-                this.direccion = Direccion.DERECHA;
-            }else{ // Izquierda
-                this.direccion = Direccion.IZQUIERDA;
-            }
-        }else{ //Arriba o abajo
-            // Abajo
-            if(this.posicion.getFila() < nuevaPosicion.getFila()){
-                this.direccion = Direccion.ABAJO;
-            }else{ // Arriba
-                this.direccion = Direccion.ARRIBA;
-            }
-        }
-    }
+    abstract void actualizarDireccion(PuntoMatriz nuevaPosicion);
 
     public abstract void actualizarArea();
 

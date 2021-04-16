@@ -12,10 +12,15 @@ public class Fruta extends EntidadMovible{
     private double puntos;
     private TipoFruta tipoFruta;
 
-    public Fruta(String id, PuntoMatriz posicion, PuntoMatriz[] area, Direccion direccion, double puntos, TipoFruta tipoFruta) {
-        super(id, posicion, area, direccion);
+    public Fruta(String id, PuntoMatriz posicion, Direccion direccion, double puntos, TipoFruta tipoFruta) {
+        super(id, posicion, new PuntoMatriz[4], direccion);
         this.puntos = puntos;
         this.tipoFruta = tipoFruta;
+    }
+
+    @Override
+    void actualizarDireccion(PuntoMatriz nuevaPosicion) {
+
     }
 
     @Override
