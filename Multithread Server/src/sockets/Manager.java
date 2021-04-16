@@ -1,6 +1,6 @@
 package sockets;
 
-import structure.Tuple;
+import structures.Tuple;
 
 import java.util.ArrayList;
 
@@ -45,7 +45,7 @@ public class Manager {
         for (int i = 0; i < rooms.size(); i++) {
             Room room = rooms.get(i);
             if (room.inGame()) {
-                if ((i == rooms.size() - 1) && room2.isEmpty()){
+                if ((i == rooms.size() - 1) && room1.isEmpty()){
                     s.append("|").append(room.getNames());
                 } else if (i == rooms.size() - 1) {
                     s.append(room.getNames());

@@ -119,6 +119,7 @@ class Server {
         }
 
         private String gameProcedure(String json){
+            System.out.printf("✘ Message to %s: %s.%n", username, Server.manager.currentGames());
             System.out.printf("▙ Note: Already log in Host %d.%n", roomNumber);
             return Server.manager.updateMatrix(json);
         }

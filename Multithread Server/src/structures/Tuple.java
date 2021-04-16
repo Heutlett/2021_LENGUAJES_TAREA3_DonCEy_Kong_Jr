@@ -1,4 +1,4 @@
-package structure;
+package structures;
 
 public class Tuple<A, B> {
 

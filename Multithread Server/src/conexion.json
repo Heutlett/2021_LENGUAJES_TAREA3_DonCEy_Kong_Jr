@@ -1,6 +1,6 @@
 [{
 
-	"action":"beplayer",
-	"data":"nameOrKeypressed"
+	"username":"Name",
+	"type":"player or viewer"
 
 }]

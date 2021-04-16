@@ -47,10 +47,10 @@ class Client {
             System.out.println("☯ Testing...");
             String json1;
 
-            json1 = "{\"username\": \"Shakime\",\"type\": \"player\"}";
-            out.println(json1);
-            out.flush();
-            System.out.println("\n● Server replied: " + in.readLine());
+//            json1 = "{\"username\": \"Shakime\",\"type\": \"player\"}";
+//            out.println(json1);
+//            out.flush();
+//            System.out.println("\n● Server replied: " + in.readLine());
 
 //            Thread.sleep(2500);
 //            json1 = "{\"username\": \"Jose\",\"type\": \"player\"}";
@@ -65,12 +65,12 @@ class Client {
 //            System.out.println("\n● Server replied: " + in.readLine());
 //            out.println("1");
 //
-//            Thread.sleep(2500);
-//            json1 = "{\"username\": \"Dylana\",\"type\": \"viewer\"}";
-//            out.println(json1);
-//            out.flush();
-//            System.out.println("\n● Server replied: " + in.readLine());
-//            out.println("1");
+            Thread.sleep(2500);
+            json1 = "{\"username\": \"Dylana\",\"type\": \"viewer\"}";
+            out.println(json1);
+            out.flush();
+            System.out.println("\n● Server replied: " + in.readLine());
+            out.println("2");
 
             while(true){
                 Thread.sleep(5000);

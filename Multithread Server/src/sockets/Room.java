@@ -1,6 +1,6 @@
 package sockets;
 
-import structure.Tuple;
+import structures.Tuple;
 
 import java.util.ArrayList;
 
