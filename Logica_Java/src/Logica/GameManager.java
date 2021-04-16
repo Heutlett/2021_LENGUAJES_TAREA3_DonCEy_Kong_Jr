@@ -33,19 +33,18 @@ public class GameManager {
     public static PuntoMatriz POSICION_INICIAL = new PuntoMatriz(93,1);
 
     private GameManager(){
-        donkeyKongJr = new Mono("dkjr", null, null);
+        setCondicionesIniciales();
+    }
+
+    private void setCondicionesIniciales(){
+
+        donkeyKongJr = new Mono("dkjr", POSICION_INICIAL, EntidadMovible.Direccion.DERECHA);
+        //donkeyKongJr.actualizarArea();
         donkeyKong = new EntidadEstatica("dk", null, null, EntidadEstatica.TipoSuperficie.DONKEYKONG );
         cocodrilos =  new ArrayList<>();
         frutas = new ArrayList<>();
         lianas = new EntidadEstatica[10];
         plataformas = new EntidadEstatica[6];
-        setCondicionesIniciales();
-    }
-
-    private void setCondicionesIniciales(){
-        donkeyKongJr.setPosicion(POSICION_INICIAL);
-        donkeyKongJr.setDireccion(EntidadMovible.Direccion.DERECHA);
-        donkeyKongJr.actualizarArea();
 
         actualizarMatriz();
     }
@@ -65,7 +64,11 @@ public class GameManager {
     }
 
     public void moverMono(EntidadMovible.Direccion direccion){
-        donkeyKongJr.mover(direccion);
+        /**
+         * Antes de mover el mono se debe verificar si chocará con una pared, un mounstrou o una liana
+         */
+
+        donkeyKongJr.moverConDireccion(direccion);
         actualizarMatriz();
     }
 

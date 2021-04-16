@@ -18,13 +18,24 @@ public class Fruta extends EntidadMovible{
         this.tipoFruta = tipoFruta;
     }
 
+
     @Override
-    void actualizarDireccion(PuntoMatriz nuevaPosicion) {
+    protected void direccionAreaAbajo() {
 
     }
 
     @Override
-    public void actualizarArea() {
+    protected void direccionAreaArriba() {
+
+    }
+
+    @Override
+    protected void direccionAreaIzquierda() {
+
+    }
+
+    @Override
+    protected void direccionAreaDerecha() {
 
     }
 

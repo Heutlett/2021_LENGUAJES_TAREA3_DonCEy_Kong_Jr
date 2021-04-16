@@ -15,84 +15,65 @@ public class Mono extends EntidadMovible{
         super(id, posicion, new PuntoMatriz[TAMANO_AREA], direccion);
         this.isOnLiana = false;
         this.isOnTwoLianas = false;
+        direccionAreaDerecha();
+        LIMITE_DERECHA = 3;
+        LIMITE_IZQUIERDA = 1;
+        LIMITE_ARRIBA = 1;
+        LIMITE_ABAJO = 1;
     }
 
-    public void mover(Direccion direccion){
-
-        if(direccion == Direccion.DERECHA && (this.posicion.getColumna()+3 < GameManager.TAMANO_MATRIZ) ){
-            mover(new PuntoMatriz(this.posicion.getFila(), this.posicion.getColumna()+1));
-        }
-        if(direccion == Direccion.IZQUIERDA && (this.posicion.getColumna()-1 > 0) ){
-            mover(new PuntoMatriz(this.posicion.getFila(), this.posicion.getColumna()-1));
-        }
-        if(direccion == Direccion.ARRIBA && (this.posicion.getFila()-2 > 0) ){
-            mover(new PuntoMatriz(this.posicion.getFila()-1, this.posicion.getColumna()));
-        }
-        if(direccion == Direccion.ABAJO && (this.posicion.getFila()+2 < GameManager.TAMANO_MATRIZ) ){
-            mover(new PuntoMatriz(this.posicion.getFila()+1, this.posicion.getColumna()));
-        }
-
+    public void direccionAreaDerecha(){
+        this.area = new PuntoMatriz[TAMANO_AREA];
+        actualizarDireccionCuerpo();
+        actualizarDireccionDerecha();
     }
 
-    @Override
-    void actualizarDireccion(PuntoMatriz nuevaPosicion) {
-        //Izquierda o derecha
-        if(this.posicion.getFila() == nuevaPosicion.getFila()){
-            // Derecha
-            if(this.posicion.getColumna() < nuevaPosicion.getColumna()){
-                this.direccion = Direccion.DERECHA;
-            }else{ // Izquierda
-                this.direccion = Direccion.IZQUIERDA;
-            }
-        }
+    public void direccionAreaIzquierda(){
+        this.area = new PuntoMatriz[TAMANO_AREA];
+        actualizarDireccionCuerpo();
+        actualizarDireccionIzquierda();
     }
 
-    @Override
-    public void actualizarArea() {
+    /**
+     * En este caso solo funciona cuando esta subido en una liana este caso se debe tratar con el atributo
+     * isOnLiana, el cual será asignado a true por el gameManager si despues de moverse el algun brazo del mono
+     * toca una liana (estas validaciones se deben hacer en el gamemanager cada vez que se mueve el mono)
+     */
+    public void direccionAreaAbajo() {
+        this.area = new PuntoMatriz[TAMANO_AREA];
+        actualizarDireccionCuerpo();
+        actualizarDireccionDerecha();
+        actualizarDireccionIzquierda();
+    }
 
-        // Centro del cuerpo
+    public void direccionAreaArriba() {
+        this.area = new PuntoMatriz[TAMANO_AREA];
+        actualizarDireccionCuerpo();
+        actualizarDireccionDerecha();
+        actualizarDireccionIzquierda();
+    }
+
+    private void actualizarDireccionCuerpo(){
+        //Cuerpo
         this.area[5] = new PuntoMatriz(this.posicion.getFila()-1,this.posicion.getColumna());
         this.area[6] = new PuntoMatriz(this.posicion.getFila()-1,this.posicion.getColumna()+1);
         this.area[9] = this.posicion;
         this.area[10] = new PuntoMatriz(this.posicion.getFila(),this.posicion.getColumna()+1);
-        // cabeza
+        //Cabeza
         this.area[1] = new PuntoMatriz(this.posicion.getFila()-2,this.posicion.getColumna());
         this.area[2] = new PuntoMatriz(this.posicion.getFila()-2,this.posicion.getColumna()+1);
-
-        //Campos siempre vacios
-        //this.area[0] = null;
-        //this.area[3] = null;
-        //this.area[8] = null;
-        //this.area[11] = null;
-        //this.area[13] = null;
-        //this.area[14] = null;
-
-        //Si el mono esta apunta hacia la derecha
-        if(this.direccion == Direccion.DERECHA) {
-            actualizarDireccionDerecha();
-        }
-        //Si el mono esta apunta hacia la izquierda
-        if(this.direccion == Direccion.IZQUIERDA) {
-            actualizarDireccionIzquierda();
-        }
-        if(isOnTwoLianas){
-            actualizarDireccionIzquierda();
-            actualizarDireccionDerecha();
-        }
     }
 
     private void actualizarDireccionDerecha(){
+        //Brazo y pie derecho
         this.area[7] = new PuntoMatriz(this.posicion.getFila()-1,this.posicion.getColumna()+2);
         this.area[15] = new PuntoMatriz(this.posicion.getFila()+1,this.posicion.getColumna()+2);
-        this.area[4] = null;
-        this.area[12] = null;
     }
 
     private void actualizarDireccionIzquierda(){
+        //Brazo y pie izquierdo
         this.area[4] = new PuntoMatriz(this.posicion.getFila()-1,this.posicion.getColumna()-1);
         this.area[12] = new PuntoMatriz(this.posicion.getFila()+1,this.posicion.getColumna()-1);
-        this.area[7] = null;
-        this.area[15] = null;
     }
 
     /**#################################################################################################

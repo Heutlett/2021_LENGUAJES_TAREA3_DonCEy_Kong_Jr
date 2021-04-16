@@ -5,7 +5,7 @@ import Models.Entidades.Utils.PuntoMatriz;
 public class Entidad {
 
     protected String id;
-    protected PuntoMatriz posicion;
+    protected PuntoMatriz posicion; // posicion actual en la matriz
     protected PuntoMatriz[] area;  // puntos en la matriz que representan el espacio de la entidad
 
     public Entidad(String id, PuntoMatriz posicion, PuntoMatriz[] area) {

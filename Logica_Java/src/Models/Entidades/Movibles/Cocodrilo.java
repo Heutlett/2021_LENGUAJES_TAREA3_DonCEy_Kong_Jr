@@ -16,35 +16,32 @@ public class Cocodrilo extends EntidadMovible {
     public Cocodrilo(String id, PuntoMatriz posicion, Direccion direccion, double velocidad) {
         super(id, posicion, new PuntoMatriz[4], direccion);
         this.velocidad = velocidad;
+        /**
+         * sE DEBEN ESTABLECER ESTOS LIMITES
+         */
+        LIMITE_ARRIBA = 0;
+        LIMITE_ABAJO = 0;
+        LIMITE_IZQUIERDA = 0;
+        LIMITE_DERECHA = 0;
     }
 
     @Override
-    public void mover(PuntoMatriz nuevaPosicion) {
+    protected void direccionAreaAbajo() {
 
     }
 
     @Override
-    void actualizarDireccion(PuntoMatriz nuevaPosicion) {
-        //Izquierda o derecha
-        if(this.posicion.getFila() == nuevaPosicion.getFila()){
-            // Derecha
-            if(this.posicion.getColumna() < nuevaPosicion.getColumna()){
-                this.direccion = Direccion.DERECHA;
-            }else{ // Izquierda
-                this.direccion = Direccion.IZQUIERDA;
-            }
-        }else{ //Arriba o abajo
-            // Abajo
-            if(this.posicion.getFila() < nuevaPosicion.getFila()){
-                this.direccion = Direccion.ABAJO;
-            }else{ // Arriba
-                this.direccion = Direccion.ARRIBA;
-            }
-        }
+    protected void direccionAreaArriba() {
+
     }
 
     @Override
-    public void actualizarArea() {
+    protected void direccionAreaIzquierda() {
+
+    }
+
+    @Override
+    protected void direccionAreaDerecha() {
 
     }
 
