@@ -1,6 +1,6 @@
 package Models.Entidades.Movibles;
 
-import Logica.GameManager;
+import Controller.GameManager;
 import Models.Entidades.Entidad;
 import Models.Entidades.Utils.PuntoMatriz;
 
@@ -17,13 +17,13 @@ public abstract class EntidadMovible extends Entidad {
     protected Direccion direccion;
 
     // Es el limite al cual puede llegar una entidad sin chocar
-    protected int LIMITE_DERECHA = 0;
-    protected int LIMITE_IZQUIERDA = 0;
-    protected int LIMITE_ARRIBA = 0;
-    protected int LIMITE_ABAJO = 0;
+    protected Integer LIMITE_DERECHA = 0;
+    protected Integer LIMITE_IZQUIERDA = 0;
+    protected Integer LIMITE_ARRIBA = 0;
+    protected Integer LIMITE_ABAJO = 0;
 
-    public EntidadMovible(String id, PuntoMatriz posicion, PuntoMatriz[] area, Direccion direccion) {
-        super(id, posicion, area);
+    public EntidadMovible(String id, PuntoMatriz posicion, PuntoMatriz[] area, TipoEntidad tipoEntidad, Direccion direccion) {
+        super(id, posicion, area, tipoEntidad);
         this.direccion = direccion;
     }
 
@@ -39,7 +39,7 @@ public abstract class EntidadMovible extends Entidad {
     /**
      * Mueve la entidad hacia una direccion y actualiza el area
      * @param direccion
-     */
+     *//*
     public void moverConDireccion(Direccion direccion){
 
         if(direccion == Direccion.DERECHA && (this.posicion.getColumna()+LIMITE_DERECHA < GameManager.TAMANO_MATRIZ) ){
@@ -58,7 +58,7 @@ public abstract class EntidadMovible extends Entidad {
             this.direccion = direccion;
             moverConPosicion(new PuntoMatriz(this.posicion.getFila()+LIMITE_ABAJO, this.posicion.getColumna()));
         }
-    }
+    }*/
 
     /**
      * Actualiza el area de la entidad dependiendo de la direccion hacia la que debe apuntar
@@ -94,6 +94,37 @@ public abstract class EntidadMovible extends Entidad {
 
     protected abstract void direccionAreaDerecha();
 
+    public Integer getLIMITE_DERECHA() {
+        return LIMITE_DERECHA;
+    }
+
+    public void setLIMITE_DERECHA(Integer LIMITE_DERECHA) {
+        this.LIMITE_DERECHA = LIMITE_DERECHA;
+    }
+
+    public Integer getLIMITE_IZQUIERDA() {
+        return LIMITE_IZQUIERDA;
+    }
+
+    public void setLIMITE_IZQUIERDA(Integer LIMITE_IZQUIERDA) {
+        this.LIMITE_IZQUIERDA = LIMITE_IZQUIERDA;
+    }
+
+    public Integer getLIMITE_ARRIBA() {
+        return LIMITE_ARRIBA;
+    }
+
+    public void setLIMITE_ARRIBA(Integer LIMITE_ARRIBA) {
+        this.LIMITE_ARRIBA = LIMITE_ARRIBA;
+    }
+
+    public Integer getLIMITE_ABAJO() {
+        return LIMITE_ABAJO;
+    }
+
+    public void setLIMITE_ABAJO(Integer LIMITE_ABAJO) {
+        this.LIMITE_ABAJO = LIMITE_ABAJO;
+    }
 
     /**#################################################################################################
      * SETTERS AND GETTERS

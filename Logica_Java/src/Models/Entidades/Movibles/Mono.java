@@ -1,6 +1,5 @@
 package Models.Entidades.Movibles;
 
-import Logica.GameManager;
 import Models.Entidades.Utils.PuntoMatriz;
 
 
@@ -9,17 +8,35 @@ public class Mono extends EntidadMovible{
 
     private boolean isOnLiana;
     private boolean isOnTwoLianas;
-    public static int TAMANO_AREA = 16;
+    private boolean isJumping;
+    public static Integer TAMANO_AREA = 16;
 
-    public Mono(String id, PuntoMatriz posicion, Direccion direccion) {
-        super(id, posicion, new PuntoMatriz[TAMANO_AREA], direccion);
+    public Mono(String id, PuntoMatriz posicion, Direccion direccion, TipoEntidad tipoEntidad) {
+        super(id, posicion, new PuntoMatriz[TAMANO_AREA],tipoEntidad, direccion);
         this.isOnLiana = false;
         this.isOnTwoLianas = false;
         direccionAreaDerecha();
-        LIMITE_DERECHA = 3;
+        LIMITE_DERECHA = 1;
         LIMITE_IZQUIERDA = 1;
         LIMITE_ARRIBA = 1;
         LIMITE_ABAJO = 1;
+        isJumping = false;
+    }
+
+    public boolean isOnTwoLianas() {
+        return isOnTwoLianas;
+    }
+
+    public void setOnTwoLianas(boolean onTwoLianas) {
+        isOnTwoLianas = onTwoLianas;
+    }
+
+    public boolean isJumping() {
+        return isJumping;
+    }
+
+    public void setJumping(boolean jumping) {
+        isJumping = jumping;
     }
 
     public void direccionAreaDerecha(){
@@ -62,6 +79,10 @@ public class Mono extends EntidadMovible{
         //Cabeza
         this.area[1] = new PuntoMatriz(this.posicion.getFila()-2,this.posicion.getColumna());
         this.area[2] = new PuntoMatriz(this.posicion.getFila()-2,this.posicion.getColumna()+1);
+
+        this.area[15] = new PuntoMatriz(this.posicion.getFila()+1,this.posicion.getColumna()+2);
+        this.area[12] = new PuntoMatriz(this.posicion.getFila()+1,this.posicion.getColumna()-1);
+
     }
 
     private void actualizarDireccionDerecha(){
@@ -88,6 +109,8 @@ public class Mono extends EntidadMovible{
     public void setOnLiana(boolean onLiana) {
         isOnLiana = onLiana;
     }
+
+
 }
 
 

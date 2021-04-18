@@ -6,27 +6,35 @@ package Models.Entidades.Utils;
  */
 public class PuntoMatriz {
 
-    private int fila;
-    private int columna;
+    private Integer fila;
+    private Integer columna;
 
-    public PuntoMatriz(int fila, int columna) {
+    public PuntoMatriz(Integer fila, Integer columna) {
         this.fila = fila;
         this.columna = columna;
     }
 
-    public int getFila() {
+    public Integer getFila() {
         return fila;
     }
 
-    public void setFila(int fila) {
+    public void setFila(Integer fila) {
         this.fila = fila;
     }
 
-    public int getColumna() {
+    public Integer getColumna() {
         return columna;
     }
 
-    public void setColumna(int columna) {
+    public void setColumna(Integer columna) {
         this.columna = columna;
+    }
+
+    @Override
+    public String toString() {
+        return "PuntoMatriz{" +
+                "fila=" + fila +
+                ", columna=" + columna +
+                '}';
     }
 }

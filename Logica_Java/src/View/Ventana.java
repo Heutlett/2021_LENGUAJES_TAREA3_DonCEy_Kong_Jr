@@ -1,5 +1,7 @@
 package View;
-import Logica.GameManager;
+import Controller.GameManager;
+import Controller.MonoController;
+import Models.Entidades.Entidad;
 import Models.Entidades.Movibles.EntidadMovible;
 
 import javax.swing.*;
@@ -8,23 +10,29 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 public class Ventana extends JFrame {
 
     private GameManager gameManager;
-    private Boton[][] matrizButton;
+    private CampoBoton[][] matrizButton;
     private JPanel panel;
-    private int WIDTH = 800;
-    private int HEIGHT = 820;
+    private Integer WIDTH = 800;
+    private Integer HEIGHT = 820;
+    private ArrayList<String> pressed;
 
 
     private Ventana() {
         super("DonkeyKongJr_Server_View");
-        gameManager = GameManager.getInstance();
-        matrizButton = new Boton[GameManager.TAMANO_MATRIZ][GameManager.TAMANO_MATRIZ];
+        gameManager = new GameManager();
+        matrizButton = new CampoBoton[GameManager.TAMANO_MATRIZ][GameManager.TAMANO_MATRIZ];
+        pressed = new ArrayList<>();
         panel = new JPanel();
         panel.setFocusable(true);
         panel.setLayout(null);
+        panel.addKeyListener(new MyKeyListener());
+        Hilo hilo = new Hilo();
+        hilo.start();
     }
 
     private void ejecuta() {
@@ -33,30 +41,28 @@ public class Ventana extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         initMatriz();
         setVisible(true);
-        actualizarMatriz();
+        actualizarMatrizInterfaz();
     }
 
     private void initMatriz(){
-        for(int fila = 0; fila < GameManager.TAMANO_MATRIZ; fila++){
-            for(int columna = 0; columna < GameManager.TAMANO_MATRIZ; columna++){
+        for(Integer fila = 0; fila < GameManager.TAMANO_MATRIZ; fila++){
+            for(Integer columna = 0; columna < GameManager.TAMANO_MATRIZ; columna++){
                 addButtonMatriz(fila,columna);
             }
         }
     }
 
-    private void addButtonMatriz(int fila, int columna){
+    private void addButtonMatriz(Integer fila, Integer columna){
 
         /**
          * esto se quita, es para mover al mono pero solo deberia poder hacerlo el servidor
          */
-        KeyListener listener = new MyKeyListener();
 
-        Boton boton = new Boton(fila,columna);
+        CampoBoton boton = new CampoBoton(fila,columna);
+        boton.addKeyListener(new MyKeyListener());
         boton.setBounds(8+columna*7,8+fila*7, 7,7);
-        boton.addKeyListener(listener);
         boton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.out.println("fila: " + boton.getFila() + " columna: " + boton.getColumna());
                 boton.setBackground(Color.GREEN);
             }
         });
@@ -64,15 +70,113 @@ public class Ventana extends JFrame {
         matrizButton[fila][columna] = boton;
     }
 
-    private void actualizarMatriz(){
+    private void actualizarMatrizInterfaz(){
 
-        for(int fila = 0; fila < GameManager.TAMANO_MATRIZ; fila++){
-            for(int columna = 0; columna < GameManager.TAMANO_MATRIZ; columna++){
-                if(gameManager.getMatriz()[fila][columna] != null){
-                    matrizButton[fila][columna].setBackground(Color.WHITE);
-                }else{
+        for(Integer fila = 0; fila < GameManager.TAMANO_MATRIZ; fila++){
+            for(Integer columna = 0; columna < GameManager.TAMANO_MATRIZ; columna++){
+                if(gameManager.getMatriz()[fila][columna] != null && matrizButton[fila][columna] != null){
+
+                    if(gameManager.getMatriz()[fila][columna].getTipoEntidad() == Entidad.TipoEntidad.MONO){
+                        matrizButton[fila][columna].setBackground(Color.WHITE);
+                    }
+                    if(gameManager.getMatriz()[fila][columna].getTipoEntidad() == Entidad.TipoEntidad.PLATAFORMA){
+                        matrizButton[fila][columna].setBackground(Color.GREEN);
+                    }
+
+                }else if(matrizButton[fila][columna] != null){
                     matrizButton[fila][columna].setBackground(Color.BLACK);
                 }
+
+            }
+        }
+    }
+
+    public class Hilo extends Thread{
+
+
+
+        @Override
+        public void run() {
+            while (true){
+                try {
+                    sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                actualizarMatrizInterfaz();
+            }
+        }
+    }
+
+
+    public class MyKeyListener implements KeyListener {
+        @Override
+        public void keyTyped(KeyEvent e) {
+
+            if(e.getKeyChar() == 'w' || e.getKeyChar() == 'W'){
+                if(!pressed.contains("ARRIBA") && !gameManager.getDonkeyKongJr().isJumping()
+                        && gameManager.getMonoController().estaEnSuelo()){
+                    pressed.add("ARRIBA");
+                    gameManager.getDonkeyKongJr().setJumping(true);
+                    gameManager.getMonoController().saltar();
+                }
+            }
+            if(e.getKeyChar() == 's' || e.getKeyChar() == 'S'){
+                if(!pressed.contains("ABAJO")){
+                    pressed.add("ABAJO");
+                }
+            }
+            if(e.getKeyChar() == 'd' || e.getKeyChar() == 'D'){
+                if(!pressed.contains("DERECHA")){
+                    pressed.add("DERECHA");
+                }
+            }
+            if(e.getKeyChar() == 'a' || e.getKeyChar() == 'A'){
+                if(!pressed.contains("IZQUIERDA")){
+                    pressed.add("IZQUIERDA");
+                }
+            }
+
+            for(int i = 0; i < pressed.size(); i++){
+
+                if(pressed.get(i).equals("ARRIBA")){
+                    gameManager.getMonoController().moverMono(EntidadMovible.Direccion.ARRIBA);
+                }
+                if(pressed.get(i).equals("ABAJO")){
+                    gameManager.getMonoController().moverMono(EntidadMovible.Direccion.ABAJO);
+                }
+                if(pressed.get(i).equals("DERECHA")){
+                    gameManager.getMonoController().moverMono(EntidadMovible.Direccion.DERECHA);
+                }
+                if(pressed.get(i).equals("IZQUIERDA")){
+                    gameManager.getMonoController().moverMono(EntidadMovible.Direccion.IZQUIERDA);
+                }
+                actualizarMatrizInterfaz();
+            }
+            actualizarMatrizInterfaz();
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            switch(e.getKeyCode()) {
+
+                case KeyEvent.VK_W:
+                    pressed.remove("ARRIBA");
+                    break;
+                case KeyEvent.VK_S:
+                    pressed.remove("ABAJO");
+                    break;
+                case KeyEvent.VK_A:
+                    pressed.remove("IZQUIERDA");
+                    break;
+                case KeyEvent.VK_D:
+                    pressed.remove("DERECHA");
+                    break;
             }
         }
     }
@@ -84,42 +188,15 @@ public class Ventana extends JFrame {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new Ventana().ejecuta();
+
+                // se pueden crear n ventanas
+                Ventana ventana = new Ventana();
+
+                ventana.ejecuta();
+                ventana.gameManager.start();
+                //new Ventana().ejecuta();
+
             }
         });
     }
-
-    public class MyKeyListener implements KeyListener {
-        @Override
-        public void keyTyped(KeyEvent e) {
-        }
-
-        @Override
-        public void keyPressed(KeyEvent e) {
-
-            if(KeyEvent.getKeyText(e.getKeyCode()).equals("Derecha")){
-                gameManager.moverMono(EntidadMovible.Direccion.DERECHA);
-                actualizarMatriz();
-            }
-            if(KeyEvent.getKeyText(e.getKeyCode()).equals("Izquierda")){
-                gameManager.moverMono(EntidadMovible.Direccion.IZQUIERDA);
-                actualizarMatriz();
-            }
-            if(KeyEvent.getKeyText(e.getKeyCode()).equals("Arriba")){
-                gameManager.moverMono(EntidadMovible.Direccion.ARRIBA);
-                actualizarMatriz();
-            }
-            if(KeyEvent.getKeyText(e.getKeyCode()).equals("Abajo")){
-                gameManager.moverMono(EntidadMovible.Direccion.ABAJO);
-                actualizarMatriz();
-            }
-
-
-        }
-
-        @Override
-        public void keyReleased(KeyEvent e) {
-        }
-    }
-
 }
