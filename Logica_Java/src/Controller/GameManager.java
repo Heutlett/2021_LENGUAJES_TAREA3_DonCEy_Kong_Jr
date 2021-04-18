@@ -23,7 +23,7 @@ public class GameManager extends Thread{
     private MonoController monoController;
     private Entidad[][] matriz;
     public static Integer TAMANO_MATRIZ = 100;
-    public static PuntoMatriz POSICION_INICIAL = new PuntoMatriz(50,1);
+    public static PuntoMatriz POSICION_INICIAL = new PuntoMatriz(10,1);
 
     public GameManager()
     {
@@ -197,8 +197,9 @@ public class GameManager extends Thread{
             monoController.moverMono(EntidadMovible.Direccion.ABAJO);
             actualizarMatriz();
 
+
             try {
-                sleep(40);
+                sleep(20);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

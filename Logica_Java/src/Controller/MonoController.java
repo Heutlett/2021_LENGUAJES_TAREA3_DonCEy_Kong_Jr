@@ -141,7 +141,6 @@ public class MonoController {
         for(int i = 0; i < donkeyKongJr.getArea().length; i++){
 
             if(verificarLimitesPosicionMatriz(donkeyKongJr.getArea()[i])){
-                System.out.println(donkeyKongJr.getArea()[i].toString());
                 matriz[donkeyKongJr.getArea()[i].getFila()][donkeyKongJr.getArea()[i].getColumna()] = null;
             }
 
