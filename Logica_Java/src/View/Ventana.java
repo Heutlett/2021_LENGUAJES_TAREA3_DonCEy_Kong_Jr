@@ -199,6 +199,14 @@ public class Ventana extends JFrame {
             gameManager.crearCocodrilo(boton.getId());
         }
         if(boton.getId().equals("vacio")){
+
+            if(gameManager.getEntidadSeleccionada() == Entidad.TipoEntidad.COCODRILO_ROJO || gameManager.getEntidadSeleccionada()
+                    == Entidad.TipoEntidad.COCODRILO_AZUL){
+                JOptionPane.showMessageDialog(null, "solo se pueden colocar cocodrilos en las lianas",
+                        "Aviso!", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+
             if(puntosEntry.getText().isBlank() && !isNumeric(puntosEntry.getText())){
                 JOptionPane.showMessageDialog(null, "no se ha ingresado el valor en puntos",
                         "Aviso!", JOptionPane.INFORMATION_MESSAGE);

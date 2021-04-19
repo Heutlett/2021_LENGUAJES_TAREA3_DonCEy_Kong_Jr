@@ -51,6 +51,12 @@ public class FrutaController {
 
     }
 
+    public void actualizarFrutas(){
+        for(int i = 0; i < frutas.size(); i++){
+            actualizarFruta(frutas.get(i));
+        }
+    }
+
     private boolean verificarLimitesPosicionMatriz(PuntoMatriz posicion){
 
         if(posicion != null

@@ -318,6 +318,7 @@ public class GameManager extends Thread{
                 }
                 crearLianas();
                 crearPlataformas();
+
                 //actualizarMatriz();
                 try {
                     sleep(20);
@@ -340,6 +341,7 @@ public class GameManager extends Thread{
             while (!donkeyKongJr.isHaPerdido()){
 
                 cocodriloController.moverCocodrilos();
+                frutaController.actualizarFrutas();
 
                 try {
                     sleep(150-nivel*30);
