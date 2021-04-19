@@ -2,6 +2,7 @@ package Controller;
 
 import Models.Entidades.Entidad;
 import Models.Entidades.Movibles.EntidadMovible;
+import Models.Entidades.Movibles.Fruta;
 import Models.Entidades.Movibles.Mono;
 import Models.Entidades.Utils.PuntoMatriz;
 
@@ -13,11 +14,14 @@ public class MonoController {
     private Entidad[][] matriz;
     public static Integer TAMANO_MATRIZ = 100;
     private boolean haPerdido = false;
+    private FrutaController frutaController;
+    private String idFrutaBorrar;
 
 
-    public MonoController(Mono donkeyKongJr, Entidad[][] matriz){
+    public MonoController(Mono donkeyKongJr, Entidad[][] matriz, FrutaController frutaController){
         this.donkeyKongJr = donkeyKongJr;
         this.matriz = matriz;
+        this.frutaController = frutaController;
     }
 
     private boolean reglasMoverDerecha(EntidadMovible.Direccion direccion){
@@ -86,6 +90,10 @@ public class MonoController {
                     donkeyKongJr.setOnLiana(true);
                     donkeyKongJr.setJumping(false);
                     return true;
+                case BANANO:
+                case MELOCOTON:
+                case MANZANA:
+                    return true;
             }
 
         }
@@ -133,7 +141,15 @@ public class MonoController {
                 if(matriz[p.getFila()+limiteFila][p.getColumna()+limiteColumna] != null){
 
                     listaTipoEntidades.add(matriz[p.getFila()+limiteFila][p.getColumna()+limiteColumna].getTipoEntidad());
-
+                    if(matriz[p.getFila()+limiteFila][p.getColumna()+limiteColumna].getId().contains("fruta")){
+                        idFrutaBorrar = matriz[p.getFila()+limiteFila][p.getColumna()+limiteColumna].getId();
+                        Fruta fruta = frutaController.buscarFrutaById(idFrutaBorrar);
+                        if(fruta != null){
+                            donkeyKongJr.setPuntuacion((int) (donkeyKongJr.getPuntuacion()+fruta.getPuntos()));
+                            frutaController.borrarFruta(fruta);
+                        }
+                        System.out.println(idFrutaBorrar);
+                    }
                 }
 
             }

@@ -12,9 +12,8 @@ import java.util.ArrayList;
 
 public class GameManager extends Thread{
 
-    private Integer puntuacion;
-    private String id;
-    static int count = 0;
+    private Entidad[][] matriz;
+
     private Mono donkeyKongJr;
     private EntidadEstatica donkeyKong;
     private ArrayList<Cocodrilo> cocodrilos;
@@ -22,14 +21,21 @@ public class GameManager extends Thread{
     private EntidadEstatica[] lianas;
     private EntidadEstatica[] plataformas;
     private EntidadEstatica[] agua;
+
     private MonoController monoController;
     private CocodriloController cocodriloController;
-    private Entidad[][] matriz;
+    private FrutaController frutaController;
+
+    private String id;
+    static int count = 0;
+
+    private Entidad.TipoEntidad entidadSeleccionada;
     public static Integer TAMANO_MATRIZ = 100;
     public static PuntoMatriz POSICION_INICIAL = new PuntoMatriz(25,1);
     private int contadorCaida;
     private boolean haPerdido;
     private int nivel;
+    private int vidas;
 
     public GameManager()
     {
@@ -46,11 +52,14 @@ public class GameManager extends Thread{
         lianas = new EntidadEstatica[10];
         plataformas = new EntidadEstatica[6];
         matriz = new Entidad[TAMANO_MATRIZ][TAMANO_MATRIZ];
-        monoController = new MonoController(donkeyKongJr, matriz);
+        frutaController = new FrutaController(matriz, frutas);
+        monoController = new MonoController(donkeyKongJr, matriz, frutaController);
         cocodriloController = new CocodriloController(matriz, cocodrilos, lianas, monoController);
+
         contadorCaida = 0;
         haPerdido = false;
         nivel = 1;
+        vidas = 1;
         new HiloCocodrilos().start();
         crearPlataformaPrueba();
         crearPlataformas();
@@ -84,22 +93,35 @@ public class GameManager extends Thread{
         }
     }
 
-    public void crearCocodrilo(String idLiana, Entidad.TipoEntidad tipoCocodrilo){
+    public void crearCocodrilo(String idLiana){
 
-        Cocodrilo cocodrilo = new Cocodrilo(null, null, null, null, null, 0,
-                null);
-        cocodrilo.setId("cocodrilo" + cocodrilos.size());
-        EntidadEstatica liana = buscarLianaById(idLiana);
-        if(liana != null){
-            cocodrilo.setPosicion(liana.getPosicion());
+        if(entidadSeleccionada != null && entidadSeleccionada == Entidad.TipoEntidad.COCODRILO_AZUL
+                || entidadSeleccionada == Entidad.TipoEntidad.COCODRILO_ROJO ){
+            Cocodrilo cocodrilo = new Cocodrilo(null, null, null, null, null, 0,
+                    null);
+            cocodrilo.setId("cocodrilo" + cocodrilos.size());
+            EntidadEstatica liana = buscarLianaById(idLiana);
+            if(liana != null){
+                cocodrilo.setPosicion(liana.getPosicion());
+            }
+            cocodrilo.direccionAreaAbajo();
+            //La area se define en la clase COCODRILO
+            cocodrilo.setTipoEntidad(entidadSeleccionada);
+            cocodrilo.setDireccion(EntidadMovible.Direccion.ABAJO);
+            cocodrilo.setVelocidad(nivel);
+            cocodrilo.setIdLiana(idLiana);
+            cocodrilos.add(cocodrilo);
         }
-        cocodrilo.direccionAreaAbajo();
-        //La area se define en la clase COCODRILO
-        cocodrilo.setTipoEntidad(tipoCocodrilo);
-        cocodrilo.setDireccion(EntidadMovible.Direccion.ABAJO);
-        cocodrilo.setVelocidad(nivel);
-        cocodrilo.setIdLiana(idLiana);
-        cocodrilos.add(cocodrilo);
+    }
+
+    public void crearFruta(PuntoMatriz posicion, int puntos) {
+
+        if (entidadSeleccionada != null && entidadSeleccionada != Entidad.TipoEntidad.COCODRILO_AZUL
+                && entidadSeleccionada != Entidad.TipoEntidad.COCODRILO_ROJO) {
+            Fruta fruta = new Fruta(posicion, null, entidadSeleccionada, null, puntos);
+            frutas.add(fruta);
+            frutaController.actualizarFruta(fruta);
+        }
     }
 
     private EntidadEstatica buscarLianaById(String id){
@@ -130,6 +152,13 @@ public class GameManager extends Thread{
         return matriz;
     }
 
+    public Entidad.TipoEntidad getEntidadSeleccionada() {
+        return entidadSeleccionada;
+    }
+
+    public void setEntidadSeleccionada(Entidad.TipoEntidad entidadSeleccionada) {
+        this.entidadSeleccionada = entidadSeleccionada;
+    }
 
     public void setId(String id) {
         this.id = id;
@@ -211,6 +240,10 @@ public class GameManager extends Thread{
         this.haPerdido = haPerdido;
     }
 
+    public String getIdGame(){
+        return id;
+    }
+
     private void crearPlataformaPrueba(){
 
         EntidadEstatica plataforma = new EntidadEstatica(null, null, null, null);
@@ -278,6 +311,7 @@ public class GameManager extends Thread{
                 contadorCaida = 0;
             }
             crearLianas();
+            crearPlataformas();
             //actualizarMatriz();
             try {
                 sleep(20);
@@ -291,7 +325,7 @@ public class GameManager extends Thread{
 
         @Override
         public void run() {
-            while (true){
+            while (!haPerdido){
 
                 cocodriloController.moverCocodrilos();
 

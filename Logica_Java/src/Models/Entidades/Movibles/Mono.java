@@ -13,6 +13,7 @@ public class Mono extends EntidadMovible{
     private PuntoMatriz manoIzquierda;
     private PuntoMatriz manoDerecha;
     private boolean isFalling;
+    private Integer puntuacion;
 
     public Mono(String id, PuntoMatriz posicion, Direccion direccion, TipoEntidad tipoEntidad) {
         super(id, posicion, new PuntoMatriz[TAMANO_AREA],tipoEntidad, direccion);
@@ -25,6 +26,7 @@ public class Mono extends EntidadMovible{
         LIMITE_ABAJO = 1;
         isJumping = false;
         isFalling = false;
+        puntuacion = 0;
     }
 
     public boolean isOnTwoLianas() {
@@ -133,6 +135,14 @@ public class Mono extends EntidadMovible{
 
     public void setFalling(boolean falling) {
         isFalling = falling;
+    }
+
+    public Integer getPuntuacion() {
+        return puntuacion;
+    }
+
+    public void setPuntuacion(Integer puntuacion) {
+        this.puntuacion = puntuacion;
     }
 }
 

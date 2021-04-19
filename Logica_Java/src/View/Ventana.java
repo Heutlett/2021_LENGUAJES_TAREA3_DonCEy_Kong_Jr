@@ -3,13 +3,12 @@ import Controller.GameManager;
 import Controller.MonoController;
 import Models.Entidades.Entidad;
 import Models.Entidades.Movibles.EntidadMovible;
+import Models.Entidades.Utils.PuntoMatriz;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 import java.util.ArrayList;
 
 public class Ventana extends JFrame {
@@ -17,10 +16,18 @@ public class Ventana extends JFrame {
     private GameManager gameManager;
     private CampoBoton[][] matrizButton;
     private JPanel panel;
-    private Integer WIDTH = 800;
+    private Integer WIDTH = 920;
     private Integer HEIGHT = 820;
     private ArrayList<String> pressed;
-
+    private JButton botonCocodriloRojo;
+    private JButton botonCocodriloAzul;
+    private JButton botonFrutaBanano;
+    private JButton botonFrutaManzana;
+    private JButton botonFrutaMelocoton;
+    private JLabel entidadSeleccionada;
+    private JTextField puntosEntry;
+    private JLabel labelPuntuacion;
+    private int puntos = 0;
 
     private Ventana() {
         super("DonkeyKongJr_Server_View");
@@ -31,8 +38,109 @@ public class Ventana extends JFrame {
         panel.setFocusable(true);
         panel.setLayout(null);
         panel.addKeyListener(new MyKeyListener());
+
+        initComponents();
+
+        //botonCocodriloAzul = new JButton("Cocodrilo rojo")
+
         Hilo hilo = new Hilo();
         hilo.start();
+    }
+
+    private void initComponents(){
+        JLabel titulo = new JLabel("   servidor donkinkongJr: " + gameManager.getIdGame());
+        titulo.setFont(new java.awt.Font("CONSOLAS", Font.BOLD, 31));
+        titulo.setBounds(10,10, 700,60);
+        titulo.setBorder(BorderFactory.createBevelBorder(1, Color.BLACK,Color.BLACK));
+        panel.add(titulo);
+
+        int yInicial = 75;
+
+        labelPuntuacion = new JLabel("Puntuacion: 0");
+        labelPuntuacion.setFont(new java.awt.Font("CONSOLAS", Font.BOLD, 15));
+        labelPuntuacion.setBounds(730,10, 160,60);
+        labelPuntuacion.setBorder(BorderFactory.createBevelBorder(1, Color.BLACK,Color.BLACK));
+        labelPuntuacion.setHorizontalAlignment(SwingConstants.CENTER);
+        panel.add(labelPuntuacion);
+
+        entidadSeleccionada = new JLabel("No ha seleccionado");
+        entidadSeleccionada.setFont(new java.awt.Font("CONSOLAS", Font.BOLD, 15));
+        entidadSeleccionada.setBounds(730,yInicial, 160,60);
+        entidadSeleccionada.setBorder(BorderFactory.createBevelBorder(1, Color.BLACK,Color.BLACK));
+        entidadSeleccionada.setHorizontalAlignment(SwingConstants.CENTER);
+        panel.add(entidadSeleccionada);
+
+        botonCocodriloRojo = new JButton("Coco rojo");
+        botonCocodriloRojo.setBackground(Color.RED);
+        botonCocodriloRojo.setBounds(752,yInicial+70,100,100);
+        botonCocodriloRojo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                entidadSeleccionada.setText("Coco rojo");
+                gameManager.setEntidadSeleccionada(Entidad.TipoEntidad.COCODRILO_ROJO);
+            }
+        });
+
+        botonCocodriloAzul = new JButton("Coco azul");
+        botonCocodriloAzul.setBackground(Color.BLUE);
+        botonCocodriloAzul.setBounds(752,yInicial+90*2,100,100);
+        botonCocodriloAzul.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                entidadSeleccionada.setText("Coco azul");
+                gameManager.setEntidadSeleccionada(Entidad.TipoEntidad.COCODRILO_AZUL);
+            }
+        });
+
+        puntosEntry = new JTextField("Puntos");
+        puntosEntry.setHorizontalAlignment(SwingConstants.CENTER);
+        puntosEntry.setBounds(752, yInicial+120*3-60, 100, 50);
+        puntosEntry.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                puntosEntry.setText("");
+            }
+        });
+
+        botonFrutaBanano = new JButton("Banano");
+        botonFrutaBanano.setBackground(Color.YELLOW);
+        botonFrutaBanano.setBounds(752, yInicial+120*3, 100, 100);
+        botonFrutaBanano.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                entidadSeleccionada.setText("Banano");
+                gameManager.setEntidadSeleccionada(Entidad.TipoEntidad.BANANO);
+            }
+        });
+
+        botonFrutaManzana = new JButton("Manzana");
+        botonFrutaManzana.setBackground(Color.RED);
+        botonFrutaManzana.setBounds(752, yInicial+117*4, 100, 100);
+        botonFrutaManzana.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                entidadSeleccionada.setText("Manzana");
+                gameManager.setEntidadSeleccionada(Entidad.TipoEntidad.MANZANA);
+            }
+        });
+
+        botonFrutaMelocoton = new JButton("Melocoton");
+        botonFrutaMelocoton.setBackground(Color.ORANGE);
+        botonFrutaMelocoton.setBounds(752, yInicial+115*5, 100, 100);
+        botonFrutaMelocoton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                entidadSeleccionada.setText("Melocoton");
+                gameManager.setEntidadSeleccionada(Entidad.TipoEntidad.MELOCOTON);
+            }
+        });
+
+        panel.add(botonCocodriloAzul);
+        panel.add(botonCocodriloRojo);
+        panel.add(botonFrutaBanano);
+        panel.add(botonFrutaManzana);
+        panel.add(botonFrutaMelocoton);
+        panel.add(puntosEntry);
     }
 
     private void ejecuta() {
@@ -60,26 +168,63 @@ public class Ventana extends JFrame {
 
         CampoBoton boton = new CampoBoton(fila,columna,"vacio");
         boton.addKeyListener(new MyKeyListener());
-        boton.setBounds(8+columna*7,8+fila*7, 7,7);
+        boton.setBounds(8+columna*7,75+fila*7, 7,7);
         boton.addActionListener(e -> generarEntidad(boton));
         panel.add(boton);
         matrizButton[fila][columna] = boton;
     }
 
-    private void generarEntidad(CampoBoton boton){
-        if(boton.getId().contains("liana")){
-            gameManager.crearCocodrilo(boton.getId(), Entidad.TipoEntidad.COCODRILO_AZUL);
+
+    private static boolean isNumeric(String cadena){
+        try {
+            Integer.parseInt(cadena);
+            return true;
+        } catch (NumberFormatException nfe){
+            return false;
         }
+    }
+
+    private void generarEntidad(CampoBoton boton){
+        System.out.println(boton.getId());
+        if(gameManager.getEntidadSeleccionada() == null){
+            JOptionPane.showMessageDialog(null, "aun no ha seleccionado una entidad para crear",
+                    "Aviso!", JOptionPane.INFORMATION_MESSAGE);
+
+        }
+        if(boton.getId().contains("liana")){
+            gameManager.crearCocodrilo(boton.getId());
+        }
+        if(boton.getId().equals("vacio")){
+            if(puntosEntry.getText().isBlank() && !isNumeric(puntosEntry.getText())){
+                JOptionPane.showMessageDialog(null, "no se ha ingresado el valor en puntos",
+                        "Aviso!", JOptionPane.INFORMATION_MESSAGE);
+            }else{
+                if(isNumeric(puntosEntry.getText())){
+                    gameManager.crearFruta(new PuntoMatriz(boton.getFila(),boton.getColumna()), Integer.parseInt(puntosEntry.getText()));
+                }else{
+                    JOptionPane.showMessageDialog(null, "error en el valor de los puntos",
+                            "Aviso!", JOptionPane.INFORMATION_MESSAGE);
+                }
+
+            }
+
+        }
+
     }
 
     private void actualizarMatrizInterfaz(){
         if(gameManager.isHaPerdido() || gameManager.getMonoController().isHaPerdido()){
-            JOptionPane.showMessageDialog(null, "HA PERDIDO: su puntuacion es", "ha perdido", JOptionPane.INFORMATION_MESSAGE);
-            gameManager.setCondicionesIniciales();
+             gameManager.setCondicionesIniciales();
+             return;
         }
 
         for(int fila = 0; fila < GameManager.TAMANO_MATRIZ; fila++){
             for(int columna = 0; columna < GameManager.TAMANO_MATRIZ; columna++){
+
+                if(gameManager.getMatriz()[fila][columna] == null && matrizButton[fila][columna] != null){
+                    matrizButton[fila][columna].setId("vacio");
+                }
+
                 if(gameManager.getMatriz()[fila][columna] != null && matrizButton[fila][columna] != null){
 
                     if(gameManager.getMatriz()[fila][columna] != null && gameManager.getMatriz()[fila][columna].getTipoEntidad() == Entidad.TipoEntidad.MONO){
@@ -97,8 +242,19 @@ public class Ventana extends JFrame {
                     if(gameManager.getMatriz()[fila][columna] != null && gameManager.getMatriz()[fila][columna].getTipoEntidad() == Entidad.TipoEntidad.COCODRILO_ROJO){
                         matrizButton[fila][columna].setBackground(Color.RED);
                     }
+                    if(gameManager.getMatriz()[fila][columna] != null && gameManager.getMatriz()[fila][columna].getTipoEntidad() == Entidad.TipoEntidad.BANANO){
+                        matrizButton[fila][columna].setBackground(Color.YELLOW);
+                    }
+                    if(gameManager.getMatriz()[fila][columna] != null && gameManager.getMatriz()[fila][columna].getTipoEntidad() == Entidad.TipoEntidad.MANZANA){
+                        matrizButton[fila][columna].setBackground(Color.RED);
+                    }
+                    if(gameManager.getMatriz()[fila][columna] != null && gameManager.getMatriz()[fila][columna].getTipoEntidad() == Entidad.TipoEntidad.MELOCOTON){
+                        matrizButton[fila][columna].setBackground(Color.ORANGE);
+                    }
                     if(gameManager.getMatriz()[fila][columna] != null ){
                         matrizButton[fila][columna].setId(gameManager.getMatriz()[fila][columna].getId());
+                    }else{
+                        matrizButton[fila][columna].setId("vacio");
                     }
 
                 }else if(matrizButton[fila][columna] != null){
@@ -119,6 +275,7 @@ public class Ventana extends JFrame {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                labelPuntuacion.setText("Puntuacion: " + gameManager.getDonkeyKongJr().getPuntuacion());
                 actualizarMatrizInterfaz();
             }
         }

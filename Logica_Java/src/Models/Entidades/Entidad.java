@@ -11,6 +11,9 @@ public class Entidad {
         COCODRILO_ROJO,
         COCODRILO_AZUL,
         FRUTA,
+        BANANO,
+        MANZANA,
+        MELOCOTON,
         AGUA
     }
     protected TipoEntidad tipoEntidad;
