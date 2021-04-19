@@ -170,7 +170,7 @@ public class Ventana extends JFrame {
         boton.addKeyListener(new MyKeyListener());
         boton.setBounds(8+columna*7,75+fila*7, 7,7);
         boton.addActionListener(e -> generarEntidad(boton));
-        boton.setBorder(BorderFactory.createBevelBorder(5, Color.BLACK,Color.BLACK));
+        //boton.setBorder(BorderFactory.createBevelBorder(5, Color.BLACK,Color.BLACK));
         panel.add(boton);
         matrizButton[fila][columna] = boton;
     }
@@ -186,6 +186,8 @@ public class Ventana extends JFrame {
     }
 
     private void generarEntidad(CampoBoton boton){
+
+        System.out.println(boton.getFila() + " , " + boton.getColumna() );
 
         if(boton.getId().contains("fruta")){
             Fruta fruta = gameManager.getFrutaController().buscarFrutaById(boton.getId());
@@ -253,6 +255,9 @@ public class Ventana extends JFrame {
                     if(gameManager.getMatriz()[fila][columna] != null && gameManager.getMatriz()[fila][columna].getTipoEntidad() == Entidad.TipoEntidad.AGUA){
                         matrizButton[fila][columna].setBackground(Color.CYAN);
                     }
+                    if(gameManager.getMatriz()[fila][columna] != null && gameManager.getMatriz()[fila][columna].getTipoEntidad() == Entidad.TipoEntidad.TROFEO){
+                        matrizButton[fila][columna].setBackground(Color.BLUE);
+                    }
                     if(gameManager.getMatriz()[fila][columna] != null && gameManager.getMatriz()[fila][columna].getTipoEntidad() == Entidad.TipoEntidad.COCODRILO_AZUL){
                         matrizButton[fila][columna].setBackground(Color.BLUE);
                     }
@@ -293,9 +298,17 @@ public class Ventana extends JFrame {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                if(gameManager.getDonkeyKongJr().isHaGanado()){
+                    JOptionPane.showMessageDialog(null, "Ha ganado, sigue un nivel mas veloz!",
+                            "Aviso!", JOptionPane.INFORMATION_MESSAGE);
+                    gameManager.setNivel(gameManager.getNivel()+1);
+                    pressed.clear();
+                    gameManager.setCondicionesIniciales();
+                }
                 if(gameManager.getDonkeyKongJr().isHaPerdido()){
                     JOptionPane.showMessageDialog(null, "Ha perdido",
                             "Aviso!", JOptionPane.INFORMATION_MESSAGE);
+                    pressed.clear();
                     gameManager.setCondicionesIniciales();
                 }else{
                     labelPuntuacion.setText("Puntuacion: " + gameManager.getDonkeyKongJr().getPuntuacion());
@@ -350,10 +363,12 @@ public class Ventana extends JFrame {
 
                     gameManager.getDonkeyKongJr().setJumping(true);
                     gameManager.getMonoController().saltar(null);
-                }else if(pressed.get(i).equals("ARRIBA") && gameManager.getDonkeyKongJr().isOnLiana()){
+                }else if(pressed.get(i).equals("ARRIBA") && gameManager.getDonkeyKongJr().isOnLiana()
+                        && !gameManager.verificarChoquePlataformaArriba()){
                     gameManager.getMonoController().moverMono(EntidadMovible.Direccion.ARRIBA);
                 }
-                if(pressed.get(i).equals("ABAJO") && gameManager.getDonkeyKongJr().isOnLiana()){
+                if(pressed.get(i).equals("ABAJO") && gameManager.getDonkeyKongJr().isOnLiana()
+                        && !gameManager.verificarChoquePlataformaAbajo()){
                     gameManager.getMonoController().moverMono(EntidadMovible.Direccion.ABAJO);
                 }
                 if(pressed.get(i).equals("DERECHA") && !gameManager.getDonkeyKongJr().isJumping()
@@ -371,6 +386,8 @@ public class Ventana extends JFrame {
             }
             //actualizarMatrizInterfaz();
         }
+
+
 
         @Override
         public void keyPressed(KeyEvent e) {

@@ -14,7 +14,8 @@ public class Entidad {
         BANANO,
         MANZANA,
         MELOCOTON,
-        AGUA
+        AGUA,
+        TROFEO
     }
     protected TipoEntidad tipoEntidad;
     protected String id;

@@ -67,6 +67,8 @@ public class CocodriloController {
         }
     }
 
+
+
     private void moverCocodrilosAzules(Cocodrilo cocodrilo){
 
         if(cocodrilo.getDireccion() == EntidadMovible.Direccion.ABAJO){
@@ -96,7 +98,11 @@ public class CocodriloController {
 
         for(int e = 0; e < cocodrilos.size(); e++){
             Cocodrilo cocodrilo = cocodrilos.get(e);
-
+            Entidad.TipoEntidad colision = donkeyKongJr.getColisionMono(cocodrilo);
+            if(colision == Entidad.TipoEntidad.COCODRILO_AZUL || colision == Entidad.TipoEntidad.COCODRILO_ROJO){
+                donkeyKongJr.setHaPerdido(true);
+                return;
+            }
             if(cocodrilo.getTipoEntidad() == Entidad.TipoEntidad.COCODRILO_ROJO){
                 moverCocodrilosRojos(cocodrilo);
             }else{
@@ -105,6 +111,7 @@ public class CocodriloController {
         }
 
         actualizarCocodrilos();
+/*
         ArrayList<Entidad.TipoEntidad> listaColisiones = monoController.obtenerColisionesEstatico();
 
         // Verifica si colisionó con el mono
@@ -113,7 +120,10 @@ public class CocodriloController {
 
             donkeyKongJr.setHaPerdido(true);
         }
+        /
+ */
     }
+
 
     private void actualizarCocodrilos(){
         for(int e = 0; e < cocodrilos.size(); e++){

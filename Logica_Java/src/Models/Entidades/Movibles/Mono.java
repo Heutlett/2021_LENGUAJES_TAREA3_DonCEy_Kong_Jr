@@ -1,5 +1,6 @@
 package Models.Entidades.Movibles;
 
+import Models.Entidades.Entidad;
 import Models.Entidades.Utils.PuntoMatriz;
 
 
@@ -15,6 +16,7 @@ public class Mono extends EntidadMovible{
     private boolean isFalling;
     private Integer puntuacion;
     private boolean haPerdido;
+    private boolean haGanado;
 
     public boolean isHaPerdido() {
         return haPerdido;
@@ -37,6 +39,34 @@ public class Mono extends EntidadMovible{
         isFalling = false;
         puntuacion = 0;
         haPerdido = false;
+        haGanado = false;
+    }
+
+    public TipoEntidad getColisionMono(Entidad entidad){
+        if(entidad != null && entidad.getArea() != null){
+            PuntoMatriz[] area2 = entidad.getArea();
+
+            for(int i = 0; i < area2.length; i++) {
+                for(int e = 0; e < getArea().length; e++){
+                    if(area2[i] != null && getArea()[e] != null){
+                        if(area2[i].getFila() == getArea()[e].getFila()
+                                && area2[i].getColumna() == getArea()[e].getColumna()){
+                            return entidad.getTipoEntidad();
+                        }
+                    }
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public boolean isHaGanado() {
+        return haGanado;
+    }
+
+    public void setHaGanado(boolean haGanado) {
+        this.haGanado = haGanado;
     }
 
     public boolean isOnTwoLianas() {
@@ -59,11 +89,13 @@ public class Mono extends EntidadMovible{
         this.area = new PuntoMatriz[TAMANO_AREA];
         actualizarDireccionCuerpo();
         actualizarDireccionDerecha();
+        actualizarDireccionIzquierda();
     }
 
     public void direccionAreaIzquierda(){
         this.area = new PuntoMatriz[TAMANO_AREA];
         actualizarDireccionCuerpo();
+        actualizarDireccionDerecha();
         actualizarDireccionIzquierda();
     }
 
@@ -80,6 +112,8 @@ public class Mono extends EntidadMovible{
         actualizarDireccionDerecha();
         actualizarDireccionIzquierda();
     }
+
+
 
     private void actualizarDireccionCuerpo(){
         //Cuerpo

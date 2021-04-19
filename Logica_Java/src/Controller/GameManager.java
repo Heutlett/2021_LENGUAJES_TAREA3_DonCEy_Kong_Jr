@@ -15,7 +15,7 @@ public class GameManager extends Thread{
     private Entidad[][] matriz;
 
     private Mono donkeyKongJr;
-    private EntidadEstatica donkeyKong;
+    private EntidadEstatica trofeo;
     private ArrayList<Cocodrilo> cocodrilos;
     private ArrayList<Fruta> frutas;
     private EntidadEstatica[] lianas;
@@ -36,19 +36,18 @@ public class GameManager extends Thread{
     private int nivel;
     private int vidas;
     private int MAXIMA_ALTURA_CAIDA = 20;
-
-    CreadorDeMapa creadorDeMapa = new CreadorDeMapa(matriz,lianas,plataformas,agua);
+    CreadorDeMapa creadorDeMapa;
 
     public GameManager()
     {
         id = "gameManager" + count;
         System.out.println("Se ha creado un nuevo juego, asignado a: gamenager" + count);
         count++;
+        nivel = 1;
         setCondicionesIniciales();
     }
     public void setCondicionesIniciales(){
         donkeyKongJr = new Mono("dkjr", POSICION_INICIAL, EntidadMovible.Direccion.DERECHA, Entidad.TipoEntidad.MONO);
-        donkeyKong = new EntidadEstatica("dk", null, null, Entidad.TipoEntidad.MONO);
         cocodrilos =  new ArrayList<>();
         frutas = new ArrayList<>();
         lianas = new EntidadEstatica[14];
@@ -59,11 +58,10 @@ public class GameManager extends Thread{
         monoController = new MonoController(donkeyKongJr, matriz, frutaController);
         cocodriloController = new CocodriloController(matriz, cocodrilos, lianas, monoController, donkeyKongJr);
         contadorCaida = 0;
-        nivel = 1;
         vidas = 1;
-        new HiloCocodrilos().start();
-        creadorDeMapa = new CreadorDeMapa(matriz,lianas,plataformas,agua);
+        creadorDeMapa = new CreadorDeMapa(matriz,lianas,plataformas,agua, trofeo);
         creadorDeMapa.inicializarMapa();
+        new HiloCocodrilos().start();
         //actualizarMatriz();
     }
 
@@ -152,13 +150,6 @@ public class GameManager extends Thread{
         this.donkeyKongJr = donkeyKongJr;
     }
 
-    public EntidadEstatica getDonkeyKong() {
-        return donkeyKong;
-    }
-
-    public void setDonkeyKong(EntidadEstatica donkeyKong) {
-        this.donkeyKong = donkeyKong;
-    }
 
     public ArrayList<Cocodrilo> getCocodrilos() {
         return cocodrilos;
@@ -244,10 +235,12 @@ public class GameManager extends Thread{
         while(true){
 
             //if(!donkeyKongJr.isHaPerdido()){
-                if(!donkeyKongJr.isJumping() && !donkeyKongJr.isOnLiana() && !getMonoController().estaEnSuelo()){
+                if(!donkeyKongJr.isJumping() && !donkeyKongJr.isOnLiana() && !getMonoController().estaEnSuelo()
+                    && !verificarChoquePlataformaAbajo() ){
                     //donkeyKongJr.setFalling(true);
                     contadorCaida++;
                     monoController.moverMono(EntidadMovible.Direccion.ABAJO);
+                    //donkeyKongJr.setFalling(true);
                 }else{
                     if(contadorCaida >= MAXIMA_ALTURA_CAIDA && !donkeyKongJr.isOnLiana()){
                         donkeyKongJr.setHaPerdido(true);
@@ -255,7 +248,7 @@ public class GameManager extends Thread{
                     contadorCaida = 0;
                 }
 
-                creadorDeMapa.crearPlataformas();
+
                 //creadorDeMapa.crearAgua();
 
                 //actualizarMatriz();
@@ -273,19 +266,66 @@ public class GameManager extends Thread{
         }
     }
 
+    /**
+     * Devuelve true si choca con una plataforma
+     * @return
+     */
+    public boolean verificarChoquePlataformaArriba(){
+
+        for(int i = 0; i < getDonkeyKongJr().getArea().length; i++){
+            if(getDonkeyKongJr().getArea()[i] != null){
+
+                if(matriz[donkeyKongJr.getArea()[i].getFila()-1][donkeyKongJr.getArea()[i].getColumna()] != null){
+
+                    if(matriz[donkeyKongJr.getArea()[i].getFila()-1][donkeyKongJr.getArea()[i].getColumna()].getTipoEntidad() == Entidad.TipoEntidad.PLATAFORMA){
+                        return true;
+                    }
+
+                }
+
+            }
+        }
+        return false;
+    }
+    public boolean verificarChoquePlataformaAbajo(){
+        for(int i = 0; i < getDonkeyKongJr().getArea().length; i++){
+            if(getDonkeyKongJr().getArea()[i] != null){
+
+                if(matriz[donkeyKongJr.getArea()[i].getFila()+1][donkeyKongJr.getArea()[i].getColumna()] != null){
+
+                    if(matriz[donkeyKongJr.getArea()[i].getFila()+1][donkeyKongJr.getArea()[i].getColumna()].getTipoEntidad() == Entidad.TipoEntidad.PLATAFORMA){
+                        return true;
+                    }
+
+                }
+
+            }
+        }
+        return false;
+    }
+
+    public int getNivel() {
+        return nivel;
+    }
+
+    public void setNivel(int nivel) {
+        this.nivel = nivel;
+    }
+
     class HiloCocodrilos extends Thread {
 
         @Override
         public void run() {
-            while (!donkeyKongJr.isHaPerdido()){
+            while (!donkeyKongJr.isHaPerdido()) {
 
                 cocodriloController.moverCocodrilos();
                 frutaController.actualizarFrutas();
                 creadorDeMapa.crearLianas();
                 creadorDeMapa.crearAgua();
+                creadorDeMapa.crearPlataformas();
 
                 try {
-                    sleep(150-nivel*30);
+                    sleep(150 - nivel * 30);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

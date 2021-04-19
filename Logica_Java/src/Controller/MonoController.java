@@ -6,6 +6,7 @@ import Models.Entidades.Movibles.Fruta;
 import Models.Entidades.Movibles.Mono;
 import Models.Entidades.Utils.PuntoMatriz;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 public class MonoController {
@@ -78,6 +79,7 @@ public class MonoController {
             switch (tipoEntidad){
                 case COCODRILO_AZUL:
                 case COCODRILO_ROJO:
+                case AGUA:
                     /**
                      * AGREGAR CODIGO SI COLISIONA COCODRILOS
                      */
@@ -93,6 +95,10 @@ public class MonoController {
                 case MELOCOTON:
                 case MANZANA:
                     return true;
+                case TROFEO:
+                    donkeyKongJr.setHaGanado(true);
+                    return false;
+
             }
 
         }
@@ -155,7 +161,7 @@ public class MonoController {
         }
         return listaTipoEntidades;
     }
-
+/*
     public ArrayList<Entidad.TipoEntidad> obtenerColisionesEstatico(){
         ArrayList<Entidad.TipoEntidad> listaTipoEntidades = new ArrayList<>();
         for(int i = 0; i < donkeyKongJr.getArea().length; i++){
@@ -172,7 +178,7 @@ public class MonoController {
             }
         }
         return listaTipoEntidades;
-    }
+    }*/
 
     public void moverMono(EntidadMovible.Direccion direccion){
         /**
@@ -271,7 +277,6 @@ public class MonoController {
             int contador = 0;
 
             while(!donkeyKongJr.isHaPerdido() && donkeyKongJr.isJumping() && contador < 10 && !donkeyKongJr.isOnLiana()){
-                System.out.println(" PRUEBA SALTO");
                 if(direccion == EntidadMovible.Direccion.DERECHA){
                     moverMono(EntidadMovible.Direccion.DERECHA);
                 }

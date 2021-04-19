@@ -10,13 +10,16 @@ public class CreadorDeMapa {
     private EntidadEstatica[] lianas;
     private EntidadEstatica[] plataformas;
     private EntidadEstatica[] agua;
+    private EntidadEstatica trofeo;
 
 
-    public CreadorDeMapa(Entidad[][] matriz, EntidadEstatica[] lianas, EntidadEstatica[] plataformas, EntidadEstatica[] agua) {
+    public CreadorDeMapa(Entidad[][] matriz, EntidadEstatica[] lianas, EntidadEstatica[] plataformas, EntidadEstatica[]
+            agua, EntidadEstatica trofeo) {
         this.matriz = matriz;
         this.lianas = lianas;
         this.plataformas = plataformas;
         this.agua = agua;
+        this.trofeo = trofeo;
     }
 
     public void inicializarMapa(){
@@ -26,8 +29,40 @@ public class CreadorDeMapa {
         crearLianas();
         crearAguaPrueba();
         crearAgua();
+        crearTrofeo();
     }
 
+
+    public void crearTrofeo(){
+        EntidadEstatica trofeo = new EntidadEstatica(null, null, null, null);
+        trofeo.setId("trofeo");
+        trofeo.setTipoEntidad(Entidad.TipoEntidad.TROFEO);
+        trofeo.setArea(new PuntoMatriz[40]);
+        int contador = 0;
+        for(int i = 45; i < 50; i++){
+            trofeo.getArea()[contador] = new PuntoMatriz(5, i);
+            contador++;
+            trofeo.getArea()[contador] = new PuntoMatriz(6, i);
+            contador++;
+            trofeo.getArea()[contador] = new PuntoMatriz(7, i);
+            contador++;
+            trofeo.getArea()[contador] = new PuntoMatriz(8, i);
+            contador++;
+            trofeo.getArea()[contador] = new PuntoMatriz(9, i);
+            contador++;
+            trofeo.getArea()[contador] = new PuntoMatriz(10, i);
+            contador++;
+            trofeo.getArea()[contador] = new PuntoMatriz(11, i);
+            contador++;
+            trofeo.getArea()[contador] = new PuntoMatriz(12, i);
+            contador++;
+        }
+
+        for(int e = 0; e < trofeo.getArea().length; e++){
+            matriz[ trofeo.getArea()[e].getFila()][trofeo.getArea()[e].getColumna()] = trofeo;
+        }
+
+    }
 
     public void crearPlataformas(){
         for(int i = 0; i < plataformas.length; i++){
@@ -357,9 +392,9 @@ public class CreadorDeMapa {
         liana1.setPosicion(new PuntoMatriz(24,18));
         liana1.setUltimaPosicion(new PuntoMatriz(80,18));
         liana1.setTipoEntidad(Entidad.TipoEntidad.LIANA);
-        liana1.setArea(new PuntoMatriz[56]);
+        liana1.setArea(new PuntoMatriz[57]);
         contador = 0;
-        for(int i = 24; i < 80; i++){
+        for(int i = 24; i <= 80; i++){
             liana1.getArea()[contador] = new PuntoMatriz(i, 18);
             contador++;
         }
@@ -371,9 +406,9 @@ public class CreadorDeMapa {
         liana2.setPosicion(new PuntoMatriz(47,26));
         liana2.setUltimaPosicion(new PuntoMatriz(61,26));
         liana2.setTipoEntidad(Entidad.TipoEntidad.LIANA);
-        liana2.setArea(new PuntoMatriz[14]);
+        liana2.setArea(new PuntoMatriz[15]);
         contador = 0;
-        for(int i = 47; i < 61; i++){
+        for(int i = 47; i <= 61; i++){
             liana2.getArea()[contador] = new PuntoMatriz(i, 26);
             contador++;
         }
@@ -385,9 +420,9 @@ public class CreadorDeMapa {
         liana3.setPosicion(new PuntoMatriz(66,26));
         liana3.setUltimaPosicion(new PuntoMatriz(84,26));
         liana3.setTipoEntidad(Entidad.TipoEntidad.LIANA);
-        liana3.setArea(new PuntoMatriz[18]);
+        liana3.setArea(new PuntoMatriz[19]);
         contador = 0;
-        for(int i = 66; i < 84; i++){
+        for(int i = 66; i <= 84; i++){
             liana3.getArea()[contador] = new PuntoMatriz(i, 26);
             contador++;
         }
@@ -399,9 +434,9 @@ public class CreadorDeMapa {
         liana4.setPosicion(new PuntoMatriz(24,41));
         liana4.setUltimaPosicion(new PuntoMatriz(72,41));
         liana4.setTipoEntidad(Entidad.TipoEntidad.LIANA);
-        liana4.setArea(new PuntoMatriz[48]);
+        liana4.setArea(new PuntoMatriz[49]);
         contador = 0;
-        for(int i = 24; i < 72; i++){
+        for(int i = 24; i <= 72; i++){
             liana4.getArea()[contador] = new PuntoMatriz(i, 41);
             contador++;
         }
@@ -413,9 +448,9 @@ public class CreadorDeMapa {
         liana5.setPosicion(new PuntoMatriz(24,54));
         liana5.setUltimaPosicion(new PuntoMatriz(57,54));
         liana5.setTipoEntidad(Entidad.TipoEntidad.LIANA);
-        liana5.setArea(new PuntoMatriz[33]);
+        liana5.setArea(new PuntoMatriz[34]);
         contador = 0;
-        for(int i = 24; i < 57; i++){
+        for(int i = 24; i <= 57; i++){
             liana5.getArea()[contador] = new PuntoMatriz(i, 54);
             contador++;
         }
@@ -427,9 +462,9 @@ public class CreadorDeMapa {
         liana6.setPosicion(new PuntoMatriz(28,63));
         liana6.setUltimaPosicion(new PuntoMatriz(72,63));
         liana6.setTipoEntidad(Entidad.TipoEntidad.LIANA);
-        liana6.setArea(new PuntoMatriz[44]);
+        liana6.setArea(new PuntoMatriz[45]);
         contador = 0;
-        for(int i = 28; i < 72; i++){
+        for(int i = 28; i <= 72; i++){
             liana6.getArea()[contador] = new PuntoMatriz(i, 63);
             contador++;
         }
@@ -441,9 +476,9 @@ public class CreadorDeMapa {
         liana7.setPosicion(new PuntoMatriz(28,72));
         liana7.setUltimaPosicion(new PuntoMatriz(65,72));
         liana7.setTipoEntidad(Entidad.TipoEntidad.LIANA);
-        liana7.setArea(new PuntoMatriz[37]);
+        liana7.setArea(new PuntoMatriz[38]);
         contador = 0;
-        for(int i = 28; i < 65; i++){
+        for(int i = 28; i <= 65; i++){
             liana7.getArea()[contador] = new PuntoMatriz(i, 72);
             contador++;
         }
@@ -455,9 +490,9 @@ public class CreadorDeMapa {
         liana8.setPosicion(new PuntoMatriz(58,81));
         liana8.setUltimaPosicion(new PuntoMatriz(73,81));
         liana8.setTipoEntidad(Entidad.TipoEntidad.LIANA);
-        liana8.setArea(new PuntoMatriz[15]);
+        liana8.setArea(new PuntoMatriz[16]);
         contador = 0;
-        for(int i = 58; i < 73; i++){
+        for(int i = 58; i <= 73; i++){
             liana8.getArea()[contador] = new PuntoMatriz(i, 81);
             contador++;
         }
@@ -469,9 +504,9 @@ public class CreadorDeMapa {
         liana9.setPosicion(new PuntoMatriz(58,91));
         liana9.setUltimaPosicion(new PuntoMatriz(73,91));
         liana9.setTipoEntidad(Entidad.TipoEntidad.LIANA);
-        liana9.setArea(new PuntoMatriz[15]);
+        liana9.setArea(new PuntoMatriz[16]);
         contador = 0;
-        for(int i = 58; i < 73; i++){
+        for(int i = 58; i <= 73; i++){
             liana9.getArea()[contador] = new PuntoMatriz(i, 91);
             contador++;
         }
@@ -483,9 +518,9 @@ public class CreadorDeMapa {
         liana10.setPosicion(new PuntoMatriz(13,81));
         liana10.setUltimaPosicion(new PuntoMatriz(53,81));
         liana10.setTipoEntidad(Entidad.TipoEntidad.LIANA);
-        liana10.setArea(new PuntoMatriz[40]);
+        liana10.setArea(new PuntoMatriz[41]);
         contador = 0;
-        for(int i = 13; i < 53; i++){
+        for(int i = 13; i <= 53; i++){
             liana10.getArea()[contador] = new PuntoMatriz(i, 81);
             contador++;
         }
@@ -497,9 +532,9 @@ public class CreadorDeMapa {
         liana11.setPosicion(new PuntoMatriz(13,91));
         liana11.setUltimaPosicion(new PuntoMatriz(53,91));
         liana11.setTipoEntidad(Entidad.TipoEntidad.LIANA);
-        liana11.setArea(new PuntoMatriz[40]);
+        liana11.setArea(new PuntoMatriz[41]);
         contador = 0;
-        for(int i = 13; i < 53; i++){
+        for(int i = 13; i <= 53; i++){
             liana11.getArea()[contador] = new PuntoMatriz(i, 91);
             contador++;
         }
@@ -511,9 +546,9 @@ public class CreadorDeMapa {
         liana12.setPosicion(new PuntoMatriz(5,60));
         liana12.setUltimaPosicion(new PuntoMatriz(9,60));
         liana12.setTipoEntidad(Entidad.TipoEntidad.LIANA);
-        liana12.setArea(new PuntoMatriz[4]);
+        liana12.setArea(new PuntoMatriz[5]);
         contador = 0;
-        for(int i = 5; i < 9; i++){
+        for(int i = 5; i <= 9; i++){
             liana12.getArea()[contador] = new PuntoMatriz(i, 60);
             contador++;
         }
@@ -525,9 +560,9 @@ public class CreadorDeMapa {
         liana13.setPosicion(new PuntoMatriz(5,42));
         liana13.setUltimaPosicion(new PuntoMatriz(12,42));
         liana13.setTipoEntidad(Entidad.TipoEntidad.LIANA);
-        liana13.setArea(new PuntoMatriz[7]);
+        liana13.setArea(new PuntoMatriz[8]);
         contador = 0;
-        for(int i = 5; i < 12; i++){
+        for(int i = 5; i <= 12; i++){
             liana13.getArea()[contador] = new PuntoMatriz(i, 42);
             contador++;
         }
