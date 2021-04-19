@@ -3,6 +3,7 @@ import Controller.GameManager;
 import Controller.MonoController;
 import Models.Entidades.Entidad;
 import Models.Entidades.Movibles.EntidadMovible;
+import Models.Entidades.Movibles.Fruta;
 import Models.Entidades.Utils.PuntoMatriz;
 
 import javax.swing.*;
@@ -185,7 +186,10 @@ public class Ventana extends JFrame {
     }
 
     private void generarEntidad(CampoBoton boton){
-        System.out.println(boton.getId());
+        if(boton.getId().contains("fruta")){
+            Fruta fruta = gameManager.getFrutaController().buscarFrutaById(boton.getId());
+            gameManager.getFrutaController().borrarFruta(fruta);
+        }
         if(gameManager.getEntidadSeleccionada() == null){
             JOptionPane.showMessageDialog(null, "aun no ha seleccionado una entidad para crear",
                     "Aviso!", JOptionPane.INFORMATION_MESSAGE);

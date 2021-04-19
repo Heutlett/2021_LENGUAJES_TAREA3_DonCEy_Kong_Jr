@@ -232,6 +232,22 @@ public class GameManager extends Thread{
         this.contadorCaida = contadorCaida;
     }
 
+    public CocodriloController getCocodriloController() {
+        return cocodriloController;
+    }
+
+    public void setCocodriloController(CocodriloController cocodriloController) {
+        this.cocodriloController = cocodriloController;
+    }
+
+    public FrutaController getFrutaController() {
+        return frutaController;
+    }
+
+    public void setFrutaController(FrutaController frutaController) {
+        this.frutaController = frutaController;
+    }
+
     public boolean isHaPerdido() {
         return haPerdido;
     }
