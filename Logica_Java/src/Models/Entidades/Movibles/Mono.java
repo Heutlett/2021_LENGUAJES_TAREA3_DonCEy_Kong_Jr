@@ -10,6 +10,9 @@ public class Mono extends EntidadMovible{
     private boolean isOnTwoLianas;
     private boolean isJumping;
     public static Integer TAMANO_AREA = 16;
+    private PuntoMatriz manoIzquierda;
+    private PuntoMatriz manoDerecha;
+    private boolean isFalling;
 
     public Mono(String id, PuntoMatriz posicion, Direccion direccion, TipoEntidad tipoEntidad) {
         super(id, posicion, new PuntoMatriz[TAMANO_AREA],tipoEntidad, direccion);
@@ -21,6 +24,7 @@ public class Mono extends EntidadMovible{
         LIMITE_ARRIBA = 1;
         LIMITE_ABAJO = 1;
         isJumping = false;
+        isFalling = false;
     }
 
     public boolean isOnTwoLianas() {
@@ -88,12 +92,14 @@ public class Mono extends EntidadMovible{
     private void actualizarDireccionDerecha(){
         //Brazo y pie derecho
         this.area[7] = new PuntoMatriz(this.posicion.getFila()-1,this.posicion.getColumna()+2);
+        manoDerecha = this.area[7];
         this.area[15] = new PuntoMatriz(this.posicion.getFila()+1,this.posicion.getColumna()+2);
     }
 
     private void actualizarDireccionIzquierda(){
         //Brazo y pie izquierdo
         this.area[4] = new PuntoMatriz(this.posicion.getFila()-1,this.posicion.getColumna()-1);
+        manoIzquierda = this.area[4];
         this.area[12] = new PuntoMatriz(this.posicion.getFila()+1,this.posicion.getColumna()-1);
     }
 
@@ -110,7 +116,29 @@ public class Mono extends EntidadMovible{
         isOnLiana = onLiana;
     }
 
+    public PuntoMatriz getManoIzquierda() {
+        return manoIzquierda;
+    }
 
+    public void setManoIzquierda(PuntoMatriz manoIzquierda) {
+        this.manoIzquierda = manoIzquierda;
+    }
+
+    public PuntoMatriz getManoDerecha() {
+        return manoDerecha;
+    }
+
+    public void setManoDerecha(PuntoMatriz manoDerecha) {
+        this.manoDerecha = manoDerecha;
+    }
+
+    public boolean isFalling() {
+        return isFalling;
+    }
+
+    public void setFalling(boolean falling) {
+        isFalling = falling;
+    }
 }
 
 

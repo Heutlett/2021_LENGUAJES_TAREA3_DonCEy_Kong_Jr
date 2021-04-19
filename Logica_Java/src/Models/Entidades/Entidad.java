@@ -10,7 +10,8 @@ public class Entidad {
         LIANA,
         COCODRILO_ROJO,
         COCODRILO_AZUL,
-        FRUTA
+        FRUTA,
+        AGUA
     }
     protected TipoEntidad tipoEntidad;
     protected String id;

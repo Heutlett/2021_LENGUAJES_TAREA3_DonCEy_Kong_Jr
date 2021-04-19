@@ -45,7 +45,7 @@ public class Ventana extends JFrame {
     }
 
     private void initMatriz(){
-        for(Integer fila = 0; fila < GameManager.TAMANO_MATRIZ; fila++){
+        for(int fila = 0; fila < GameManager.TAMANO_MATRIZ; fila++){
             for(Integer columna = 0; columna < GameManager.TAMANO_MATRIZ; columna++){
                 addButtonMatriz(fila,columna);
             }
@@ -71,9 +71,13 @@ public class Ventana extends JFrame {
     }
 
     private void actualizarMatrizInterfaz(){
+        if(gameManager.isHaPerdido()){
+            JOptionPane.showMessageDialog(null, "HA PERDIDO: su puntuacion es", "ha perdido", JOptionPane.INFORMATION_MESSAGE);
+            gameManager.setCondicionesIniciales();
+        }
 
-        for(Integer fila = 0; fila < GameManager.TAMANO_MATRIZ; fila++){
-            for(Integer columna = 0; columna < GameManager.TAMANO_MATRIZ; columna++){
+        for(int fila = 0; fila < GameManager.TAMANO_MATRIZ; fila++){
+            for(int columna = 0; columna < GameManager.TAMANO_MATRIZ; columna++){
                 if(gameManager.getMatriz()[fila][columna] != null && matrizButton[fila][columna] != null){
 
                     if(gameManager.getMatriz()[fila][columna].getTipoEntidad() == Entidad.TipoEntidad.MONO){
@@ -81,6 +85,9 @@ public class Ventana extends JFrame {
                     }
                     if(gameManager.getMatriz()[fila][columna].getTipoEntidad() == Entidad.TipoEntidad.PLATAFORMA){
                         matrizButton[fila][columna].setBackground(Color.GREEN);
+                    }
+                    if(gameManager.getMatriz()[fila][columna].getTipoEntidad() == Entidad.TipoEntidad.LIANA){
+                        matrizButton[fila][columna].setBackground(Color.ORANGE);
                     }
 
                 }else if(matrizButton[fila][columna] != null){
@@ -92,8 +99,6 @@ public class Ventana extends JFrame {
     }
 
     public class Hilo extends Thread{
-
-
 
         @Override
         public void run() {
@@ -114,11 +119,9 @@ public class Ventana extends JFrame {
         public void keyTyped(KeyEvent e) {
 
             if(e.getKeyChar() == 'w' || e.getKeyChar() == 'W'){
-                if(!pressed.contains("ARRIBA") && !gameManager.getDonkeyKongJr().isJumping()
-                        && gameManager.getMonoController().estaEnSuelo()){
+
+                if(!pressed.contains("ARRIBA") ){
                     pressed.add("ARRIBA");
-                    gameManager.getDonkeyKongJr().setJumping(true);
-                    gameManager.getMonoController().saltar();
                 }
             }
             if(e.getKeyChar() == 's' || e.getKeyChar() == 'S'){
@@ -139,17 +142,38 @@ public class Ventana extends JFrame {
 
             for(int i = 0; i < pressed.size(); i++){
 
-                if(pressed.get(i).equals("ARRIBA")){
+                if(pressed.contains("ARRIBA") && pressed.contains("DERECHA") && !gameManager.getDonkeyKongJr().isJumping()
+                        && gameManager.getMonoController().estaEnSuelo()){
+                    gameManager.getDonkeyKongJr().setJumping(true);
+                    gameManager.getMonoController().saltar(EntidadMovible.Direccion.DERECHA);
+
+                }if(pressed.contains("ARRIBA") && pressed.contains("IZQUIERDA") && !gameManager.getDonkeyKongJr().isJumping()
+                        && gameManager.getMonoController().estaEnSuelo()){
+                    gameManager.getDonkeyKongJr().setJumping(true);
+                    gameManager.getMonoController().saltar(EntidadMovible.Direccion.IZQUIERDA);
+
+                    //gameManager.getMonoController().moverMono(EntidadMovible.Direccion.ARRIBA);
+                }else if(pressed.get(i).equals("ARRIBA") && !gameManager.getDonkeyKongJr().isJumping()
+                        && gameManager.getMonoController().estaEnSuelo()) {
+
+                    gameManager.getDonkeyKongJr().setJumping(true);
+                    gameManager.getMonoController().saltar(null);
+                }else if(pressed.get(i).equals("ARRIBA") && gameManager.getDonkeyKongJr().isOnLiana()){
                     gameManager.getMonoController().moverMono(EntidadMovible.Direccion.ARRIBA);
                 }
-                if(pressed.get(i).equals("ABAJO")){
+                if(pressed.get(i).equals("ABAJO") && gameManager.getDonkeyKongJr().isOnLiana()){
                     gameManager.getMonoController().moverMono(EntidadMovible.Direccion.ABAJO);
                 }
-                if(pressed.get(i).equals("DERECHA")){
+                if(pressed.get(i).equals("DERECHA") && !gameManager.getDonkeyKongJr().isJumping()
+                        && !gameManager.getDonkeyKongJr().isFalling()){
                     gameManager.getMonoController().moverMono(EntidadMovible.Direccion.DERECHA);
                 }
-                if(pressed.get(i).equals("IZQUIERDA")){
+                if(pressed.get(i).equals("IZQUIERDA") && !gameManager.getDonkeyKongJr().isJumping()
+                        && !gameManager.getDonkeyKongJr().isFalling()){
                     gameManager.getMonoController().moverMono(EntidadMovible.Direccion.IZQUIERDA);
+                }
+                if(gameManager.getDonkeyKongJr().isOnLiana()){
+                    gameManager.crearLianas();
                 }
                 actualizarMatrizInterfaz();
             }
@@ -194,6 +218,7 @@ public class Ventana extends JFrame {
 
                 ventana.ejecuta();
                 ventana.gameManager.start();
+
                 //new Ventana().ejecuta();
 
             }

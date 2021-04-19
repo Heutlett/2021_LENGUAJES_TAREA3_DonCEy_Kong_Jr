@@ -5,6 +5,8 @@ import Models.Entidades.Movibles.EntidadMovible;
 import Models.Entidades.Movibles.Mono;
 import Models.Entidades.Utils.PuntoMatriz;
 
+import java.util.ArrayList;
+
 public class MonoController {
 
     private Mono donkeyKongJr;
@@ -20,7 +22,7 @@ public class MonoController {
     private boolean reglasMoverDerecha(EntidadMovible.Direccion direccion){
 
         if((donkeyKongJr.getPosicion().getColumna()+donkeyKongJr.getLIMITE_DERECHA() < GameManager.TAMANO_MATRIZ)){
-            if(!verificarColisiones(direccion)) {
+            if(manejarColisiones(obtenerColision(direccion))) {
                 return true;
             }
         }
@@ -30,7 +32,7 @@ public class MonoController {
     private boolean reglasMoverIzquierda(EntidadMovible.Direccion direccion){
 
         if((donkeyKongJr.getPosicion().getColumna()-donkeyKongJr.getLIMITE_IZQUIERDA() > 0)){
-            if(!verificarColisiones(direccion)) {
+            if(manejarColisiones(obtenerColision(direccion))) {
                 return true;
             }
         }
@@ -41,7 +43,7 @@ public class MonoController {
     private boolean reglasMoverArriba(EntidadMovible.Direccion direccion){
 
         if((donkeyKongJr.getPosicion().getFila()-3 > 0)){
-            if(!verificarColisiones(direccion)) {
+            if(manejarColisiones(obtenerColision(direccion))) {
                 return true;
             }
         }
@@ -50,10 +52,44 @@ public class MonoController {
     private boolean reglasMoverAbajo(EntidadMovible.Direccion direccion){
 
         if((donkeyKongJr.getPosicion().getFila()+2 < GameManager.TAMANO_MATRIZ)){
-            if(!verificarColisiones(direccion)) {
+            if(manejarColisiones(obtenerColision(direccion))) {
                 return true;
             }
         }
+        return false;
+    }
+
+    private boolean manejarColisiones(ArrayList<Entidad.TipoEntidad> listaEntidad){
+        if(listaEntidad.isEmpty()){
+            donkeyKongJr.setOnLiana(false);
+            return true;
+        }
+        for(int i = 0; i < listaEntidad.size(); i++){
+            Entidad.TipoEntidad tipoEntidad = listaEntidad.get(i);
+            /*
+            if(tipoEntidad == null){
+                donkeyKongJr.setOnLiana(false);
+                return true;
+            }*/
+            switch (tipoEntidad){
+                case COCODRILO_AZUL:
+                case COCODRILO_ROJO:
+                    /**
+                     * AGREGAR CODIGO SI COLISIONA COCODRILOS
+                     */
+                    return false;
+                case PLATAFORMA:
+                    return false;
+                case LIANA:
+                    donkeyKongJr.setOnLiana(true);
+                    donkeyKongJr.setJumping(false);
+                    return true;
+            }
+
+        }
+
+
+
         return false;
     }
 
@@ -62,8 +98,9 @@ public class MonoController {
      * @return
      */
 
-    private boolean verificarColisiones(EntidadMovible.Direccion direccion){
+    private ArrayList<Entidad.TipoEntidad> obtenerColision(EntidadMovible.Direccion direccion){
 
+        ArrayList<Entidad.TipoEntidad> listaTipoEntidades = new ArrayList<>();
         int limiteFila = 0;
         int limiteColumna = 0;
 
@@ -90,15 +127,15 @@ public class MonoController {
             PuntoMatriz p = donkeyKongJr.getArea()[i];
             if(p != null && p.getColumna()+limiteColumna >= 0 && p.getFila()+limiteFila >= 0
                     &&  p.getColumna()+limiteColumna < TAMANO_MATRIZ && p.getFila()+limiteFila < TAMANO_MATRIZ){
-                if(matriz[p.getFila()+limiteFila][p.getColumna()+limiteColumna] != null &&
-                        (matriz[p.getFila()+limiteFila][p.getColumna()+limiteColumna].getTipoEntidad() ==
-                                Entidad.TipoEntidad.PLATAFORMA)){
-                    System.out.println("HAY COLISION");
-                    return true;
+                if(matriz[p.getFila()+limiteFila][p.getColumna()+limiteColumna] != null){
+
+                    listaTipoEntidades.add(matriz[p.getFila()+limiteFila][p.getColumna()+limiteColumna].getTipoEntidad());
+
                 }
+
             }
         }
-        return false;
+        return listaTipoEntidades;
     }
 
     public void moverMono(EntidadMovible.Direccion direccion){
@@ -168,8 +205,8 @@ public class MonoController {
 
         PuntoMatriz posicionMono = donkeyKongJr.getPosicion();
 
-        if(matriz[posicionMono.getFila()+1][posicionMono.getColumna()] != null
-                && matriz[posicionMono.getFila()+1][posicionMono.getColumna()].getTipoEntidad() == Entidad.TipoEntidad.PLATAFORMA ){
+        if(posicionMono.getFila()+2 < TAMANO_MATRIZ && matriz[posicionMono.getFila()+2][posicionMono.getColumna()] != null
+                && matriz[posicionMono.getFila()+2][posicionMono.getColumna()].getTipoEntidad() == Entidad.TipoEntidad.PLATAFORMA ){
 
             return true;
 
@@ -178,10 +215,46 @@ public class MonoController {
 
     }
 
-    public void saltar() {
+    public void saltar(EntidadMovible.Direccion direccion) {
 
-        if(donkeyKongJr.isJumping()){
+        new HiloSalto(direccion).start();
 
+    }
+
+    public class HiloSalto extends Thread{
+
+        private EntidadMovible.Direccion direccion;
+
+        public HiloSalto(EntidadMovible.Direccion direccion){
+            this.direccion = direccion;
         }
+
+        @Override
+        public void run() {
+
+            int contador = 0;
+
+            while(donkeyKongJr.isJumping() && contador < 10 && !donkeyKongJr.isOnLiana()){
+
+                if(direccion == EntidadMovible.Direccion.DERECHA){
+                    moverMono(EntidadMovible.Direccion.DERECHA);
+                }
+                if(direccion == EntidadMovible.Direccion.IZQUIERDA){
+                    moverMono(EntidadMovible.Direccion.IZQUIERDA);
+                }
+
+                moverMono(EntidadMovible.Direccion.ARRIBA);
+                contador++;
+
+                try {
+                    sleep(20);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            }
+            donkeyKongJr.setJumping(false);
+        }
+
     }
 }
