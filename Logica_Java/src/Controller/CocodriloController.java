@@ -4,6 +4,7 @@ import Models.Entidades.Entidad;
 import Models.Entidades.Estaticas.EntidadEstatica;
 import Models.Entidades.Movibles.Cocodrilo;
 import Models.Entidades.Movibles.EntidadMovible;
+import Models.Entidades.Movibles.Mono;
 import Models.Entidades.Utils.PuntoMatriz;
 
 import java.util.ArrayList;
@@ -15,14 +16,15 @@ public class CocodriloController {
     private EntidadEstatica[] lianas;
     private int TAMANO_MATRIZ = 100;
     private MonoController monoController;
+    private Mono donkeyKongJr;
 
     public CocodriloController(Entidad[][] matriz, ArrayList<Cocodrilo> cocodrilos, EntidadEstatica[] lianas,
-                               MonoController monoController) {
+                               MonoController monoController, Mono donkeyKongJr) {
         this.matriz = matriz;
         this.cocodrilos = cocodrilos;
         this.lianas = lianas;
         this.monoController = monoController;
-
+        this.donkeyKongJr = donkeyKongJr;
     }
 
     private boolean compararPosicion(PuntoMatriz posicion1, PuntoMatriz posicion2){
@@ -109,7 +111,7 @@ public class CocodriloController {
         if(listaColisiones.contains(Entidad.TipoEntidad.COCODRILO_ROJO)
                 || listaColisiones.contains(Entidad.TipoEntidad.COCODRILO_AZUL)){
 
-            monoController.setHaPerdido(true);
+            donkeyKongJr.setHaPerdido(true);
         }
     }
 
@@ -141,9 +143,10 @@ public class CocodriloController {
 
         for(int e = 0; e < cocodrilos.size(); e++){
             for(int i = 0; i < cocodrilos.get(e).getArea().length; i++){
-
-                if(verificarLimitesPosicionMatriz(cocodrilos.get(e).getArea()[i])){
-                    matriz[cocodrilos.get(e).getArea()[i].getFila()][cocodrilos.get(e).getArea()[i].getColumna()] = null;
+                if(cocodrilos.get(e).getArea() != null){
+                    if(verificarLimitesPosicionMatriz(cocodrilos.get(e).getArea()[i])){
+                        matriz[cocodrilos.get(e).getArea()[i].getFila()][cocodrilos.get(e).getArea()[i].getColumna()] = null;
+                    }
                 }
             }
         }

@@ -13,7 +13,6 @@ public class MonoController {
     private Mono donkeyKongJr;
     private Entidad[][] matriz;
     public static Integer TAMANO_MATRIZ = 100;
-    private boolean haPerdido = false;
     private FrutaController frutaController;
     private String idFrutaBorrar;
 
@@ -82,7 +81,7 @@ public class MonoController {
                     /**
                      * AGREGAR CODIGO SI COLISIONA COCODRILOS
                      */
-                    haPerdido = true;
+                    donkeyKongJr.setHaPerdido(true);
                     return false;
                 case PLATAFORMA:
                     return false;
@@ -270,7 +269,7 @@ public class MonoController {
 
             int contador = 0;
 
-            while(donkeyKongJr.isJumping() && contador < 10 && !donkeyKongJr.isOnLiana()){
+            while(!donkeyKongJr.isHaPerdido() && donkeyKongJr.isJumping() && contador < 10 && !donkeyKongJr.isOnLiana()){
 
                 if(direccion == EntidadMovible.Direccion.DERECHA){
                     moverMono(EntidadMovible.Direccion.DERECHA);
@@ -294,11 +293,4 @@ public class MonoController {
 
     }
 
-    public boolean isHaPerdido() {
-        return haPerdido;
-    }
-
-    public void setHaPerdido(boolean haPerdido) {
-        this.haPerdido = haPerdido;
-    }
 }

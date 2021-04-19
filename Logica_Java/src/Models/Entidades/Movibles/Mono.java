@@ -14,6 +14,15 @@ public class Mono extends EntidadMovible{
     private PuntoMatriz manoDerecha;
     private boolean isFalling;
     private Integer puntuacion;
+    private boolean haPerdido;
+
+    public boolean isHaPerdido() {
+        return haPerdido;
+    }
+
+    public void setHaPerdido(boolean haPerdido) {
+        this.haPerdido = haPerdido;
+    }
 
     public Mono(String id, PuntoMatriz posicion, Direccion direccion, TipoEntidad tipoEntidad) {
         super(id, posicion, new PuntoMatriz[TAMANO_AREA],tipoEntidad, direccion);
@@ -27,6 +36,7 @@ public class Mono extends EntidadMovible{
         isJumping = false;
         isFalling = false;
         puntuacion = 0;
+        haPerdido = false;
     }
 
     public boolean isOnTwoLianas() {

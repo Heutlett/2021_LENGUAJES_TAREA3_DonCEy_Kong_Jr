@@ -33,7 +33,6 @@ public class GameManager extends Thread{
     public static Integer TAMANO_MATRIZ = 100;
     public static PuntoMatriz POSICION_INICIAL = new PuntoMatriz(25,1);
     private int contadorCaida;
-    private boolean haPerdido;
     private int nivel;
     private int vidas;
 
@@ -54,10 +53,8 @@ public class GameManager extends Thread{
         matriz = new Entidad[TAMANO_MATRIZ][TAMANO_MATRIZ];
         frutaController = new FrutaController(matriz, frutas);
         monoController = new MonoController(donkeyKongJr, matriz, frutaController);
-        cocodriloController = new CocodriloController(matriz, cocodrilos, lianas, monoController);
-
+        cocodriloController = new CocodriloController(matriz, cocodrilos, lianas, monoController, donkeyKongJr);
         contadorCaida = 0;
-        haPerdido = false;
         nivel = 1;
         vidas = 1;
         new HiloCocodrilos().start();
@@ -248,14 +245,6 @@ public class GameManager extends Thread{
         this.frutaController = frutaController;
     }
 
-    public boolean isHaPerdido() {
-        return haPerdido;
-    }
-
-    public void setHaPerdido(boolean haPerdido) {
-        this.haPerdido = haPerdido;
-    }
-
     public String getIdGame(){
         return id;
     }
@@ -316,24 +305,31 @@ public class GameManager extends Thread{
     public void run() {
         while(true){
 
-            if(!donkeyKongJr.isJumping() && !donkeyKongJr.isOnLiana() && !getMonoController().estaEnSuelo()){
-                //donkeyKongJr.setFalling(true);
-                contadorCaida++;
-                monoController.moverMono(EntidadMovible.Direccion.ABAJO);
-            }else{
-                if(contadorCaida >= 15){
-                    haPerdido = true;
+            if(!donkeyKongJr.isHaPerdido()){
+                if(!donkeyKongJr.isJumping() && !donkeyKongJr.isOnLiana() && !getMonoController().estaEnSuelo()){
+                    //donkeyKongJr.setFalling(true);
+                    contadorCaida++;
+                    monoController.moverMono(EntidadMovible.Direccion.ABAJO);
+                }else{
+                    if(contadorCaida >= 15){
+                        donkeyKongJr.setHaPerdido(true);
+                    }
+                    contadorCaida = 0;
                 }
-                contadorCaida = 0;
+                crearLianas();
+                crearPlataformas();
+                //actualizarMatriz();
+                try {
+                    sleep(20);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }else{
+                start();
+                break;
             }
-            crearLianas();
-            crearPlataformas();
-            //actualizarMatriz();
-            try {
-                sleep(20);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+
+
         }
     }
 
@@ -341,7 +337,7 @@ public class GameManager extends Thread{
 
         @Override
         public void run() {
-            while (!haPerdido){
+            while (!donkeyKongJr.isHaPerdido()){
 
                 cocodriloController.moverCocodrilos();
 

@@ -44,8 +44,7 @@ public class Ventana extends JFrame {
 
         //botonCocodriloAzul = new JButton("Cocodrilo rojo")
 
-        Hilo hilo = new Hilo();
-        hilo.start();
+        new Hilo().start();
     }
 
     private void initComponents(){
@@ -150,7 +149,7 @@ public class Ventana extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         initMatriz();
         setVisible(true);
-        actualizarMatrizInterfaz();
+        //actualizarMatrizInterfaz();
     }
 
     private void initMatriz(){
@@ -186,6 +185,7 @@ public class Ventana extends JFrame {
     }
 
     private void generarEntidad(CampoBoton boton){
+
         if(boton.getId().contains("fruta")){
             Fruta fruta = gameManager.getFrutaController().buscarFrutaById(boton.getId());
             gameManager.getFrutaController().borrarFruta(fruta);
@@ -217,10 +217,11 @@ public class Ventana extends JFrame {
     }
 
     private void actualizarMatrizInterfaz(){
-        if(gameManager.isHaPerdido() || gameManager.getMonoController().isHaPerdido()){
+        /*
+        if(gameManager.getDonkeyKongJr().isHaPerdido()){
              gameManager.setCondicionesIniciales();
              return;
-        }
+        }*/
 
         for(int fila = 0; fila < GameManager.TAMANO_MATRIZ; fila++){
             for(int columna = 0; columna < GameManager.TAMANO_MATRIZ; columna++){
@@ -279,8 +280,15 @@ public class Ventana extends JFrame {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                labelPuntuacion.setText("Puntuacion: " + gameManager.getDonkeyKongJr().getPuntuacion());
-                actualizarMatrizInterfaz();
+                if(gameManager.getDonkeyKongJr().isHaPerdido()){
+                    JOptionPane.showMessageDialog(null, "Ha perdido",
+                            "Aviso!", JOptionPane.INFORMATION_MESSAGE);
+                    gameManager.setCondicionesIniciales();
+                }else{
+                    labelPuntuacion.setText("Puntuacion: " + gameManager.getDonkeyKongJr().getPuntuacion());
+                    actualizarMatrizInterfaz();
+                }
+
             }
         }
     }
@@ -346,9 +354,9 @@ public class Ventana extends JFrame {
                 if(gameManager.getDonkeyKongJr().isOnLiana()){
                     gameManager.crearLianas();
                 }
-                actualizarMatrizInterfaz();
+                //actualizarMatrizInterfaz();
             }
-            actualizarMatrizInterfaz();
+            //actualizarMatrizInterfaz();
         }
 
         @Override
