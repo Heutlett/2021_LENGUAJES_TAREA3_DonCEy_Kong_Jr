@@ -35,6 +35,7 @@ public class GameManager extends Thread{
     private int contadorCaida;
     private int nivel;
     private int vidas;
+    private int MAXIMA_ALTURA_CAIDA = 20;
 
     CreadorDeMapa creadorDeMapa = new CreadorDeMapa(matriz,lianas,plataformas,agua);
 
@@ -50,8 +51,9 @@ public class GameManager extends Thread{
         donkeyKong = new EntidadEstatica("dk", null, null, Entidad.TipoEntidad.MONO);
         cocodrilos =  new ArrayList<>();
         frutas = new ArrayList<>();
-        lianas = new EntidadEstatica[10];
+        lianas = new EntidadEstatica[14];
         plataformas = new EntidadEstatica[11];
+        agua = new EntidadEstatica[1];
         matriz = new Entidad[TAMANO_MATRIZ][TAMANO_MATRIZ];
         frutaController = new FrutaController(matriz, frutas);
         monoController = new MonoController(donkeyKongJr, matriz, frutaController);
@@ -247,7 +249,7 @@ public class GameManager extends Thread{
                     contadorCaida++;
                     monoController.moverMono(EntidadMovible.Direccion.ABAJO);
                 }else{
-                    if(contadorCaida >= 15){
+                    if(contadorCaida >= MAXIMA_ALTURA_CAIDA && !donkeyKongJr.isOnLiana()){
                         donkeyKongJr.setHaPerdido(true);
                     }
                     contadorCaida = 0;

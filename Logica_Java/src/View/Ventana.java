@@ -187,6 +187,8 @@ public class Ventana extends JFrame {
 
     private void generarEntidad(CampoBoton boton){
 
+        System.out.println(boton.getFila()+" , " + boton.getColumna());
+
         if(boton.getId().contains("fruta")){
             Fruta fruta = gameManager.getFrutaController().buscarFrutaById(boton.getId());
             gameManager.getFrutaController().borrarFruta(fruta);
@@ -250,6 +252,9 @@ public class Ventana extends JFrame {
                     if(gameManager.getMatriz()[fila][columna] != null && gameManager.getMatriz()[fila][columna].getTipoEntidad() == Entidad.TipoEntidad.LIANA){
                         matrizButton[fila][columna].setBackground(Color.ORANGE);
                     }
+                    if(gameManager.getMatriz()[fila][columna] != null && gameManager.getMatriz()[fila][columna].getTipoEntidad() == Entidad.TipoEntidad.AGUA){
+                        matrizButton[fila][columna].setBackground(Color.CYAN);
+                    }
                     if(gameManager.getMatriz()[fila][columna] != null && gameManager.getMatriz()[fila][columna].getTipoEntidad() == Entidad.TipoEntidad.COCODRILO_AZUL){
                         matrizButton[fila][columna].setBackground(Color.BLUE);
                     }
@@ -265,6 +270,7 @@ public class Ventana extends JFrame {
                     if(gameManager.getMatriz()[fila][columna] != null && gameManager.getMatriz()[fila][columna].getTipoEntidad() == Entidad.TipoEntidad.MELOCOTON){
                         matrizButton[fila][columna].setBackground(Color.ORANGE);
                     }
+
                     if(gameManager.getMatriz()[fila][columna] != null ){
                         matrizButton[fila][columna].setId(gameManager.getMatriz()[fila][columna].getId());
                     }else{

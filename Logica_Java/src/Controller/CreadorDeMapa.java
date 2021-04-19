@@ -24,6 +24,8 @@ public class CreadorDeMapa {
         crearPlataformas();
         crearLianaPrueba();
         crearLianas();
+        crearAguaPrueba();
+        crearAgua();
     }
 
 
@@ -42,6 +44,16 @@ public class CreadorDeMapa {
             if(lianas[i] != null){
                 for(int e = 0; e < lianas[i].getArea().length; e++){
                     matriz[lianas[i].getArea()[e].getFila()][lianas[i].getArea()[e].getColumna()] = lianas[i];
+                }
+            }
+        }
+    }
+
+    public void crearAgua(){
+        for(int i = 0; i < agua.length; i++){
+            if(agua[i] != null){
+                for(int e = 0; e < agua[i].getArea().length; e++){
+                    matriz[agua[i].getArea()[e].getFila()][agua[i].getArea()[e].getColumna()] = agua[i];
                 }
             }
         }
@@ -163,9 +175,9 @@ public class CreadorDeMapa {
         EntidadEstatica plataforma6 = new EntidadEstatica(null, null, null, null);
         plataforma6.setId("plataforma6");
         plataforma6.setTipoEntidad(Entidad.TipoEntidad.PLATAFORMA);
-        plataforma6.setArea(new PuntoMatriz[112]);
+        plataforma6.setArea(new PuntoMatriz[116]);
         contador = 0;
-        for(int i = 0; i < 28; i++){
+        for(int i = 0; i < 29; i++){
             plataforma6.getArea()[contador] = new PuntoMatriz(92, i);
             contador++;
             plataforma6.getArea()[contador] = new PuntoMatriz(93, i);
@@ -185,18 +197,16 @@ public class CreadorDeMapa {
         plataforma7.setArea(new PuntoMatriz[79]);
         contador = 0;
         for(int i = 38; i < 49; i++){
-            plataforma7.getArea()[contador] = new PuntoMatriz(84, i);
-            contador++;
             plataforma7.getArea()[contador] = new PuntoMatriz(85, i);
             contador++;
             plataforma7.getArea()[contador] = new PuntoMatriz(86, i);
             contador++;
             plataforma7.getArea()[contador] = new PuntoMatriz(87, i);
             contador++;
-        }
-        for(int i = 41; i < 46; i++){
             plataforma7.getArea()[contador] = new PuntoMatriz(88, i);
             contador++;
+        }
+        for(int i = 41; i < 46; i++){
             plataforma7.getArea()[contador] = new PuntoMatriz(89, i);
             contador++;
             plataforma7.getArea()[contador] = new PuntoMatriz(90, i);
@@ -209,39 +219,344 @@ public class CreadorDeMapa {
             contador++;
             plataforma7.getArea()[contador] = new PuntoMatriz(94, i);
             contador++;
+            plataforma7.getArea()[contador] = new PuntoMatriz(95, i);
+            contador++;
         }
 
         plataformas[7] = plataforma7;
 
 
+        EntidadEstatica plataforma8 = new EntidadEstatica(null, null, null, null);
+        plataforma8.setId("plataforma8");
+        plataforma8.setTipoEntidad(Entidad.TipoEntidad.PLATAFORMA);
+        plataforma8.setArea(new PuntoMatriz[39]);
+        contador = 0;
+        for(int i = 53; i < 62; i++){
+            plataforma8.getArea()[contador] = new PuntoMatriz(91, i);
+            contador++;
+            plataforma8.getArea()[contador] = new PuntoMatriz(90, i);
+            contador++;
+            plataforma8.getArea()[contador] = new PuntoMatriz(89, i);
+            contador++;
+        }
+        for(int i = 56; i < 59; i++){
+            plataforma8.getArea()[contador] = new PuntoMatriz(95, i);
+            contador++;
+            plataforma8.getArea()[contador] = new PuntoMatriz(94, i);
+            contador++;
+            plataforma8.getArea()[contador] = new PuntoMatriz(93, i);
+            contador++;
+            plataforma8.getArea()[contador] = new PuntoMatriz(92, i);
+            contador++;
+        }
+
+        plataformas[8] = plataforma8;
+
+        EntidadEstatica plataforma9 = new EntidadEstatica(null, null, null, null);
+        plataforma9.setId("plataforma9");
+        plataforma9.setTipoEntidad(Entidad.TipoEntidad.PLATAFORMA);
+        plataforma9.setArea(new PuntoMatriz[84]);
+        contador = 0;
+        for(int i = 69; i < 74; i++){
+            plataforma9.getArea()[contador] = new PuntoMatriz(88, i);
+            contador++;
+            plataforma9.getArea()[contador] = new PuntoMatriz(89, i);
+            contador++;
+            plataforma9.getArea()[contador] = new PuntoMatriz(90, i);
+            contador++;
+            plataforma9.getArea()[contador] = new PuntoMatriz(91, i);
+            contador++;
+            plataforma9.getArea()[contador] = new PuntoMatriz(92, i);
+            contador++;
+            plataforma9.getArea()[contador] = new PuntoMatriz(93, i);
+            contador++;
+            plataforma9.getArea()[contador] = new PuntoMatriz(94, i);
+            contador++;
+            plataforma9.getArea()[contador] = new PuntoMatriz(95, i);
+            contador++;
+        }
+        for(int i = 66; i < 77; i++){
+            plataforma9.getArea()[contador] = new PuntoMatriz(84, i);
+            contador++;
+            plataforma9.getArea()[contador] = new PuntoMatriz(85, i);
+            contador++;
+            plataforma9.getArea()[contador] = new PuntoMatriz(86, i);
+            contador++;
+            plataforma9.getArea()[contador] = new PuntoMatriz(87, i);
+            contador++;
+        }
+
+        plataformas[9] = plataforma9;
+
+        EntidadEstatica plataforma10 = new EntidadEstatica(null, null, null, null);
+        plataforma10.setId("plataforma10");
+        plataforma10.setTipoEntidad(Entidad.TipoEntidad.PLATAFORMA);
+        plataforma10.setArea(new PuntoMatriz[99]);
+        contador = 0;
+        for(int i = 84; i < 89; i++){
+            plataforma10.getArea()[contador] = new PuntoMatriz(85, i);
+            contador++;
+            plataforma10.getArea()[contador] = new PuntoMatriz(86, i);
+            contador++;
+            plataforma10.getArea()[contador] = new PuntoMatriz(87, i);
+            contador++;
+            plataforma10.getArea()[contador] = new PuntoMatriz(88, i);
+            contador++;
+            plataforma10.getArea()[contador] = new PuntoMatriz(89, i);
+            contador++;
+            plataforma10.getArea()[contador] = new PuntoMatriz(90, i);
+            contador++;
+            plataforma10.getArea()[contador] = new PuntoMatriz(91, i);
+            contador++;
+            plataforma10.getArea()[contador] = new PuntoMatriz(92, i);
+            contador++;
+            plataforma10.getArea()[contador] = new PuntoMatriz(93, i);
+            contador++;
+            plataforma10.getArea()[contador] = new PuntoMatriz(94, i);
+            contador++;
+            plataforma10.getArea()[contador] = new PuntoMatriz(95, i);
+            contador++;
+
+        }
+        for(int i = 81; i < 92; i++){
+            plataforma10.getArea()[contador] = new PuntoMatriz(84, i);
+            contador++;
+            plataforma10.getArea()[contador] = new PuntoMatriz(83, i);
+            contador++;
+            plataforma10.getArea()[contador] = new PuntoMatriz(82, i);
+            contador++;
+            plataforma10.getArea()[contador] = new PuntoMatriz(81, i);
+            contador++;
+        }
+
+        plataformas[10] = plataforma10;
+
 
     }
+
+
 
     private void crearLianaPrueba(){
 
         EntidadEstatica liana = new EntidadEstatica(null, null, null, null);
-        liana.setId("liana1");
-        liana.setPosicion(new PuntoMatriz(0,23));
-        liana.setUltimaPosicion(new PuntoMatriz(20,23));
+        liana.setId("liana0");
+        liana.setPosicion(new PuntoMatriz(24,8));
+        liana.setUltimaPosicion(new PuntoMatriz(84,8));
         liana.setTipoEntidad(Entidad.TipoEntidad.LIANA);
-        liana.setArea(new PuntoMatriz[20]);
-        for(int i = 0; i < 20; i++){
-            liana.getArea()[i] = new PuntoMatriz(i, 23);
+        liana.setArea(new PuntoMatriz[60]);
+        int contador = 0;
+        for(int i = 24; i < 84; i++){
+            liana.getArea()[contador] = new PuntoMatriz(i, 8);
+            contador++;
         }
 
         lianas[0] = liana;
 
-        EntidadEstatica liana2 = new EntidadEstatica(null, null, null, null);
-        liana2.setId("liana2");
-        liana2.setPosicion(new PuntoMatriz(0,30));
-        liana2.setUltimaPosicion(new PuntoMatriz(20,30));
-        liana2.setTipoEntidad(Entidad.TipoEntidad.LIANA);
-        liana2.setArea(new PuntoMatriz[20]);
-        for(int i = 0; i < 20; i++){
-            liana2.getArea()[i] = new PuntoMatriz(i, 30);
+        EntidadEstatica liana1 = new EntidadEstatica(null, null, null, null);
+        liana1.setId("liana1");
+        liana1.setPosicion(new PuntoMatriz(24,18));
+        liana1.setUltimaPosicion(new PuntoMatriz(80,18));
+        liana1.setTipoEntidad(Entidad.TipoEntidad.LIANA);
+        liana1.setArea(new PuntoMatriz[56]);
+        contador = 0;
+        for(int i = 24; i < 80; i++){
+            liana1.getArea()[contador] = new PuntoMatriz(i, 18);
+            contador++;
         }
 
-        lianas[1] = liana2;
+        lianas[1] = liana1;
+
+        EntidadEstatica liana2 = new EntidadEstatica(null, null, null, null);
+        liana2.setId("liana2");
+        liana2.setPosicion(new PuntoMatriz(47,26));
+        liana2.setUltimaPosicion(new PuntoMatriz(61,26));
+        liana2.setTipoEntidad(Entidad.TipoEntidad.LIANA);
+        liana2.setArea(new PuntoMatriz[14]);
+        contador = 0;
+        for(int i = 47; i < 61; i++){
+            liana2.getArea()[contador] = new PuntoMatriz(i, 26);
+            contador++;
+        }
+
+        lianas[2] = liana2;
+
+        EntidadEstatica liana3 = new EntidadEstatica(null, null, null, null);
+        liana3.setId("liana3");
+        liana3.setPosicion(new PuntoMatriz(66,26));
+        liana3.setUltimaPosicion(new PuntoMatriz(84,26));
+        liana3.setTipoEntidad(Entidad.TipoEntidad.LIANA);
+        liana3.setArea(new PuntoMatriz[18]);
+        contador = 0;
+        for(int i = 66; i < 84; i++){
+            liana3.getArea()[contador] = new PuntoMatriz(i, 26);
+            contador++;
+        }
+
+        lianas[3] = liana3;
+
+        EntidadEstatica liana4 = new EntidadEstatica(null, null, null, null);
+        liana4.setId("liana4");
+        liana4.setPosicion(new PuntoMatriz(24,41));
+        liana4.setUltimaPosicion(new PuntoMatriz(72,41));
+        liana4.setTipoEntidad(Entidad.TipoEntidad.LIANA);
+        liana4.setArea(new PuntoMatriz[48]);
+        contador = 0;
+        for(int i = 24; i < 72; i++){
+            liana4.getArea()[contador] = new PuntoMatriz(i, 41);
+            contador++;
+        }
+
+        lianas[4] = liana4;
+
+        EntidadEstatica liana5 = new EntidadEstatica(null, null, null, null);
+        liana5.setId("liana5");
+        liana5.setPosicion(new PuntoMatriz(24,54));
+        liana5.setUltimaPosicion(new PuntoMatriz(57,54));
+        liana5.setTipoEntidad(Entidad.TipoEntidad.LIANA);
+        liana5.setArea(new PuntoMatriz[33]);
+        contador = 0;
+        for(int i = 24; i < 57; i++){
+            liana5.getArea()[contador] = new PuntoMatriz(i, 54);
+            contador++;
+        }
+
+        lianas[5] = liana5;
+
+        EntidadEstatica liana6 = new EntidadEstatica(null, null, null, null);
+        liana6.setId("liana6");
+        liana6.setPosicion(new PuntoMatriz(28,63));
+        liana6.setUltimaPosicion(new PuntoMatriz(72,63));
+        liana6.setTipoEntidad(Entidad.TipoEntidad.LIANA);
+        liana6.setArea(new PuntoMatriz[44]);
+        contador = 0;
+        for(int i = 28; i < 72; i++){
+            liana6.getArea()[contador] = new PuntoMatriz(i, 63);
+            contador++;
+        }
+
+        lianas[6] = liana6;
+
+        EntidadEstatica liana7 = new EntidadEstatica(null, null, null, null);
+        liana7.setId("liana7");
+        liana7.setPosicion(new PuntoMatriz(28,72));
+        liana7.setUltimaPosicion(new PuntoMatriz(65,72));
+        liana7.setTipoEntidad(Entidad.TipoEntidad.LIANA);
+        liana7.setArea(new PuntoMatriz[37]);
+        contador = 0;
+        for(int i = 28; i < 65; i++){
+            liana7.getArea()[contador] = new PuntoMatriz(i, 72);
+            contador++;
+        }
+
+        lianas[7] = liana7;
+
+        EntidadEstatica liana8 = new EntidadEstatica(null, null, null, null);
+        liana8.setId("liana8");
+        liana8.setPosicion(new PuntoMatriz(58,81));
+        liana8.setUltimaPosicion(new PuntoMatriz(73,81));
+        liana8.setTipoEntidad(Entidad.TipoEntidad.LIANA);
+        liana8.setArea(new PuntoMatriz[15]);
+        contador = 0;
+        for(int i = 58; i < 73; i++){
+            liana8.getArea()[contador] = new PuntoMatriz(i, 81);
+            contador++;
+        }
+
+        lianas[8] = liana8;
+
+        EntidadEstatica liana9 = new EntidadEstatica(null, null, null, null);
+        liana9.setId("liana9");
+        liana9.setPosicion(new PuntoMatriz(58,91));
+        liana9.setUltimaPosicion(new PuntoMatriz(73,91));
+        liana9.setTipoEntidad(Entidad.TipoEntidad.LIANA);
+        liana9.setArea(new PuntoMatriz[15]);
+        contador = 0;
+        for(int i = 58; i < 73; i++){
+            liana9.getArea()[contador] = new PuntoMatriz(i, 91);
+            contador++;
+        }
+
+        lianas[9] = liana9;
+
+        EntidadEstatica liana10 = new EntidadEstatica(null, null, null, null);
+        liana10.setId("liana10");
+        liana10.setPosicion(new PuntoMatriz(13,81));
+        liana10.setUltimaPosicion(new PuntoMatriz(53,81));
+        liana10.setTipoEntidad(Entidad.TipoEntidad.LIANA);
+        liana10.setArea(new PuntoMatriz[40]);
+        contador = 0;
+        for(int i = 13; i < 53; i++){
+            liana10.getArea()[contador] = new PuntoMatriz(i, 81);
+            contador++;
+        }
+
+        lianas[10] = liana10;
+
+        EntidadEstatica liana11 = new EntidadEstatica(null, null, null, null);
+        liana11.setId("liana11");
+        liana11.setPosicion(new PuntoMatriz(13,91));
+        liana11.setUltimaPosicion(new PuntoMatriz(53,91));
+        liana11.setTipoEntidad(Entidad.TipoEntidad.LIANA);
+        liana11.setArea(new PuntoMatriz[40]);
+        contador = 0;
+        for(int i = 13; i < 53; i++){
+            liana11.getArea()[contador] = new PuntoMatriz(i, 91);
+            contador++;
+        }
+
+        lianas[11] = liana11;
+
+        EntidadEstatica liana12 = new EntidadEstatica(null, null, null, null);
+        liana12.setId("liana12");
+        liana12.setPosicion(new PuntoMatriz(5,60));
+        liana12.setUltimaPosicion(new PuntoMatriz(9,60));
+        liana12.setTipoEntidad(Entidad.TipoEntidad.LIANA);
+        liana12.setArea(new PuntoMatriz[4]);
+        contador = 0;
+        for(int i = 5; i < 9; i++){
+            liana12.getArea()[contador] = new PuntoMatriz(i, 60);
+            contador++;
+        }
+
+        lianas[12] = liana12;
+
+        EntidadEstatica liana13 = new EntidadEstatica(null, null, null, null);
+        liana13.setId("liana13");
+        liana13.setPosicion(new PuntoMatriz(5,42));
+        liana13.setUltimaPosicion(new PuntoMatriz(12,42));
+        liana13.setTipoEntidad(Entidad.TipoEntidad.LIANA);
+        liana13.setArea(new PuntoMatriz[7]);
+        contador = 0;
+        for(int i = 5; i < 12; i++){
+            liana13.getArea()[contador] = new PuntoMatriz(i, 42);
+            contador++;
+        }
+
+        lianas[13] = liana13;
+
+    }
+
+    private void crearAguaPrueba(){
+
+        EntidadEstatica aguaNueva = new EntidadEstatica(null, null, null, null);
+        aguaNueva.setId("agua");
+        aguaNueva.setPosicion(new PuntoMatriz(0,0));
+        aguaNueva.setUltimaPosicion(new PuntoMatriz(0,0));
+        aguaNueva.setTipoEntidad(Entidad.TipoEntidad.AGUA);
+        aguaNueva.setArea(new PuntoMatriz[400]);
+        int contador = 0;
+        for(int i = 0; i <= 99; i++){
+            aguaNueva.getArea()[contador] = new PuntoMatriz(99, i);
+            contador++;
+            aguaNueva.getArea()[contador] = new PuntoMatriz(98, i);
+            contador++;
+            aguaNueva.getArea()[contador] = new PuntoMatriz(97, i);
+            contador++;
+            aguaNueva.getArea()[contador] = new PuntoMatriz(96, i);
+            contador++;
+        }
+
+        agua[0] = aguaNueva;
 
     }
 
