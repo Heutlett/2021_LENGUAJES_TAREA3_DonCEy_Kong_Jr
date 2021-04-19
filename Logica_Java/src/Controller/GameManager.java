@@ -254,8 +254,9 @@ public class GameManager extends Thread{
                     }
                     contadorCaida = 0;
                 }
-                creadorDeMapa.crearLianas();
+
                 creadorDeMapa.crearPlataformas();
+                //creadorDeMapa.crearAgua();
 
                 //actualizarMatriz();
                 try {
@@ -280,6 +281,8 @@ public class GameManager extends Thread{
 
                 cocodriloController.moverCocodrilos();
                 frutaController.actualizarFrutas();
+                creadorDeMapa.crearLianas();
+                creadorDeMapa.crearAgua();
 
                 try {
                     sleep(150-nivel*30);

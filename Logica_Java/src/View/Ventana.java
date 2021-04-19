@@ -170,7 +170,7 @@ public class Ventana extends JFrame {
         boton.addKeyListener(new MyKeyListener());
         boton.setBounds(8+columna*7,75+fila*7, 7,7);
         boton.addActionListener(e -> generarEntidad(boton));
-        //boton.setBorder(BorderFactory.createBevelBorder(5, Color.BLACK,Color.BLACK));
+        boton.setBorder(BorderFactory.createBevelBorder(5, Color.BLACK,Color.BLACK));
         panel.add(boton);
         matrizButton[fila][columna] = boton;
     }
@@ -186,8 +186,6 @@ public class Ventana extends JFrame {
     }
 
     private void generarEntidad(CampoBoton boton){
-
-        System.out.println(boton.getFila()+" , " + boton.getColumna());
 
         if(boton.getId().contains("fruta")){
             Fruta fruta = gameManager.getFrutaController().buscarFrutaById(boton.getId());
