@@ -23,11 +23,13 @@ public class GameManager extends Thread{
     private EntidadEstatica[] plataformas;
     private EntidadEstatica[] agua;
     private MonoController monoController;
+    private CocodriloController cocodriloController;
     private Entidad[][] matriz;
     public static Integer TAMANO_MATRIZ = 100;
     public static PuntoMatriz POSICION_INICIAL = new PuntoMatriz(25,1);
     private int contadorCaida;
     private boolean haPerdido;
+    private int nivel;
 
     public GameManager()
     {
@@ -45,8 +47,11 @@ public class GameManager extends Thread{
         plataformas = new EntidadEstatica[6];
         matriz = new Entidad[TAMANO_MATRIZ][TAMANO_MATRIZ];
         monoController = new MonoController(donkeyKongJr, matriz);
+        cocodriloController = new CocodriloController(matriz, cocodrilos, lianas, monoController);
         contadorCaida = 0;
         haPerdido = false;
+        nivel = 1;
+        new HiloCocodrilos().start();
         crearPlataformaPrueba();
         crearPlataformas();
         crearLianaPrueba();
@@ -77,6 +82,33 @@ public class GameManager extends Thread{
                 }
             }
         }
+    }
+
+    public void crearCocodrilo(String idLiana, Entidad.TipoEntidad tipoCocodrilo){
+
+        Cocodrilo cocodrilo = new Cocodrilo(null, null, null, null, null, 0,
+                null);
+        cocodrilo.setId("cocodrilo" + cocodrilos.size());
+        EntidadEstatica liana = buscarLianaById(idLiana);
+        if(liana != null){
+            cocodrilo.setPosicion(liana.getPosicion());
+        }
+        cocodrilo.direccionAreaAbajo();
+        //La area se define en la clase COCODRILO
+        cocodrilo.setTipoEntidad(tipoCocodrilo);
+        cocodrilo.setDireccion(EntidadMovible.Direccion.ABAJO);
+        cocodrilo.setVelocidad(nivel);
+        cocodrilo.setIdLiana(idLiana);
+        cocodrilos.add(cocodrilo);
+    }
+
+    private EntidadEstatica buscarLianaById(String id){
+        for(int i = 0; i < lianas.length; i++){
+            if(lianas[i].getId().equals(id)){
+                return lianas[i];
+            }
+        }
+        return null;
     }
 
     public void imprimirMatriz(){
@@ -207,8 +239,9 @@ public class GameManager extends Thread{
     private void crearLianaPrueba(){
 
         EntidadEstatica liana = new EntidadEstatica(null, null, null, null);
-        liana.setId("prueba");
-        liana.setPosicion(new PuntoMatriz(0,0));
+        liana.setId("liana1");
+        liana.setPosicion(new PuntoMatriz(0,23));
+        liana.setUltimaPosicion(new PuntoMatriz(20,23));
         liana.setTipoEntidad(Entidad.TipoEntidad.LIANA);
         liana.setArea(new PuntoMatriz[20]);
         for(int i = 0; i < 20; i++){
@@ -218,8 +251,9 @@ public class GameManager extends Thread{
         lianas[0] = liana;
 
         EntidadEstatica liana2 = new EntidadEstatica(null, null, null, null);
-        liana2.setId("prueba");
-        liana2.setPosicion(new PuntoMatriz(0,0));
+        liana2.setId("liana2");
+        liana2.setPosicion(new PuntoMatriz(0,30));
+        liana2.setUltimaPosicion(new PuntoMatriz(20,30));
         liana2.setTipoEntidad(Entidad.TipoEntidad.LIANA);
         liana2.setArea(new PuntoMatriz[20]);
         for(int i = 0; i < 20; i++){
@@ -243,15 +277,29 @@ public class GameManager extends Thread{
                 }
                 contadorCaida = 0;
             }
-            if(!getDonkeyKongJr().isOnLiana()){
-                crearLianas();
-            }
-
+            crearLianas();
             //actualizarMatriz();
             try {
                 sleep(20);
             } catch (InterruptedException e) {
                 e.printStackTrace();
+            }
+        }
+    }
+
+    class HiloCocodrilos extends Thread {
+
+        @Override
+        public void run() {
+            while (true){
+
+                cocodriloController.moverCocodrilos();
+
+                try {
+                    sleep(150-nivel*30);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

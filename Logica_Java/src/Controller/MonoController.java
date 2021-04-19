@@ -12,6 +12,7 @@ public class MonoController {
     private Mono donkeyKongJr;
     private Entidad[][] matriz;
     public static Integer TAMANO_MATRIZ = 100;
+    private boolean haPerdido = false;
 
 
     public MonoController(Mono donkeyKongJr, Entidad[][] matriz){
@@ -22,7 +23,7 @@ public class MonoController {
     private boolean reglasMoverDerecha(EntidadMovible.Direccion direccion){
 
         if((donkeyKongJr.getPosicion().getColumna()+donkeyKongJr.getLIMITE_DERECHA() < GameManager.TAMANO_MATRIZ)){
-            if(manejarColisiones(obtenerColision(direccion))) {
+            if(manejarColisiones(obtenerColisionAlMoverse(direccion))) {
                 return true;
             }
         }
@@ -32,7 +33,7 @@ public class MonoController {
     private boolean reglasMoverIzquierda(EntidadMovible.Direccion direccion){
 
         if((donkeyKongJr.getPosicion().getColumna()-donkeyKongJr.getLIMITE_IZQUIERDA() > 0)){
-            if(manejarColisiones(obtenerColision(direccion))) {
+            if(manejarColisiones(obtenerColisionAlMoverse(direccion))) {
                 return true;
             }
         }
@@ -43,7 +44,7 @@ public class MonoController {
     private boolean reglasMoverArriba(EntidadMovible.Direccion direccion){
 
         if((donkeyKongJr.getPosicion().getFila()-3 > 0)){
-            if(manejarColisiones(obtenerColision(direccion))) {
+            if(manejarColisiones(obtenerColisionAlMoverse(direccion))) {
                 return true;
             }
         }
@@ -52,7 +53,7 @@ public class MonoController {
     private boolean reglasMoverAbajo(EntidadMovible.Direccion direccion){
 
         if((donkeyKongJr.getPosicion().getFila()+2 < GameManager.TAMANO_MATRIZ)){
-            if(manejarColisiones(obtenerColision(direccion))) {
+            if(manejarColisiones(obtenerColisionAlMoverse(direccion))) {
                 return true;
             }
         }
@@ -77,6 +78,7 @@ public class MonoController {
                     /**
                      * AGREGAR CODIGO SI COLISIONA COCODRILOS
                      */
+                    haPerdido = true;
                     return false;
                 case PLATAFORMA:
                     return false;
@@ -98,29 +100,30 @@ public class MonoController {
      * @return
      */
 
-    private ArrayList<Entidad.TipoEntidad> obtenerColision(EntidadMovible.Direccion direccion){
+    private ArrayList<Entidad.TipoEntidad> obtenerColisionAlMoverse(EntidadMovible.Direccion direccion){
 
         ArrayList<Entidad.TipoEntidad> listaTipoEntidades = new ArrayList<>();
         int limiteFila = 0;
         int limiteColumna = 0;
 
-        switch (direccion){
+        switch (direccion) {
             case DERECHA:
                 limiteFila = 0;
                 limiteColumna = donkeyKongJr.getLIMITE_DERECHA();
                 break;
             case IZQUIERDA:
                 limiteFila = 0;
-                limiteColumna = -1*donkeyKongJr.getLIMITE_DERECHA();
+                limiteColumna = -1 * donkeyKongJr.getLIMITE_DERECHA();
                 break;
             case ARRIBA:
-                limiteFila = -1*donkeyKongJr.getLIMITE_ARRIBA();
+                limiteFila = -1 * donkeyKongJr.getLIMITE_ARRIBA();
                 limiteColumna = 0;
                 break;
             case ABAJO:
                 limiteFila = donkeyKongJr.getLIMITE_ABAJO();
                 limiteColumna = 0;
                 break;
+
         }
 
         for(int i = 0; i < donkeyKongJr.getArea().length; i++){
@@ -130,6 +133,23 @@ public class MonoController {
                 if(matriz[p.getFila()+limiteFila][p.getColumna()+limiteColumna] != null){
 
                     listaTipoEntidades.add(matriz[p.getFila()+limiteFila][p.getColumna()+limiteColumna].getTipoEntidad());
+
+                }
+
+            }
+        }
+        return listaTipoEntidades;
+    }
+
+    public ArrayList<Entidad.TipoEntidad> obtenerColisionesEstatico(){
+        ArrayList<Entidad.TipoEntidad> listaTipoEntidades = new ArrayList<>();
+        for(int i = 0; i < donkeyKongJr.getArea().length; i++){
+            PuntoMatriz p = donkeyKongJr.getArea()[i];
+            if(p != null && p.getColumna() >= 0 && p.getFila() >= 0
+                    &&  p.getColumna() < TAMANO_MATRIZ && p.getFila() < TAMANO_MATRIZ){
+                if(matriz[p.getFila()][p.getColumna()] != null){
+
+                    listaTipoEntidades.add(matriz[p.getFila()][p.getColumna()].getTipoEntidad());
 
                 }
 
@@ -256,5 +276,13 @@ public class MonoController {
             donkeyKongJr.setJumping(false);
         }
 
+    }
+
+    public boolean isHaPerdido() {
+        return haPerdido;
+    }
+
+    public void setHaPerdido(boolean haPerdido) {
+        this.haPerdido = haPerdido;
     }
 }

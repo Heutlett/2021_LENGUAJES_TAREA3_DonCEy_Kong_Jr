@@ -12,7 +12,8 @@ public abstract class EntidadMovible extends Entidad {
         ARRIBA,
         ABAJO,
         DERECHA,
-        IZQUIERDA
+        IZQUIERDA,
+        NINGUNA
     }
     protected Direccion direccion;
 

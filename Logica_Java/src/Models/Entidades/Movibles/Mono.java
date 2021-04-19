@@ -55,11 +55,6 @@ public class Mono extends EntidadMovible{
         actualizarDireccionIzquierda();
     }
 
-    /**
-     * En este caso solo funciona cuando esta subido en una liana este caso se debe tratar con el atributo
-     * isOnLiana, el cual será asignado a true por el gameManager si despues de moverse el algun brazo del mono
-     * toca una liana (estas validaciones se deben hacer en el gamemanager cada vez que se mueve el mono)
-     */
     public void direccionAreaAbajo() {
         this.area = new PuntoMatriz[TAMANO_AREA];
         actualizarDireccionCuerpo();

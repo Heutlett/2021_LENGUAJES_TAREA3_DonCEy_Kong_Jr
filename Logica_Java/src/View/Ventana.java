@@ -58,20 +58,22 @@ public class Ventana extends JFrame {
          * esto se quita, es para mover al mono pero solo deberia poder hacerlo el servidor
          */
 
-        CampoBoton boton = new CampoBoton(fila,columna);
+        CampoBoton boton = new CampoBoton(fila,columna,"vacio");
         boton.addKeyListener(new MyKeyListener());
         boton.setBounds(8+columna*7,8+fila*7, 7,7);
-        boton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                boton.setBackground(Color.GREEN);
-            }
-        });
+        boton.addActionListener(e -> generarEntidad(boton));
         panel.add(boton);
         matrizButton[fila][columna] = boton;
     }
 
+    private void generarEntidad(CampoBoton boton){
+        if(boton.getId().contains("liana")){
+            gameManager.crearCocodrilo(boton.getId(), Entidad.TipoEntidad.COCODRILO_ROJO);
+        }
+    }
+
     private void actualizarMatrizInterfaz(){
-        if(gameManager.isHaPerdido()){
+        if(gameManager.isHaPerdido() || gameManager.getMonoController().isHaPerdido()){
             JOptionPane.showMessageDialog(null, "HA PERDIDO: su puntuacion es", "ha perdido", JOptionPane.INFORMATION_MESSAGE);
             gameManager.setCondicionesIniciales();
         }
@@ -80,14 +82,23 @@ public class Ventana extends JFrame {
             for(int columna = 0; columna < GameManager.TAMANO_MATRIZ; columna++){
                 if(gameManager.getMatriz()[fila][columna] != null && matrizButton[fila][columna] != null){
 
-                    if(gameManager.getMatriz()[fila][columna].getTipoEntidad() == Entidad.TipoEntidad.MONO){
+                    if(gameManager.getMatriz()[fila][columna] != null && gameManager.getMatriz()[fila][columna].getTipoEntidad() == Entidad.TipoEntidad.MONO){
                         matrizButton[fila][columna].setBackground(Color.WHITE);
                     }
-                    if(gameManager.getMatriz()[fila][columna].getTipoEntidad() == Entidad.TipoEntidad.PLATAFORMA){
+                    if(gameManager.getMatriz()[fila][columna] != null && gameManager.getMatriz()[fila][columna].getTipoEntidad() == Entidad.TipoEntidad.PLATAFORMA){
                         matrizButton[fila][columna].setBackground(Color.GREEN);
                     }
-                    if(gameManager.getMatriz()[fila][columna].getTipoEntidad() == Entidad.TipoEntidad.LIANA){
+                    if(gameManager.getMatriz()[fila][columna] != null && gameManager.getMatriz()[fila][columna].getTipoEntidad() == Entidad.TipoEntidad.LIANA){
                         matrizButton[fila][columna].setBackground(Color.ORANGE);
+                    }
+                    if(gameManager.getMatriz()[fila][columna] != null && gameManager.getMatriz()[fila][columna].getTipoEntidad() == Entidad.TipoEntidad.COCODRILO_AZUL){
+                        matrizButton[fila][columna].setBackground(Color.BLUE);
+                    }
+                    if(gameManager.getMatriz()[fila][columna] != null && gameManager.getMatriz()[fila][columna].getTipoEntidad() == Entidad.TipoEntidad.COCODRILO_ROJO){
+                        matrizButton[fila][columna].setBackground(Color.RED);
+                    }
+                    if(gameManager.getMatriz()[fila][columna] != null ){
+                        matrizButton[fila][columna].setId(gameManager.getMatriz()[fila][columna].getId());
                     }
 
                 }else if(matrizButton[fila][columna] != null){
@@ -112,7 +123,6 @@ public class Ventana extends JFrame {
             }
         }
     }
-
 
     public class MyKeyListener implements KeyListener {
         @Override

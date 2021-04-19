@@ -6,15 +6,15 @@ package Models.Entidades.Utils;
  */
 public class PuntoMatriz {
 
-    private Integer fila;
-    private Integer columna;
+    private int fila;
+    private int columna;
 
     public PuntoMatriz(Integer fila, Integer columna) {
         this.fila = fila;
         this.columna = columna;
     }
 
-    public Integer getFila() {
+    public int getFila() {
         return fila;
     }
 
@@ -22,7 +22,7 @@ public class PuntoMatriz {
         this.fila = fila;
     }
 
-    public Integer getColumna() {
+    public int getColumna() {
         return columna;
     }
 
