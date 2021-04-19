@@ -161,7 +161,8 @@ public class MonoController {
         for(int i = 0; i < donkeyKongJr.getArea().length; i++){
             PuntoMatriz p = donkeyKongJr.getArea()[i];
             if(p != null && p.getColumna() >= 0 && p.getFila() >= 0
-                    &&  p.getColumna() < TAMANO_MATRIZ && p.getFila() < TAMANO_MATRIZ){
+                    &&  p.getColumna() < TAMANO_MATRIZ && p.getFila() < TAMANO_MATRIZ
+                    &&  p.getColumna() >= 0 && p.getFila() >= 0){
                 if(matriz[p.getFila()][p.getColumna()] != null){
 
                     listaTipoEntidades.add(matriz[p.getFila()][p.getColumna()].getTipoEntidad());
@@ -270,7 +271,7 @@ public class MonoController {
             int contador = 0;
 
             while(!donkeyKongJr.isHaPerdido() && donkeyKongJr.isJumping() && contador < 10 && !donkeyKongJr.isOnLiana()){
-
+                System.out.println(" PRUEBA SALTO");
                 if(direccion == EntidadMovible.Direccion.DERECHA){
                     moverMono(EntidadMovible.Direccion.DERECHA);
                 }

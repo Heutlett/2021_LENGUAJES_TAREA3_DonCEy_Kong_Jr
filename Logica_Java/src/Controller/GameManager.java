@@ -31,10 +31,12 @@ public class GameManager extends Thread{
 
     private Entidad.TipoEntidad entidadSeleccionada;
     public static Integer TAMANO_MATRIZ = 100;
-    public static PuntoMatriz POSICION_INICIAL = new PuntoMatriz(25,1);
+    public static PuntoMatriz POSICION_INICIAL = new PuntoMatriz(89,1);
     private int contadorCaida;
     private int nivel;
     private int vidas;
+
+    CreadorDeMapa creadorDeMapa = new CreadorDeMapa(matriz,lianas,plataformas,agua);
 
     public GameManager()
     {
@@ -49,7 +51,7 @@ public class GameManager extends Thread{
         cocodrilos =  new ArrayList<>();
         frutas = new ArrayList<>();
         lianas = new EntidadEstatica[10];
-        plataformas = new EntidadEstatica[6];
+        plataformas = new EntidadEstatica[11];
         matriz = new Entidad[TAMANO_MATRIZ][TAMANO_MATRIZ];
         frutaController = new FrutaController(matriz, frutas);
         monoController = new MonoController(donkeyKongJr, matriz, frutaController);
@@ -58,10 +60,8 @@ public class GameManager extends Thread{
         nivel = 1;
         vidas = 1;
         new HiloCocodrilos().start();
-        crearPlataformaPrueba();
-        crearPlataformas();
-        crearLianaPrueba();
-        crearLianas();
+        creadorDeMapa = new CreadorDeMapa(matriz,lianas,plataformas,agua);
+        creadorDeMapa.inicializarMapa();
         //actualizarMatriz();
     }
 
@@ -70,25 +70,6 @@ public class GameManager extends Thread{
     }
 
 
-    public void crearPlataformas(){
-        for(int i = 0; i < plataformas.length; i++){
-            if(plataformas[i] != null){
-                for(int e = 0; e < plataformas[i].getArea().length; e++){
-                    matriz[plataformas[i].getArea()[e].getFila()][plataformas[i].getArea()[e].getColumna()] = plataformas[i];
-                }
-            }
-        }
-    }
-
-    public void crearLianas(){
-        for(int i = 0; i < lianas.length; i++){
-            if(lianas[i] != null){
-                for(int e = 0; e < lianas[i].getArea().length; e++){
-                    matriz[lianas[i].getArea()[e].getFila()][lianas[i].getArea()[e].getColumna()] = lianas[i];
-                }
-            }
-        }
-    }
 
     public void crearCocodrilo(String idLiana){
 
@@ -249,63 +230,18 @@ public class GameManager extends Thread{
         return id;
     }
 
-    private void crearPlataformaPrueba(){
-
-        EntidadEstatica plataforma = new EntidadEstatica(null, null, null, null);
-        plataforma.setId("prueba");
-        plataforma.setTipoEntidad(Entidad.TipoEntidad.PLATAFORMA);
-        plataforma.setArea(new PuntoMatriz[50]);
-        for(int i = 0; i < 50; i++){
-            plataforma.getArea()[i] = new PuntoMatriz(95, i);
-        }
-
-        plataformas[0] = plataforma;
-
-        EntidadEstatica plataforma2 = new EntidadEstatica(null, null, null, null);
-        plataforma2.setId("prueba");
-        plataforma2.setPosicion(new PuntoMatriz(0,0));
-        plataforma2.setTipoEntidad(Entidad.TipoEntidad.PLATAFORMA);
-        plataforma2.setArea(new PuntoMatriz[50]);
-        for(int i = 0; i < 50; i++){
-            plataforma2.getArea()[i] = new PuntoMatriz(30, i);
-        }
-
-        plataformas[1] = plataforma2;
-
+    public CreadorDeMapa getCreadorDeMapa() {
+        return creadorDeMapa;
     }
 
-    private void crearLianaPrueba(){
-
-        EntidadEstatica liana = new EntidadEstatica(null, null, null, null);
-        liana.setId("liana1");
-        liana.setPosicion(new PuntoMatriz(0,23));
-        liana.setUltimaPosicion(new PuntoMatriz(20,23));
-        liana.setTipoEntidad(Entidad.TipoEntidad.LIANA);
-        liana.setArea(new PuntoMatriz[20]);
-        for(int i = 0; i < 20; i++){
-            liana.getArea()[i] = new PuntoMatriz(i, 23);
-        }
-
-        lianas[0] = liana;
-
-        EntidadEstatica liana2 = new EntidadEstatica(null, null, null, null);
-        liana2.setId("liana2");
-        liana2.setPosicion(new PuntoMatriz(0,30));
-        liana2.setUltimaPosicion(new PuntoMatriz(20,30));
-        liana2.setTipoEntidad(Entidad.TipoEntidad.LIANA);
-        liana2.setArea(new PuntoMatriz[20]);
-        for(int i = 0; i < 20; i++){
-            liana2.getArea()[i] = new PuntoMatriz(i, 30);
-        }
-
-        lianas[1] = liana2;
-
+    public void setCreadorDeMapa(CreadorDeMapa creadorDeMapa) {
+        this.creadorDeMapa = creadorDeMapa;
     }
 
     public void run() {
         while(true){
 
-            if(!donkeyKongJr.isHaPerdido()){
+            //if(!donkeyKongJr.isHaPerdido()){
                 if(!donkeyKongJr.isJumping() && !donkeyKongJr.isOnLiana() && !getMonoController().estaEnSuelo()){
                     //donkeyKongJr.setFalling(true);
                     contadorCaida++;
@@ -316,8 +252,8 @@ public class GameManager extends Thread{
                     }
                     contadorCaida = 0;
                 }
-                crearLianas();
-                crearPlataformas();
+                creadorDeMapa.crearLianas();
+                creadorDeMapa.crearPlataformas();
 
                 //actualizarMatriz();
                 try {
@@ -325,10 +261,10 @@ public class GameManager extends Thread{
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-            }else{
-                start();
-                break;
-            }
+            //}else{
+                //start();
+                //break;
+            //}
 
 
         }

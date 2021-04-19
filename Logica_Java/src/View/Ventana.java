@@ -170,6 +170,7 @@ public class Ventana extends JFrame {
         boton.addKeyListener(new MyKeyListener());
         boton.setBounds(8+columna*7,75+fila*7, 7,7);
         boton.addActionListener(e -> generarEntidad(boton));
+        //boton.setBorder(BorderFactory.createBevelBorder(5, Color.BLACK,Color.BLACK));
         panel.add(boton);
         matrizButton[fila][columna] = boton;
     }
@@ -244,7 +245,7 @@ public class Ventana extends JFrame {
                         matrizButton[fila][columna].setBackground(Color.WHITE);
                     }
                     if(gameManager.getMatriz()[fila][columna] != null && gameManager.getMatriz()[fila][columna].getTipoEntidad() == Entidad.TipoEntidad.PLATAFORMA){
-                        matrizButton[fila][columna].setBackground(Color.GREEN);
+                        matrizButton[fila][columna].setBackground(new Color( 226, 112, 41));
                     }
                     if(gameManager.getMatriz()[fila][columna] != null && gameManager.getMatriz()[fila][columna].getTipoEntidad() == Entidad.TipoEntidad.LIANA){
                         matrizButton[fila][columna].setBackground(Color.ORANGE);
@@ -360,7 +361,7 @@ public class Ventana extends JFrame {
                     gameManager.getMonoController().moverMono(EntidadMovible.Direccion.IZQUIERDA);
                 }
                 if(gameManager.getDonkeyKongJr().isOnLiana()){
-                    gameManager.crearLianas();
+                    gameManager.getCreadorDeMapa().crearLianas();
                 }
                 //actualizarMatrizInterfaz();
             }
