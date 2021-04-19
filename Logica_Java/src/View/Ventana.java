@@ -68,7 +68,7 @@ public class Ventana extends JFrame {
 
     private void generarEntidad(CampoBoton boton){
         if(boton.getId().contains("liana")){
-            gameManager.crearCocodrilo(boton.getId(), Entidad.TipoEntidad.COCODRILO_ROJO);
+            gameManager.crearCocodrilo(boton.getId(), Entidad.TipoEntidad.COCODRILO_AZUL);
         }
     }
 

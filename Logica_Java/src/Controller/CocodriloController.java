@@ -34,6 +34,56 @@ public class CocodriloController {
         return false;
     }
 
+    private void moverCocodrilosRojos(Cocodrilo cocodrilo){
+
+
+        if(cocodrilo.getDireccion() == EntidadMovible.Direccion.ARRIBA
+                && compararPosicion(cocodrilo.getPosicion(), buscarLianaById(cocodrilo.getIdLiana()).getPosicion())){
+
+            cocodrilo.setDireccion(EntidadMovible.Direccion.ABAJO);
+
+        }else if(cocodrilo.getDireccion() == EntidadMovible.Direccion.ABAJO
+                && compararPosicion(cocodrilo.getPosicion(), buscarLianaById(cocodrilo.getIdLiana()).getUltimaPosicion())){
+
+            cocodrilo.setDireccion(EntidadMovible.Direccion.ARRIBA);
+        }
+        else if(cocodrilo.getDireccion() == EntidadMovible.Direccion.ABAJO
+                && !compararPosicion(cocodrilo.getPosicion(), buscarLianaById(cocodrilo.getIdLiana()).getUltimaPosicion())){
+
+            PuntoMatriz nuevaPosicion = new PuntoMatriz(cocodrilo.getPosicion().getFila()+1,
+                    cocodrilo.getPosicion().getColumna());
+
+            cocodrilo.moverConPosicion(nuevaPosicion);
+
+        }else if(cocodrilo.getDireccion() == EntidadMovible.Direccion.ARRIBA
+                && !compararPosicion(cocodrilo.getPosicion(), buscarLianaById(cocodrilo.getIdLiana()).getPosicion())) {
+
+            PuntoMatriz nuevaPosicion = new PuntoMatriz(cocodrilo.getPosicion().getFila() - 1,
+                    cocodrilo.getPosicion().getColumna());
+
+            cocodrilo.moverConPosicion(nuevaPosicion);
+        }
+    }
+
+    private void moverCocodrilosAzules(Cocodrilo cocodrilo){
+
+        if(cocodrilo.getDireccion() == EntidadMovible.Direccion.ABAJO){
+
+            PuntoMatriz nuevaPosicion = new PuntoMatriz(cocodrilo.getPosicion().getFila()+1,
+                    cocodrilo.getPosicion().getColumna());
+
+            cocodrilo.moverConPosicion(nuevaPosicion);
+
+        }
+
+
+        if(cocodrilo.getPosicion().getFila() > TAMANO_MATRIZ){
+            cocodrilos.remove(cocodrilo);
+        }
+
+
+    }
+
     public void moverCocodrilos(){
 
         /**
@@ -44,31 +94,11 @@ public class CocodriloController {
 
         for(int e = 0; e < cocodrilos.size(); e++){
             Cocodrilo cocodrilo = cocodrilos.get(e);
-            if(cocodrilo.getDireccion() == EntidadMovible.Direccion.ARRIBA
-                    && compararPosicion(cocodrilo.getPosicion(), buscarLianaById(cocodrilo.getIdLiana()).getPosicion())){
 
-                cocodrilo.setDireccion(EntidadMovible.Direccion.ABAJO);
-
-            }else if(cocodrilo.getDireccion() == EntidadMovible.Direccion.ABAJO
-                    && compararPosicion(cocodrilo.getPosicion(), buscarLianaById(cocodrilo.getIdLiana()).getUltimaPosicion())){
-
-                cocodrilo.setDireccion(EntidadMovible.Direccion.ARRIBA);
-            }
-            else if(cocodrilo.getDireccion() == EntidadMovible.Direccion.ABAJO
-                    && !compararPosicion(cocodrilo.getPosicion(), buscarLianaById(cocodrilo.getIdLiana()).getUltimaPosicion())){
-
-                PuntoMatriz nuevaPosicion = new PuntoMatriz(cocodrilo.getPosicion().getFila()+1,
-                        cocodrilo.getPosicion().getColumna());
-
-                cocodrilo.moverConPosicion(nuevaPosicion);
-
-            }else if(cocodrilo.getDireccion() == EntidadMovible.Direccion.ARRIBA
-                    && !compararPosicion(cocodrilo.getPosicion(), buscarLianaById(cocodrilo.getIdLiana()).getPosicion())) {
-
-                PuntoMatriz nuevaPosicion = new PuntoMatriz(cocodrilo.getPosicion().getFila() - 1,
-                        cocodrilo.getPosicion().getColumna());
-
-                cocodrilo.moverConPosicion(nuevaPosicion);
+            if(cocodrilo.getTipoEntidad() == Entidad.TipoEntidad.COCODRILO_ROJO){
+                moverCocodrilosRojos(cocodrilo);
+            }else{
+                moverCocodrilosAzules(cocodrilo);
             }
         }
 
