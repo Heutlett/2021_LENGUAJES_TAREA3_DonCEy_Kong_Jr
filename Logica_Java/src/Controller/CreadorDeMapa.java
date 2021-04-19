@@ -389,13 +389,13 @@ public class CreadorDeMapa {
 
         EntidadEstatica liana1 = new EntidadEstatica(null, null, null, null);
         liana1.setId("liana1");
-        liana1.setPosicion(new PuntoMatriz(24,18));
-        liana1.setUltimaPosicion(new PuntoMatriz(80,18));
+        liana1.setPosicion(new PuntoMatriz(24,17));
+        liana1.setUltimaPosicion(new PuntoMatriz(80,17));
         liana1.setTipoEntidad(Entidad.TipoEntidad.LIANA);
         liana1.setArea(new PuntoMatriz[57]);
         contador = 0;
         for(int i = 24; i <= 80; i++){
-            liana1.getArea()[contador] = new PuntoMatriz(i, 18);
+            liana1.getArea()[contador] = new PuntoMatriz(i, 17);
             contador++;
         }
 
@@ -445,13 +445,13 @@ public class CreadorDeMapa {
 
         EntidadEstatica liana5 = new EntidadEstatica(null, null, null, null);
         liana5.setId("liana5");
-        liana5.setPosicion(new PuntoMatriz(24,54));
-        liana5.setUltimaPosicion(new PuntoMatriz(57,54));
+        liana5.setPosicion(new PuntoMatriz(24,52));
+        liana5.setUltimaPosicion(new PuntoMatriz(57,52));
         liana5.setTipoEntidad(Entidad.TipoEntidad.LIANA);
         liana5.setArea(new PuntoMatriz[34]);
         contador = 0;
         for(int i = 24; i <= 57; i++){
-            liana5.getArea()[contador] = new PuntoMatriz(i, 54);
+            liana5.getArea()[contador] = new PuntoMatriz(i, 52);
             contador++;
         }
 
