@@ -29,6 +29,7 @@ public class Ventana extends JFrame {
     private JTextField puntosEntry;
     private JLabel labelPuntuacion;
     private JLabel labelVidas;
+    private JLabel labelNivel;
     private int puntos = 0;
 
     private Ventana() {
@@ -70,6 +71,13 @@ public class Ventana extends JFrame {
         labelVidas.setBorder(BorderFactory.createBevelBorder(1, Color.BLACK,Color.BLACK));
         labelVidas.setHorizontalAlignment(SwingConstants.CENTER);
         panel.add(labelVidas);
+
+        labelNivel = new JLabel("Nivel: 1");
+        labelNivel.setFont(new java.awt.Font("CONSOLAS", Font.BOLD, 15));
+        labelNivel.setBounds(910,yInicial, 90,60);
+        labelNivel.setBorder(BorderFactory.createBevelBorder(1, Color.BLACK,Color.BLACK));
+        labelNivel.setHorizontalAlignment(SwingConstants.CENTER);
+        panel.add(labelNivel);
 
         entidadSeleccionada = new JLabel("No ha seleccionado");
         entidadSeleccionada.setFont(new java.awt.Font("CONSOLAS", Font.BOLD, 15));
@@ -316,8 +324,9 @@ public class Ventana extends JFrame {
                     gameManager.siHaPerdido();
                 }
                 labelPuntuacion.setText("Puntuacion: " + gameManager.getDonkeyKongJr().getPuntuacion());
-                actualizarMatrizInterfaz();
                 labelVidas.setText("Vidas: " + gameManager.getVidas());
+                labelNivel.setText("Nivel: " + gameManager.getNivel());
+                actualizarMatrizInterfaz();
                 gameManager.getCreadorDeMapa().crearLianas();
                 gameManager.getCreadorDeMapa().crearAgua();
                 gameManager.getCreadorDeMapa().crearPlataformas();

@@ -8,6 +8,7 @@ import Models.Entidades.Movibles.Fruta;
 import Models.Entidades.Movibles.Mono;
 import Models.Entidades.Utils.PuntoMatriz;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 public class GameManager extends Thread{
@@ -88,20 +89,14 @@ public class GameManager extends Thread{
         if(vidas == 0){
             setCondicionesIniciales();
             vidas = 1;
-            donkeyKongJr.setPuntuacion(0);
+            nivel = 1;
+            donkeyKongJr.setPuntuacion(0);  
         }else{
             monoController.limpiarAreaAnteriorMono();
             donkeyKongJr.moverConPosicion(POSICION_INICIAL);
         }
     }
 
-    public void setReinicioDerrota(){
-
-    }
-
-    public void setReinicioDerrotaConVida(){
-
-    }
 
     public void setReinicioGanar(){
         nivel++;

@@ -98,12 +98,12 @@ public class CocodriloController {
 
         for(int e = 0; e < cocodrilos.size(); e++){
             Cocodrilo cocodrilo = cocodrilos.get(e);
-            /*
+
             Entidad.TipoEntidad colision = donkeyKongJr.getColisionMono(cocodrilo);
             if(colision == Entidad.TipoEntidad.COCODRILO_AZUL || colision == Entidad.TipoEntidad.COCODRILO_ROJO){
                 donkeyKongJr.setHaPerdido(true);
                 return;
-            }*/
+            }
             if(cocodrilo.getTipoEntidad() == Entidad.TipoEntidad.COCODRILO_ROJO){
                 moverCocodrilosRojos(cocodrilo);
             }else{
