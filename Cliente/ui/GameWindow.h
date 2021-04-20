@@ -13,6 +13,7 @@
 #include "../models/monkey.h"
 #include "../models/kremlin.h"
 #include "../models/fruit.h"
+#include "../models/key.h"
 
 
 static ALLEGRO_DISPLAY *display;
