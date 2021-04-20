@@ -1,84 +1,75 @@
 package sockets;
 
-import structures.Tuple;
-
 import java.util.ArrayList;
 
 public class Room {
 
-    private final static Integer playerIndex = 0;
-    private final static Integer maximumGuestsPerRoom = 3;
-
+    private final static Integer maximumViewersPerRoom = 2;
     private final int roomNumber;
-    private ArrayList<Tuple<Integer, Server.ClientHandler>> guests = new ArrayList<>();
+
+    private Guest player = null;
+    private ArrayList<Guest> viewers = new ArrayList<>();
 
     public Room(int roomNumber) {
         this.roomNumber = roomNumber;
     }
 
-    public void addGuest(Tuple<Integer, Server.ClientHandler> guest){
+
+    public Guest getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Guest player) {
+        if (this.player == null) this.player = player;
+    }
+
+    public ArrayList<Guest> getViewers() {
+        return viewers;
+    }
+
+    public void addViewer(Guest viewer) {
         if (!isFull()) {
-            guests.add(guest);
+            viewers.add(viewer);
         }
     }
 
-    public void removeGuest(Server.ClientHandler guest){
-        for (int i = 0; i < guests.size(); i++) {
-            if ( guests.get(i).getA().equals(guest.getClientID()) ){
-                if ( i==playerIndex ){
-                    guests.clear();
-                } else{
-                    guests.remove(guests.get(i));
-                }
-            }
-        }
-    }
 
-    public boolean isEmpty(){
-        return guests.isEmpty();
-    }
-
-    public boolean inGame() {
-        return (guests.size() >= 1);
-    }
-
-    public boolean isFull() {
-        return (guests.size() == maximumGuestsPerRoom);
-    }
-
-    public int size() {
-        return guests.size();
-    }
-
-    public boolean isAlreadyIn(Integer id){
-        for (Tuple<Integer, Server.ClientHandler> guest : guests) {
-            if (guest.getA().equals(id)) return true;
+    public boolean contains(int id) {
+        if (player.getId() == id) return true;
+        for (Guest viewer : viewers) {
+            if (viewer.getId() == id) return true;
         }
         return false;
     }
 
-
-    public ArrayList<Tuple<Integer, Server.ClientHandler>> getGuests() {
-        return guests;
+    public void removeSomebody(int id) {
+        if (id == player.getId()) {
+            viewers.removeAll(viewers);
+            player = null;
+            return;
+        }
+        for (int i = 0; i < viewers.size(); i++) {
+            if (id == viewers.get(i).getId()) {
+                viewers.remove(viewers.get(i));
+            }
+        }
     }
 
-    public void setGuests(ArrayList<Tuple<Integer, Server.ClientHandler>> guests) {
-        this.guests = guests;
+
+    public boolean isEmpty() {
+        return viewers.isEmpty();
+    }
+
+    public boolean inGame() {
+        return (player != null);
+    }
+
+    public boolean isFull() {
+        return (viewers.size() == maximumViewersPerRoom);
     }
 
     public int getRoomNumber() {
         return roomNumber;
     }
 
-    public String getNames() {
-        StringBuilder a = new StringBuilder();
-        for (int i = 0; i < guests.size(); i++) {
-            if (i == guests.size() - 1) {
-                a.append(guests.get(i).getB().getUsername());
-            }else {
-                a.append(guests.get(i).getB().getUsername()).append(",");
-            }
-        }
-        return a.toString();
-    }
 }

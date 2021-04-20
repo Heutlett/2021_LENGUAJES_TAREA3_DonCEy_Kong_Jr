@@ -1,5 +1,6 @@
 package sockets;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import settings.Settings;
 
 import org.json.JSONObject;
@@ -70,9 +71,11 @@ class Server {
     // ClientHandler class
     static class ClientHandler implements Runnable {
         private static int counter = 0;
-        private final int ID;
+        private final int id;
+
         private final Socket clientSocket;
         private final String myIP;
+
         private String username;
         private int roomNumber;
         private boolean inRoom = false;
@@ -80,7 +83,7 @@ class Server {
         // Constructor
         public ClientHandler(Socket socket)
         {
-            this.ID = counter++;
+            this.id = counter++;
             this.clientSocket = socket;
             this.myIP = clientSocket.getInetAddress().getHostAddress();
         }
@@ -93,6 +96,7 @@ class Server {
          Si no hay partidas, en juego "No games".
          */
         private String logIn(String json) throws IOException {
+
             if (Server.manager.isFull()) return "Rooms are full";
             // get the outputstream and inputstream of client
             PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
@@ -104,11 +108,11 @@ class Server {
 
             if (type.equalsIgnoreCase("player")) {
                 String s = Server.manager.addPlayer(this); // Agregar a sala.
-                System.out.printf("✘ Message to %s: %s.%n", username, Server.manager.currentGames());
+                System.out.printf("✘ Message to %s: %s.%n", username, Server.manager.getCurrentGames());
                 return s;
             } else if (type.equalsIgnoreCase("viewer")){
                 if (Server.manager.isEmpty()) return "No games."; // Existen partidas en juego?
-                String currentGames = Server.manager.currentGames();
+                String currentGames = Server.manager.getCurrentGames();
                 System.out.printf("✘ Message to %s: %s.%n", username, currentGames);
                 out.println(currentGames); // Enviar partidas en juego.
                 out.flush();
@@ -118,8 +122,8 @@ class Server {
             return "I do not know what to do.";
         }
 
-        private String gameProcedure(String json){
-            System.out.printf("✘ Message to %s: %s.%n", username, Server.manager.currentGames());
+        private String gameProcedure(String json) throws JsonProcessingException {
+            System.out.printf("✘ Message to %s: %s.%n", username, Server.manager.getCurrentGames());
             System.out.printf("▙ Note: Already log in Host %d.%n", roomNumber);
             return Server.manager.updateMatrix(json);
         }
@@ -150,12 +154,12 @@ class Server {
                     out.flush();
                 }
                 // Remove client from guestsArray.
-                Server.manager.removeGuest(this);
+                Server.manager.removeSomeone(this.id);
             }
             catch (IOException | NullPointerException e) {
                 e.printStackTrace();
                 System.out.println("▙ ERROR. Connection interrupted!");
-                Server.manager.removeGuest(this);
+                Server.manager.removeSomeone(this.id);
             }
             finally {
                 try {
@@ -169,7 +173,7 @@ class Server {
                 catch (IOException e) {
 //                    e.printStackTrace();
                     System.out.println("▙ ERROR. Client crashed!");
-                    Server.manager.removeGuest(this);
+                    Server.manager.removeSomeone(this.id);
                 }
             }
         }
@@ -195,8 +199,8 @@ class Server {
             this.inRoom = inRoom;
         }
 
-        public int getClientID() {
-            return ID;
+        public int getClientId() {
+            return id;
         }
     }
 

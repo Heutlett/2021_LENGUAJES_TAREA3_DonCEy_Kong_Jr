@@ -31,8 +31,6 @@ public class Main {
     }
 
     public static boolean haveSpace() {
-        if (!isFull())
-                return true;
-        return false;
+        return !isFull();
     }
 }

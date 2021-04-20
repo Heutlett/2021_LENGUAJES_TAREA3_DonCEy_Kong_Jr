@@ -1,34 +1,32 @@
 package sockets;
 
-import structures.Tuple;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.ArrayList;
 
 public class Manager {
 
+
+    private final static Integer maximumActiveRooms = 2;
     private final static String playerAction = "player";
     private final static String viewerRequest = "viewer";
-
-    private final Room room1 = new Room(1);
-    private final Room room2 = new Room(2);
-    private final ArrayList<Room> rooms = new ArrayList<>();
+    private static final ArrayList<Room> rooms = new ArrayList<>();
 
 
     public Manager() {
-        this.rooms.add(room1);
-        this.rooms.add(room2);
+        setRooms();
     }
 
-
-    public boolean isFull() {
-        for (Room room : rooms) {
-            if (!room.isFull())
-                return false;
+    // Funcion que inserta una cantidad fija de Host en la lista Rooms.
+    // Como maximunActiveRooms es 2, significa que solo existen 2 salas, es decir solo dos jugadores a la misma vez.
+    private void setRooms() {
+        for (int r = 1; r < maximumActiveRooms; ++r) {
+            rooms.add(new Room(r));
         }
-        return true;
     }
 
-
+    // Funcion para verificar si hay espacio para un jugador.
     public boolean isEmpty() {
         for (Room room : rooms) {
             if (room.inGame())
@@ -37,24 +35,30 @@ public class Manager {
         return true;
     }
 
+    // Funcion que retorna si hay espacio para un espectador.
+    public boolean isFull() {
+        for (Room room : rooms) {
+            if (!room.isFull())
+                return false;
+        }
+        return true;
+    }
 
-    public String currentGames() {
-        if(isEmpty()) return "No games";
-        StringBuilder s = new StringBuilder();
+    // Funcion que retorna los juegos en curso hasta el momento.
+    // Las salas que tengan como mínimo un jugador, son partidas en curso.
+    public String getCurrentGames() throws JsonProcessingException {
+        if (isEmpty()) return "No games";
 
+        StringBuilder str = new StringBuilder("[");
         for (int i = 0; i < rooms.size(); i++) {
-            Room room = rooms.get(i);
-            if (room.inGame()) {
-                if ((i == rooms.size() - 1) && room1.isEmpty()){
-                    s.append("|").append(room.getNames());
-                } else if (i == rooms.size() - 1) {
-                    s.append(room.getNames());
-                } else{
-                    s.append(room.getNames()).append("|");
-                }
+            if (i ==  rooms.size()-1){
+                str.append(Serializer.serializeRoom(rooms.get(i))).append("]");
+            } else{
+                str.append(Serializer.serializeRoom(rooms.get(i))).append(",");
             }
         }
-        return (!s.toString().equals("")) ? s.toString() : "No games";
+//        System.out.println("JSON :" + str);
+        return str.toString();
     }
 
 
@@ -63,8 +67,10 @@ public class Manager {
             if (room.isEmpty()){
                 client.setRoomNumber(room.getRoomNumber());
                 client.setInRoom(true);
-                Tuple<Integer, Server.ClientHandler> guest = new Tuple<>(client.getClientID(), client);
-                room.addGuest(guest);
+                // Creo el perfil del jugador y lo agrego a la sala como jugador.
+                Guest player = new Guest(client.getClientId(),client.getUsername(), client.getRoomNumber());
+                room.setPlayer(player);
+                player.setInRoom(true);
                 return "You are host of room "+room.getRoomNumber();
             }
         }
@@ -73,25 +79,23 @@ public class Manager {
 
 
     public String addViewer(int roomNumber, Server.ClientHandler client) {
-        Room room = (roomNumber == 1) ? room1 : room2;
-
+        Room room = rooms.get(roomNumber-1);
         if (room.inGame()){
             client.setRoomNumber(room.getRoomNumber());
             client.setInRoom(true);
-            Tuple<Integer, Server.ClientHandler> guest = new Tuple<>(client.getClientID(), client);
-            room.addGuest(guest);
-            return "You are the guest " + (room.size()-1) + " in room " + room.getRoomNumber();
+            // Creo el perfil del espectador y lo agrego a la sala como espectador.
+            Guest viewer = new Guest(client.getClientId(),client.getUsername(), client.getRoomNumber());
+            room.addViewer(viewer);
+            viewer.setInRoom(true);
+            return "You are the guest " + (room.getViewers().size()) + " in room " + room.getRoomNumber();
         }
         return "All rooms full";
     }
 
 
-    public void removeGuest(Server.ClientHandler clientHandler) {
-        if ((clientHandler.getRoomNumber() == 1)) {
-            room1.removeGuest(clientHandler);
-        } else {
-            room2.removeGuest(clientHandler);
-        }
+    public void removeSomeone(int id) {
+        for (Room room : rooms)
+            if (room.contains(id)) room.removeSomebody(id);
     }
 
 
