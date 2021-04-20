@@ -48,7 +48,16 @@ public class Mono extends EntidadMovible{
 
             for(int i = 0; i < area2.length; i++) {
                 for(int e = 0; e < getArea().length; e++){
-                    if(area2[i] != null && getArea()[e] != null){
+                    if(area2[i] != null && getArea()[e] != null
+                            && area2[i].getFila() >= 0 && area2[i].getFila() < 100
+                            && area2[i].getColumna() >= 0 && area2[i].getColumna() < 100
+
+                            && getArea()[e] != null && getArea()[e].getFila() >= 0 && getArea()[e] != null
+                            && getArea()[e].getFila() < 100
+                            && getArea()[e] != null && getArea()[e].getColumna() >= 0 && getArea()[e] != null
+                            && getArea()[e].getColumna() < 100){
+
+
                         if(area2[i].getFila() == getArea()[e].getFila()
                                 && area2[i].getColumna() == getArea()[e].getColumna()){
                             return entidad.getTipoEntidad();

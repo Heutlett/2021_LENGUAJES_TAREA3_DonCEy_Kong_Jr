@@ -216,7 +216,7 @@ public class MonoController {
     /**
      * Elimina de la matriz los puntos de la matriz donde estaba el area del mono para asignarlo a otra direccion
      */
-    private void limpiarAreaAnteriorMono(){
+    public void limpiarAreaAnteriorMono(){
         for(int i = 0; i < donkeyKongJr.getArea().length; i++){
 
             if(verificarLimitesPosicionMatriz(donkeyKongJr.getArea()[i])){

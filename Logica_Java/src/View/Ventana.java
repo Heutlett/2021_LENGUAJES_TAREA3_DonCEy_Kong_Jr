@@ -17,7 +17,7 @@ public class Ventana extends JFrame {
     private GameManager gameManager;
     private CampoBoton[][] matrizButton;
     private JPanel panel;
-    private Integer WIDTH = 920;
+    private Integer WIDTH = 1020;
     private Integer HEIGHT = 820;
     private ArrayList<String> pressed;
     private JButton botonCocodriloRojo;
@@ -28,6 +28,7 @@ public class Ventana extends JFrame {
     private JLabel entidadSeleccionada;
     private JTextField puntosEntry;
     private JLabel labelPuntuacion;
+    private JLabel labelVidas;
     private int puntos = 0;
 
     private Ventana() {
@@ -62,6 +63,13 @@ public class Ventana extends JFrame {
         labelPuntuacion.setBorder(BorderFactory.createBevelBorder(1, Color.BLACK,Color.BLACK));
         labelPuntuacion.setHorizontalAlignment(SwingConstants.CENTER);
         panel.add(labelPuntuacion);
+
+        labelVidas = new JLabel("Vidas: 1");
+        labelVidas.setFont(new java.awt.Font("CONSOLAS", Font.BOLD, 15));
+        labelVidas.setBounds(910,10, 90,60);
+        labelVidas.setBorder(BorderFactory.createBevelBorder(1, Color.BLACK,Color.BLACK));
+        labelVidas.setHorizontalAlignment(SwingConstants.CENTER);
+        panel.add(labelVidas);
 
         entidadSeleccionada = new JLabel("No ha seleccionado");
         entidadSeleccionada.setFont(new java.awt.Font("CONSOLAS", Font.BOLD, 15));
@@ -298,22 +306,21 @@ public class Ventana extends JFrame {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                // SI GANA
                 if(gameManager.getDonkeyKongJr().isHaGanado()){
-                    JOptionPane.showMessageDialog(null, "Ha ganado, sigue un nivel mas veloz!",
-                            "Aviso!", JOptionPane.INFORMATION_MESSAGE);
-                    gameManager.setNivel(gameManager.getNivel()+1);
                     pressed.clear();
-                    gameManager.setCondicionesIniciales();
+                    gameManager.setReinicioGanar();
                 }
                 if(gameManager.getDonkeyKongJr().isHaPerdido()){
-                    JOptionPane.showMessageDialog(null, "Ha perdido",
-                            "Aviso!", JOptionPane.INFORMATION_MESSAGE);
                     pressed.clear();
-                    gameManager.setCondicionesIniciales();
-                }else{
-                    labelPuntuacion.setText("Puntuacion: " + gameManager.getDonkeyKongJr().getPuntuacion());
-                    actualizarMatrizInterfaz();
+                    gameManager.siHaPerdido();
                 }
+                labelPuntuacion.setText("Puntuacion: " + gameManager.getDonkeyKongJr().getPuntuacion());
+                actualizarMatrizInterfaz();
+                labelVidas.setText("Vidas: " + gameManager.getVidas());
+                gameManager.getCreadorDeMapa().crearLianas();
+                gameManager.getCreadorDeMapa().crearAgua();
+                gameManager.getCreadorDeMapa().crearPlataformas();
 
             }
         }
@@ -424,9 +431,12 @@ public class Ventana extends JFrame {
 
                 // se pueden crear n ventanas
                 Ventana ventana = new Ventana();
+                //Ventana ventana2 = new Ventana();
 
                 ventana.ejecuta();
                 ventana.gameManager.start();
+                //ventana2.ejecuta();
+                //ventana2.gameManager.start();
 
                 //new Ventana().ejecuta();
 

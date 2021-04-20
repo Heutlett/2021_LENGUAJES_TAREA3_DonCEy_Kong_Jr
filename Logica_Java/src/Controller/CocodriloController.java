@@ -98,11 +98,12 @@ public class CocodriloController {
 
         for(int e = 0; e < cocodrilos.size(); e++){
             Cocodrilo cocodrilo = cocodrilos.get(e);
+            /*
             Entidad.TipoEntidad colision = donkeyKongJr.getColisionMono(cocodrilo);
             if(colision == Entidad.TipoEntidad.COCODRILO_AZUL || colision == Entidad.TipoEntidad.COCODRILO_ROJO){
                 donkeyKongJr.setHaPerdido(true);
                 return;
-            }
+            }*/
             if(cocodrilo.getTipoEntidad() == Entidad.TipoEntidad.COCODRILO_ROJO){
                 moverCocodrilosRojos(cocodrilo);
             }else{
@@ -128,7 +129,7 @@ public class CocodriloController {
     private void actualizarCocodrilos(){
         for(int e = 0; e < cocodrilos.size(); e++){
             for(int i = 0; i < cocodrilos.get(e).getArea().length; i++){
-                if(verificarLimitesPosicionMatriz(cocodrilos.get(e).getArea()[i])
+                if(cocodrilos.get(e).getArea() != null && verificarLimitesPosicionMatriz(cocodrilos.get(e).getArea()[i])
                         && cocodrilos.get(e).getArea()[i] != null){
                     matriz[cocodrilos.get(e).getArea()[i].getFila()][cocodrilos.get(e).getArea()[i].getColumna()] =
                             cocodrilos.get(e);
@@ -149,7 +150,7 @@ public class CocodriloController {
         return false;
     }
 
-    private void limpiarAreaAnteriorCocodrilos(){
+    public void limpiarAreaAnteriorCocodrilos(){
 
         for(int e = 0; e < cocodrilos.size(); e++){
             for(int i = 0; i < cocodrilos.get(e).getArea().length; i++){

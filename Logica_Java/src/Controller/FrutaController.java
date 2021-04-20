@@ -1,7 +1,6 @@
 package Controller;
 
 import Models.Entidades.Entidad;
-import Models.Entidades.Movibles.Cocodrilo;
 import Models.Entidades.Movibles.Fruta;
 import Models.Entidades.Utils.PuntoMatriz;
 
@@ -80,6 +79,20 @@ public class FrutaController {
         }
 
     }
+
+    public void limpiarAreaAnteriorFrutas(){
+        for(int e = 0; e < frutas.size(); e++){
+            for(int i = 0; i < frutas.get(e).getArea().length; i++){
+
+                if(verificarLimitesPosicionMatriz(frutas.get(e).getArea()[i])){
+                    matriz[frutas.get(e).getArea()[i].getFila()][frutas.get(e).getArea()[i].getColumna()] = null;
+                }
+            }
+        }
+
+
+    }
+
 
     public Fruta buscarFrutaById(String idFruta){
         for(int i = 0; i < frutas.size(); i++){
