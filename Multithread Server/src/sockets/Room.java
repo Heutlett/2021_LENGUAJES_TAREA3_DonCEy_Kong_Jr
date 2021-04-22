@@ -1,20 +1,23 @@
 package sockets;
 
+import settings.Settings;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Room {
 
-    private final static Integer maximumViewersPerRoom = 2;
+    // Attributes
     private final int roomNumber;
-
     private Guest player = null;
-    private ArrayList<Guest> viewers = new ArrayList<>();
+    private final ArrayList<Guest> viewers = new ArrayList<>();
 
+    // Constructor
     public Room(int roomNumber) {
         this.roomNumber = roomNumber;
     }
 
-
+    // Methods
     public Guest getPlayer() {
         return player;
     }
@@ -33,8 +36,8 @@ public class Room {
         }
     }
 
-
     public boolean contains(int id) {
+        if (player == null ) return false;
         if (player.getId() == id) return true;
         for (Guest viewer : viewers) {
             if (viewer.getId() == id) return true;
@@ -42,22 +45,25 @@ public class Room {
         return false;
     }
 
-    public void removeSomebody(int id) {
+    public void removeSomebody(int id) throws IOException {
+        // To remove a player.
         if (id == player.getId()) {
+            // Disconnect everybody of the room.
+            player.getSocket().endConnection();
+            for (Guest viewer : viewers) { viewer.getSocket().endConnection(); }
+            // Clear the room data.
             viewers.removeAll(viewers);
             player = null;
             return;
         }
-        for (int i = 0; i < viewers.size(); i++) {
-            if (id == viewers.get(i).getId()) {
-                viewers.remove(viewers.get(i));
+        // To remove a viewer.
+        // Search for it in the viewers list and end its connection, then remove it from the server data.
+        for (Guest viewer : viewers) {
+            if (id == viewer.getId()) {
+                viewer.getSocket().endConnection();
+                viewers.remove(viewer);
             }
         }
-    }
-
-
-    public boolean isEmpty() {
-        return viewers.isEmpty();
     }
 
     public boolean inGame() {
@@ -65,7 +71,7 @@ public class Room {
     }
 
     public boolean isFull() {
-        return (viewers.size() == maximumViewersPerRoom);
+        return (viewers.size() == Settings.maximumViewersPerRoom);
     }
 
     public int getRoomNumber() {

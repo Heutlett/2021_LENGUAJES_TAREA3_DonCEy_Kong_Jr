@@ -34,7 +34,11 @@ public class Serializer {
 
         private void setGuests(Room room) {
             // Player
-            player = room.getPlayer().getName();
+            if (room.getPlayer() == null) {
+                player = null;
+            } else{
+                player = room.getPlayer().getName();
+            }
 //            guests.add(room.getPlayer().getName());
             // Viewers
             for (Guest viewer : room.getViewers()) {

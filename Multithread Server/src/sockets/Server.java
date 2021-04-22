@@ -17,7 +17,7 @@ import java.net.SocketException;
 // Server class
 class Server {
 
-    private static volatile Manager manager = new Manager();
+    private static final Manager manager = new Manager();
 
     public static void main(String[] args)
     {
@@ -79,6 +79,7 @@ class Server {
         private String username;
         private int roomNumber;
         private boolean inRoom = false;
+        private boolean isPlayer = false;
 
         // Constructor
         public ClientHandler(Socket socket)
@@ -105,10 +106,10 @@ class Server {
             JSONObject obj = new JSONObject(json);
             username = obj.getString("username");
             String type = obj.getString("type");
-
+            String s = "";
             if (type.equalsIgnoreCase("player")) {
-                String s = Server.manager.addPlayer(this); // Agregar a sala.
-                System.out.printf("✘ Message to %s: %s.%n", username, Server.manager.getCurrentGames());
+                s = Server.manager.addPlayer(this); // Agregar a sala.
+                System.out.printf("☰ Update %s%n", Server.manager.getCurrentGames());
                 return s;
             } else if (type.equalsIgnoreCase("viewer")){
                 if (Server.manager.isEmpty()) return "No games."; // Existen partidas en juego?
@@ -116,16 +117,34 @@ class Server {
                 System.out.printf("✘ Message to %s: %s.%n", username, currentGames);
                 out.println(currentGames); // Enviar partidas en juego.
                 out.flush();
-                return Server.manager.addViewer(Integer.parseInt(in.readLine()), this); // Agregar a sala.
+                s = Server.manager.addViewer(Integer.parseInt(in.readLine()), this); // Agregar a sala.
+                System.out.printf("☰ Update %s%n", Server.manager.getCurrentGames());
+                return s;
             }
             System.out.println("▙ ERROR. Could not log in!%n");
             return "I do not know what to do.";
         }
 
-        private String gameProcedure(String json) throws JsonProcessingException {
-            System.out.printf("✘ Message to %s: %s.%n", username, Server.manager.getCurrentGames());
-            System.out.printf("▙ Note: Already log in Host %d.%n", roomNumber);
-            return Server.manager.updateMatrix(json);
+        private String gameProcedure(String json) {
+//            System.out.printf("✘ Message to %s: %s.%n", username, Server.manager.getCurrentGames());
+            String jsonMatrix = "";
+            System.out.print("➤ Updated Matrix because of player\n");
+            jsonMatrix = Server.manager.updateMatrix(json);
+            return jsonMatrix;
+        }
+        private String getMatrix(){
+            return "This is the last matrix";
+        }
+
+
+        private void LogOut() throws IOException {
+            inRoom = false;
+            isPlayer = false;
+            Server.manager.removeSomeone(this.id);
+        }
+
+        public void endConnection() throws IOException {
+            clientSocket.close();
         }
 
         public void run()
@@ -136,30 +155,42 @@ class Server {
                 // get the outputstream and inputstream of client
                 out = new PrintWriter(clientSocket.getOutputStream(), true);
                 in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-                String jsonIn = null;
-                String jsonOut = null;
+                String jsonIn;
+                String jsonOut;
 
-                while (!(jsonIn = in.readLine()).equals("exit")) {
+                while (true) {
+                    jsonIn = in.readLine();
+                    if (jsonIn.equals("exit")) break;
                     System.out.printf("%n● Message from Cliente: %s%n",jsonIn);
-                    // Process Message.
-                    jsonOut = (!inRoom) ? logIn(jsonIn) : gameProcedure(jsonIn);
-//                    if (!inRoom){
+
+
+//                     Process Message.
+//                    jsonOut = (!inRoom) ? logIn(jsonIn) : gameProcedure(jsonIn);
+                    if (!inRoom) {
+                        jsonOut = logIn(jsonIn);
+                    }else{
+//                        System.out.printf("▙ Note: Already log in Host %d.%n", roomNumber);
 //                        jsonOut = logIn(jsonIn);
-//                    }else{
-//                        jsonOut = logIn(jsonIn);
-//                    }
+                        jsonOut = (isPlayer) ? gameProcedure(jsonIn) : getMatrix();
+                    }
+
+
                     // Reply to client.
                     System.out.printf("✘ Message to %s: %s.%n", username, jsonOut);
                     out.println(jsonOut);
                     out.flush();
                 }
                 // Remove client from guestsArray.
-                Server.manager.removeSomeone(this.id);
+                LogOut();
             }
             catch (IOException | NullPointerException e) {
                 e.printStackTrace();
                 System.out.println("▙ ERROR. Connection interrupted!");
-                Server.manager.removeSomeone(this.id);
+                try {
+                    LogOut();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
             }
             finally {
                 try {
@@ -171,9 +202,7 @@ class Server {
                     }
                 }
                 catch (IOException e) {
-//                    e.printStackTrace();
                     System.out.println("▙ ERROR. Client crashed!");
-                    Server.manager.removeSomeone(this.id);
                 }
             }
         }
@@ -191,10 +220,6 @@ class Server {
             this.roomNumber = roomNumber;
         }
 
-        public boolean isInRoom() {
-            return inRoom;
-        }
-
         public void setInRoom(boolean inRoom) {
             this.inRoom = inRoom;
         }
@@ -202,6 +227,11 @@ class Server {
         public int getClientId() {
             return id;
         }
+
+        public void setPlayer(boolean player) {
+            isPlayer = player;
+        }
+
     }
 
 
