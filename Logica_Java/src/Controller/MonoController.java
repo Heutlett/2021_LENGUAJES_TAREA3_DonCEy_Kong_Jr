@@ -153,7 +153,6 @@ public class MonoController {
                             donkeyKongJr.setPuntuacion((int) (donkeyKongJr.getPuntuacion()+fruta.getPuntos()));
                             frutaController.borrarFruta(fruta);
                         }
-                        System.out.println(idFrutaBorrar);
                     }
                 }
 

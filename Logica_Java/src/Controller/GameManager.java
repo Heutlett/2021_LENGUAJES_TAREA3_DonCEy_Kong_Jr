@@ -59,7 +59,7 @@ public class GameManager extends Thread{
         creadorDeMapa = new CreadorDeMapa(matriz,lianas,plataformas,agua, trofeo);
         creadorDeMapa.inicializarMapa();
 
-        vidas = 10;
+        vidas = 3;
         setCondicionesIniciales();
         new HiloMoverCocodrilosFrutas().start();
     }

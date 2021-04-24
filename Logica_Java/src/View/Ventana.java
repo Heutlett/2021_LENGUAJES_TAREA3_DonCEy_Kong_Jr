@@ -252,6 +252,7 @@ public class Ventana extends JFrame {
                 if(gameManager.getMatriz()[fila][columna].getTipoEntidad() == Entidad.TipoEntidad.VACIO
                         && matrizButton[fila][columna] != null){
                     matrizButton[fila][columna].setId("vacio");
+                    matrizButton[fila][columna].setBackground(Color.BLACK);
                 }
 
                 if(gameManager.getMatriz()[fila][columna].getTipoEntidad() != Entidad.TipoEntidad.VACIO && matrizButton[fila][columna] != null){
