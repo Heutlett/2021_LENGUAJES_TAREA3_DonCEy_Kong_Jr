@@ -43,7 +43,10 @@ public class GameManager extends Thread{
         id = "gameManager" + count;
         System.out.println("Se ha creado un nuevo juego, asignado a: gamenager" + count);
         count++;
-        nivel = 15;
+
+        vidas = 1;
+        nivel = 1;
+
         contadorCaida = 0;
         donkeyKongJr = new Mono("dkjr", POSICION_INICIAL, EntidadMovible.Direccion.DERECHA, Entidad.TipoEntidad.MONO);
         cocodrilos =  new ArrayList<>();
@@ -59,7 +62,7 @@ public class GameManager extends Thread{
         creadorDeMapa = new CreadorDeMapa(matriz,lianas,plataformas,agua, trofeo);
         creadorDeMapa.inicializarMapa();
 
-        vidas = 3;
+
         setCondicionesIniciales();
         new HiloMoverCocodrilosFrutas().start();
     }
