@@ -11,18 +11,18 @@ int init_game() {
     al_init_ttf_addon();
     al_init_image_addon();
     al_init_primitives_addon();
-    init_monkey();
-    init_kremlin();
-    init_fruit();
-    init_key();
+
 
     display = al_create_display(690,700);
     queue = al_create_event_queue();
     timer = al_create_timer(1.0/60);
 
     font = al_load_ttf_font("../resources/bahnschrift.ttf",64,0);
-    //monkey = al_load_bitmap("../resources/walk_right2.png");
     background = al_load_bitmap("../resources/background.jpeg");
+    init_monkey();
+    init_kremlin();
+    init_fruit();
+    init_key();
 
     al_start_timer(timer);
 
@@ -35,6 +35,7 @@ int init_game() {
 }
 
 int run(){
+    //running = true;
     while (running) {
 
         ALLEGRO_EVENT event;
@@ -51,11 +52,15 @@ int run(){
 
             //Dibujar aqui*****************************
             draw_kremlinXY(300, 400, 1);
-            draw_kremlinXY(200, 600,2);
+            draw_kremlinXY(500, 400, 2);
+
 
             draw_fruitXY(310,100,1);
             draw_fruitXY(350,100,2);
             draw_fruitXY(390,100,3);
+            //draw_fruitXY(190,100,3);
+
+
 
             draw_keyXY(500,500);
             //*****************************************
@@ -92,18 +97,15 @@ int run(){
         if (event.type == ALLEGRO_EVENT_KEY_UP){
             pressed = false;
         }
-
-        //if(x > width) x = - al_get_bitmap_width(monkey_bitmap);
     }
 
     al_destroy_display(display);
     al_uninstall_keyboard();
     al_destroy_timer(timer);
-    //al_destroy_bitmap(monkey);
     destroy_monkey();
     destroy_kremlin();
     destroy_fruit();
-    destroy_key();
+    //destroy_key();
     al_destroy_bitmap(background);
     al_destroy_font(font);
     return 0;

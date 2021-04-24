@@ -5,8 +5,8 @@
 #include "monkey.h"
 
 void init_monkey() {
-    al_init();
-    al_init_image_addon();
+    //al_init();
+    //al_init_image_addon();
     monkeyL = al_load_bitmap("../resources/walk_left2.png");
     monkeyR = al_load_bitmap("../resources/walk_right2.png");
 }

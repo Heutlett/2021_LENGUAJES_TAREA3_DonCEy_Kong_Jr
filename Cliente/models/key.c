@@ -5,8 +5,8 @@
 #include "key.h"
 
 void init_key() {
-    al_init();
-    al_init_image_addon();
+    //al_init();
+    //al_init_image_addon();
     key = al_load_bitmap("../resources/key.png");
 }
 

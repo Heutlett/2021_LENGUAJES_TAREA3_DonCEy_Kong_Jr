@@ -5,8 +5,8 @@
 #include "kremlin.h"
 
 void init_kremlin() {
-    al_init();
-    al_init_image_addon();
+    //al_init();
+    //al_init_image_addon();
     kremlinRU = al_load_bitmap("../resources/redcroc_onvine_up.png");
     kremlinRD = al_load_bitmap("../resources/redcroc_onvine_down.png");
     kremlinBU = al_load_bitmap("../resources/bluecroc_onvine_up.png");

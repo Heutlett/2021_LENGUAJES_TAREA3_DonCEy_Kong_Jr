@@ -5,8 +5,8 @@
 #include "fruit.h"
 
 void init_fruit() {
-    al_init();
-    al_init_image_addon();
+    //al_init();
+    //al_init_image_addon();
     banana = al_load_bitmap("../resources/banana.png");
     apple = al_load_bitmap("../resources/apple.png");
     mango = al_load_bitmap("../resources/mango.png");
