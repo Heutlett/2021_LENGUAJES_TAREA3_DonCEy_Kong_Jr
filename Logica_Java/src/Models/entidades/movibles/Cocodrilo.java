@@ -1,5 +1,5 @@
-package Models.Entidades.Movibles;
-import Models.Entidades.Utils.PuntoMatriz;
+package models.entidades.movibles;
+import models.entidades.utils.PuntoMatriz;
 
 import java.util.Arrays;
 

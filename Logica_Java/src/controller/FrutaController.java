@@ -1,8 +1,8 @@
-package Controller;
+package controller;
 
-import Models.Entidades.Entidad;
-import Models.Entidades.Movibles.Fruta;
-import Models.Entidades.Utils.PuntoMatriz;
+import models.entidades.Entidad;
+import models.entidades.movibles.Fruta;
+import models.entidades.utils.PuntoMatriz;
 
 import java.util.ArrayList;
 

@@ -1,7 +1,7 @@
-package Models.Entidades.Estaticas;
+package models.entidades.estaticas;
 
-import Models.Entidades.Entidad;
-import Models.Entidades.Utils.PuntoMatriz;
+import models.entidades.Entidad;
+import models.entidades.utils.PuntoMatriz;
 
 public class EntidadEstatica extends Entidad {
 

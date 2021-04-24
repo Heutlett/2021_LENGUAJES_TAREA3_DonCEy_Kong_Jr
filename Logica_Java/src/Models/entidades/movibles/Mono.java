@@ -1,7 +1,7 @@
-package Models.Entidades.Movibles;
+package models.entidades.movibles;
 
-import Models.Entidades.Entidad;
-import Models.Entidades.Utils.PuntoMatriz;
+import models.entidades.Entidad;
+import models.entidades.utils.PuntoMatriz;
 
 
 

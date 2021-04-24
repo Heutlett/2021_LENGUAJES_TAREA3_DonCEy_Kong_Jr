@@ -1,11 +1,11 @@
-package Controller;
+package controller;
 
-import Models.Entidades.Entidad;
-import Models.Entidades.Estaticas.EntidadEstatica;
-import Models.Entidades.Movibles.Cocodrilo;
-import Models.Entidades.Movibles.EntidadMovible;
-import Models.Entidades.Movibles.Mono;
-import Models.Entidades.Utils.PuntoMatriz;
+import models.entidades.Entidad;
+import models.entidades.estaticas.EntidadEstatica;
+import models.entidades.movibles.Cocodrilo;
+import models.entidades.movibles.EntidadMovible;
+import models.entidades.movibles.Mono;
+import models.entidades.utils.PuntoMatriz;
 
 import java.util.ArrayList;
 

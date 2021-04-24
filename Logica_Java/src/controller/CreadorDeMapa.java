@@ -1,8 +1,8 @@
-package Controller;
+package controller;
 
-import Models.Entidades.Entidad;
-import Models.Entidades.Estaticas.EntidadEstatica;
-import Models.Entidades.Utils.PuntoMatriz;
+import models.entidades.Entidad;
+import models.entidades.estaticas.EntidadEstatica;
+import models.entidades.utils.PuntoMatriz;
 
 public class CreadorDeMapa {
 

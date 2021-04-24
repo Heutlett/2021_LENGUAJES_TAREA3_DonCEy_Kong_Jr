@@ -1,9 +1,9 @@
-package View;
-import Controller.GameManager;
-import Models.Entidades.Entidad;
-import Models.Entidades.Movibles.EntidadMovible;
-import Models.Entidades.Movibles.Fruta;
-import Models.Entidades.Utils.PuntoMatriz;
+package view;
+import controller.GameManager;
+import models.entidades.Entidad;
+import models.entidades.movibles.EntidadMovible;
+import models.entidades.movibles.Fruta;
+import models.entidades.utils.PuntoMatriz;
 
 import javax.swing.*;
 import java.awt.*;

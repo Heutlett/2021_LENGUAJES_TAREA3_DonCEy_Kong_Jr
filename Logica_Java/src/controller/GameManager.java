@@ -1,12 +1,13 @@
-package Controller;
+package controller;
 
-import Models.Entidades.Entidad;
-import Models.Entidades.Estaticas.EntidadEstatica;
-import Models.Entidades.Movibles.Cocodrilo;
-import Models.Entidades.Movibles.EntidadMovible;
-import Models.Entidades.Movibles.Fruta;
-import Models.Entidades.Movibles.Mono;
-import Models.Entidades.Utils.PuntoMatriz;
+import models.entidades.Entidad;
+import models.entidades.estaticas.EntidadEstatica;
+import models.entidades.movibles.Cocodrilo;
+import models.entidades.movibles.EntidadMovible;
+import models.entidades.movibles.Fruta;
+import models.entidades.movibles.Mono;
+import models.entidades.utils.JSON_Generator;
+import models.entidades.utils.PuntoMatriz;
 
 import java.util.ArrayList;
 
@@ -99,7 +100,7 @@ public class GameManager extends Thread{
         if(vidas == 0){
             setCondicionesIniciales();
             vidas = 1;
-            nivel = 15;
+            nivel = 1;
             donkeyKongJr.setPuntuacion(0);  
         }else{
             monoController.limpiarAreaAnteriorMono();
@@ -391,11 +392,14 @@ public class GameManager extends Thread{
                     creadorDeMapa.crearAgua();
                     creadorDeMapa.crearPlataformas();
                     creadorDeMapa.crearTrofeo();
+                    //imprimirMatriz();
 
+                    System.out.println(JSON_Generator.generateMatrizJSON(matriz,nivel, donkeyKongJr.getPuntuacion(),
+                            vidas, donkeyKongJr.isHaGanado(), donkeyKongJr.isHaPerdido()));
 
                     try {
                         if(250 - nivel * 30 > 10){
-                            sleep(250 - nivel * 10);
+                            sleep(250 - nivel * 30);
                         }else{
                             sleep(20);
                         }

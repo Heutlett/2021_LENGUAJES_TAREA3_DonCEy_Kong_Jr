@@ -1,6 +1,6 @@
-package Models.Entidades;
+package models.entidades;
 
-import Models.Entidades.Utils.PuntoMatriz;
+import models.entidades.utils.PuntoMatriz;
 
 public class Entidad {
 

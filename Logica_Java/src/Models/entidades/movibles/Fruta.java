@@ -1,6 +1,6 @@
-package Models.Entidades.Movibles;
+package models.entidades.movibles;
 
-import Models.Entidades.Utils.PuntoMatriz;
+import models.entidades.utils.PuntoMatriz;
 
 public class Fruta extends EntidadMovible{
 

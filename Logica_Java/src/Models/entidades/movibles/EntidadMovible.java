@@ -1,8 +1,7 @@
-package Models.Entidades.Movibles;
+package models.entidades.movibles;
 
-import Controller.GameManager;
-import Models.Entidades.Entidad;
-import Models.Entidades.Utils.PuntoMatriz;
+import models.entidades.Entidad;
+import models.entidades.utils.PuntoMatriz;
 
 public abstract class EntidadMovible extends Entidad {
     /**
