@@ -2,6 +2,8 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
 #include "ui/GameWindow.h"
+#include "ui/LobbyWindow.h"
+#include "sockets/socket.h"
 #include "stdio.h"
 
 
@@ -17,8 +19,19 @@ void create_grid(){
 
 int main() {
 
-    init_game();
-    run();
+    init_lobby();
+    run_lobby();
+
+//    init_game();
+//    run();
+
+//    start_connection();
+//    //sendMessage("{\"username\": \"Jugador1\",\"type\": \"player\"}");
+//    getRecvMessage();
+//    close_socket();
+
+//    enviar("127.0.0.1",80,"{\"username\": \"Jugador2\",\"type\": \"player\"}");
+//    escuchar(80,"127.0.0.1");
 
     return 0;
 }

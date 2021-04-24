@@ -159,6 +159,10 @@ class Server {
                 String jsonOut;
 
                 while (true) {
+
+                    //out.println("Mensaje del Server!");
+                    //out.flush();
+
                     jsonIn = in.readLine();
                     if (jsonIn.equals("exit")) break;
                     System.out.printf("%n● Message from Cliente: %s%n",jsonIn);

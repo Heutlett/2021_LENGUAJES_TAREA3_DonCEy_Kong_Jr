@@ -46,11 +46,11 @@ class Client {
 //            // test
 //            System.out.println("☯ Testing...");
             String json1;
-//
-//            json1 = "{\"username\": \"Jugador1\",\"type\": \"player\"}";
-//            out.println(json1);
-//            out.flush();
-//            System.out.println("● Server replied: " + in.readLine());
+
+            json1 = "{\"username\": \"Jugador1\",\"type\": \"player\"}";
+            out.println(json1);
+            out.flush();
+            System.out.println("● Server replied: " + in.readLine());
 //
 //            Thread.sleep(2500);
 //            json1 = "{\"username\": \"Jugador2\",\"type\": \"player\"}";
@@ -73,12 +73,12 @@ class Client {
 //            System.out.println("● Server replied: " + in.readLine());
 //            out.println("1");
 //
-            Thread.sleep(2500);
-            json1 = "{\"username\": \"Spectator1.2\",\"type\": \"viewer\"}";
-            out.println(json1);
-            out.flush();
-            System.out.println("● Server replied: " + in.readLine());
-            out.println("1");
+//            Thread.sleep(2500);
+//            json1 = "{\"username\": \"Spectator1.2\",\"type\": \"viewer\"}";
+//            out.println(json1);
+//            out.flush();
+//            System.out.println("● Server replied: " + in.readLine());
+//            out.println("1");
 
 //            Thread.sleep(2500);
 //            json1 = "{\"username\": \"Spectator4\",\"type\": \"viewer\"}";
@@ -91,7 +91,7 @@ class Client {
             while(true){
                 Thread.sleep(8000);
 //                out.println("keypressed");
-                out.println("request matrix");
+//                out.println("request matrix");
 
                 System.out.println("● Server replied: " + in.readLine());
             }

@@ -15,12 +15,14 @@
 static ALLEGRO_DISPLAY *Lobbydisplay;
 static ALLEGRO_EVENT_QUEUE *Lobbyqueue;
 static ALLEGRO_TIMER *Lobbytimer;
-static ALLEGRO_FONT *Lobbyfont;
+static ALLEGRO_FONT *Lobbyfont1;
+static ALLEGRO_FONT *Lobbyfont2;
 
 static ALLEGRO_BITMAP *Lobbybackground;
 
 static bool Lobbyrunning = true;
 
-
+int init_lobby();
+int run_lobby();
 
 #endif //CLIENTE_LOBBYWINDOW_H

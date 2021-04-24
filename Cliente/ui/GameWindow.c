@@ -22,7 +22,6 @@ int init_game() {
     init_monkey();
     init_kremlin();
     init_fruit();
-    init_key();
 
     al_start_timer(timer);
 
@@ -62,7 +61,6 @@ int run(){
 
 
 
-            draw_keyXY(500,500);
             //*****************************************
 
             draw_monkey();
@@ -105,7 +103,6 @@ int run(){
     destroy_monkey();
     destroy_kremlin();
     destroy_fruit();
-    //destroy_key();
     al_destroy_bitmap(background);
     al_destroy_font(font);
     return 0;

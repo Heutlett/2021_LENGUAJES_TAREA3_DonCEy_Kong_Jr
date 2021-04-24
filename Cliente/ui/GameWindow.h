@@ -35,6 +35,5 @@ static char yc[10];
 
 int init_game();
 int run();
-int mainAllegro(int port);
 
 #endif //CLIENTE_GAMEWINDOW_H
