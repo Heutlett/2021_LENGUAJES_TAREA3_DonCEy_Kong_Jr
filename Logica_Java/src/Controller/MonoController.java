@@ -143,7 +143,7 @@ public class MonoController {
             PuntoMatriz p = donkeyKongJr.getArea()[i];
             if(p != null && p.getColumna()+limiteColumna >= 0 && p.getFila()+limiteFila >= 0
                     &&  p.getColumna()+limiteColumna < TAMANO_MATRIZ && p.getFila()+limiteFila < TAMANO_MATRIZ){
-                if(matriz[p.getFila()+limiteFila][p.getColumna()+limiteColumna] != null){
+                if(matriz[p.getFila()+limiteFila][p.getColumna()+limiteColumna].getTipoEntidad() != Entidad.TipoEntidad.VACIO){
 
                     listaTipoEntidades.add(matriz[p.getFila()+limiteFila][p.getColumna()+limiteColumna].getTipoEntidad());
                     if(matriz[p.getFila()+limiteFila][p.getColumna()+limiteColumna].getId().contains("fruta")){
@@ -208,10 +208,10 @@ public class MonoController {
     public void actualizarMono(){
         //System.out.println("Actualizando mono: ");
 
-        //limpiarAreaAnteriorMono();
+        limpiarAreaAnteriorMono();
         for(int i = 0; i < donkeyKongJr.getArea().length; i++){
             //System.out.println(donkeyKongJr.getArea()[i].toString());
-            if(verificarLimitesPosicionMatriz(donkeyKongJr.getArea()[i])){
+            if(verificarLimitesPosicionMatriz(donkeyKongJr.getArea()[i]) && donkeyKongJr.getArea()[i] != null){
                 matriz[donkeyKongJr.getArea()[i].getFila()][donkeyKongJr.getArea()[i].getColumna()] = donkeyKongJr;
             }
         }
@@ -224,7 +224,7 @@ public class MonoController {
         for(int i = 0; i < donkeyKongJr.getArea().length; i++){
 
             if(verificarLimitesPosicionMatriz(donkeyKongJr.getArea()[i]) && donkeyKongJr.getArea()[i] != null){
-                matriz[donkeyKongJr.getArea()[i].getFila()][donkeyKongJr.getArea()[i].getColumna()] = null;
+                matriz[donkeyKongJr.getArea()[i].getFila()][donkeyKongJr.getArea()[i].getColumna()] = Entidad.crearEntidadVacia();
             }
 
         }
@@ -251,7 +251,8 @@ public class MonoController {
 
         PuntoMatriz posicionMono = donkeyKongJr.getPosicion();
 
-        if(posicionMono.getFila()+2 < TAMANO_MATRIZ && matriz[posicionMono.getFila()+2][posicionMono.getColumna()] != null
+        if(posicionMono.getFila()+2 < TAMANO_MATRIZ
+                && matriz[posicionMono.getFila()+2][posicionMono.getColumna()].getTipoEntidad() != Entidad.TipoEntidad.VACIO
                 && matriz[posicionMono.getFila()+2][posicionMono.getColumna()].getTipoEntidad() == Entidad.TipoEntidad.PLATAFORMA ){
 
             return true;

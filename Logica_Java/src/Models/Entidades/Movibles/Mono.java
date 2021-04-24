@@ -43,6 +43,8 @@ public class Mono extends EntidadMovible{
     }
 
     public TipoEntidad getColisionMono(Entidad entidad){
+
+
         if(entidad != null && entidad.getArea() != null){
             PuntoMatriz[] area2 = entidad.getArea();
 

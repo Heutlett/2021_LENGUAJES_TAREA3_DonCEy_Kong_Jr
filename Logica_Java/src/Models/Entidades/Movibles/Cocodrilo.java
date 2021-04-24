@@ -117,6 +117,14 @@ public class Cocodrilo extends EntidadMovible {
         this.idLiana = idLiana;
     }
 
+    public String toStringCreado(){
+        return "Cocodrilo{" +
+                "tipoEntidad=" + tipoEntidad +
+                ", id='" + id + '\'' +
+                ", idLiana='" + idLiana + '\'' +
+                '}';
+    }
+
     @Override
     public String toString() {
         return "Cocodrilo{" +

@@ -100,13 +100,15 @@ public class CocodriloController {
             Cocodrilo cocodrilo = cocodrilos.get(e);
 
 
-/*
-            Entidad.TipoEntidad colision = donkeyKongJr.getColisionMono(cocodrilo);
-            if(colision == Entidad.TipoEntidad.COCODRILO_AZUL || colision == Entidad.TipoEntidad.COCODRILO_ROJO){
-                donkeyKongJr.setHaPerdido(true);
-                return;
+            try{
+                Entidad.TipoEntidad colision = donkeyKongJr.getColisionMono(cocodrilo);
+                if(colision == Entidad.TipoEntidad.COCODRILO_AZUL || colision == Entidad.TipoEntidad.COCODRILO_ROJO){
+                    donkeyKongJr.setHaPerdido(true);
+                    return;
+                }
+            }catch (Exception exception){
+
             }
-*/
 
             if(cocodrilo.getTipoEntidad() == Entidad.TipoEntidad.COCODRILO_ROJO){
                 moverCocodrilosRojos(cocodrilo);
@@ -140,7 +142,7 @@ public class CocodriloController {
         for(int e = 0; e < cocodrilos.size(); e++){
             //System.out.println(cocodrilos.get(e).toString());
             for(int i = 0; i < cocodrilos.get(e).getArea().length; i++){
-                if(cocodrilos.get(e).getArea() != null && verificarLimitesPosicionMatriz(cocodrilos.get(e).getArea()[i])
+                if(cocodrilos.get(e) != null && cocodrilos.get(e).getArea() != null && verificarLimitesPosicionMatriz(cocodrilos.get(e).getArea()[i])
                         && cocodrilos.get(e).getArea()[i] != null){
                     matriz[cocodrilos.get(e).getArea()[i].getFila()][cocodrilos.get(e).getArea()[i].getColumna()] =
                             cocodrilos.get(e);
@@ -163,15 +165,25 @@ public class CocodriloController {
 
     public void limpiarAreaAnteriorCocodrilos(){
 
-        for(int e = 0; e < cocodrilos.size(); e++){
-            for(int i = 0; i < cocodrilos.get(e).getArea().length; i++){
-                if(cocodrilos.get(e).getArea() != null){
-                    if(verificarLimitesPosicionMatriz(cocodrilos.get(e).getArea()[i])){
-                        matriz[cocodrilos.get(e).getArea()[i].getFila()][cocodrilos.get(e).getArea()[i].getColumna()] = null;
+        try{
+            for(int e = 0; e < cocodrilos.size(); e++){
+                for(int i = 0; i < cocodrilos.get(e).getArea().length; i++){
+                    if(cocodrilos.get(e).getArea() != null){
+                        if(verificarLimitesPosicionMatriz(cocodrilos.get(e).getArea()[i])){
+                            matriz[cocodrilos.get(e).getArea()[i].getFila()][cocodrilos.get(e).getArea()[i].getColumna()]
+                                    = Entidad.crearEntidadVacia();
+                        }
                     }
                 }
             }
+        }catch (IndexOutOfBoundsException e){
+            System.out.println(e.getStackTrace());
+        }catch (Exception e){
+            System.out.println(e.getStackTrace());
         }
+
+
+
     }
 
 

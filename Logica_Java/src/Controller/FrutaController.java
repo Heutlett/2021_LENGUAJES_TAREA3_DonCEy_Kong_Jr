@@ -20,10 +20,11 @@ public class FrutaController {
     public void borrarFruta(Fruta fruta){
         for(int i = 0; i < fruta.getArea().length; i++){
             if(fruta.getArea()[i] != null){
-                matriz[fruta.getArea()[i].getFila()][fruta.getArea()[i].getColumna()] = null;
+                matriz[fruta.getArea()[i].getFila()][fruta.getArea()[i].getColumna()] = Entidad.crearEntidadVacia();
 
             }
         }
+        System.out.println("Se ha borrado una fruta: " + fruta.toString());
         frutas.remove(fruta);
     }
 
@@ -51,6 +52,7 @@ public class FrutaController {
     }
 
     public void actualizarFrutas(){
+        limpiarAreaAnteriorFrutas();
         for(int i = 0; i < frutas.size(); i++){
             actualizarFruta(frutas.get(i));
         }
@@ -74,7 +76,7 @@ public class FrutaController {
         for(int i = 0; i < fruta.getArea().length; i++){
 
             if(verificarLimitesPosicionMatriz(fruta.getArea()[i])){
-                matriz[fruta.getArea()[i].getFila()][fruta.getArea()[i].getColumna()] = null;
+                matriz[fruta.getArea()[i].getFila()][fruta.getArea()[i].getColumna()] = Entidad.crearEntidadVacia();
             }
         }
 
@@ -85,7 +87,7 @@ public class FrutaController {
             for(int i = 0; i < frutas.get(e).getArea().length; i++){
 
                 if(verificarLimitesPosicionMatriz(frutas.get(e).getArea()[i])){
-                    matriz[frutas.get(e).getArea()[i].getFila()][frutas.get(e).getArea()[i].getColumna()] = null;
+                    matriz[frutas.get(e).getArea()[i].getFila()][frutas.get(e).getArea()[i].getColumna()] = Entidad.crearEntidadVacia();
                 }
             }
         }

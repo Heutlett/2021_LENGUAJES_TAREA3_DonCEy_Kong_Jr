@@ -43,7 +43,7 @@ public class GameManager extends Thread{
         id = "gameManager" + count;
         System.out.println("Se ha creado un nuevo juego, asignado a: gamenager" + count);
         count++;
-        nivel = 1;
+        nivel = 15;
         contadorCaida = 0;
         donkeyKongJr = new Mono("dkjr", POSICION_INICIAL, EntidadMovible.Direccion.DERECHA, Entidad.TipoEntidad.MONO);
         cocodrilos =  new ArrayList<>();
@@ -52,15 +52,24 @@ public class GameManager extends Thread{
         plataformas = new EntidadEstatica[11];
         agua = new EntidadEstatica[1];
         matriz = new Entidad[TAMANO_MATRIZ][TAMANO_MATRIZ];
+        setearMatrizVacia();
         frutaController = new FrutaController(matriz, frutas);
         monoController = new MonoController(donkeyKongJr, matriz, frutaController);
         cocodriloController = new CocodriloController(matriz, cocodrilos, lianas, monoController, donkeyKongJr);
         creadorDeMapa = new CreadorDeMapa(matriz,lianas,plataformas,agua, trofeo);
         creadorDeMapa.inicializarMapa();
 
-        vidas = 1;
+        vidas = 10;
         setCondicionesIniciales();
         new HiloMoverCocodrilosFrutas().start();
+    }
+
+    public void setearMatrizVacia(){
+        for(int i = 0; i < TAMANO_MATRIZ; i++){
+            for(int e = 0; e < TAMANO_MATRIZ; e++){
+                matriz[i][e] = Entidad.crearEntidadVacia();
+            }
+        }
     }
 
     public void setCondicionesIniciales(){
@@ -141,7 +150,7 @@ public class GameManager extends Thread{
             //cocodrilo.setVelocidad(nivel);
             cocodrilo.setIdLiana(idLiana);
             cocodrilos.add(cocodrilo);
-            System.out.println(cocodrilo.toString());
+            System.out.println("Se ha creado un cocodrilo: " + cocodrilo.toStringCreado());
         }
     }
 
@@ -152,6 +161,7 @@ public class GameManager extends Thread{
             Fruta fruta = new Fruta(posicion, null, entidadSeleccionada, null, puntos);
             frutas.add(fruta);
             frutaController.actualizarFruta(fruta);
+            System.out.println("Se ha creado una fruta: " + fruta.toString());
         }
     }
 
@@ -168,7 +178,7 @@ public class GameManager extends Thread{
 
         for(int i = 0; i < TAMANO_MATRIZ; i++){
             for(int e = 0; e < TAMANO_MATRIZ; e++){
-                if(matriz[i][e] == null){
+                if(matriz[i][e].getTipoEntidad() == Entidad.TipoEntidad.VACIO){
                     System.out.print(" ⬜ ");
                 }else if(matriz[i][e].getTipoEntidad() == Entidad.TipoEntidad.COCODRILO_AZUL
                         || matriz[i][e].getTipoEntidad() == Entidad.TipoEntidad.COCODRILO_ROJO){
@@ -323,7 +333,7 @@ public class GameManager extends Thread{
         for(int i = 0; i < getDonkeyKongJr().getArea().length; i++){
             if(getDonkeyKongJr().getArea()[i] != null){
 
-                if(matriz[donkeyKongJr.getArea()[i].getFila()-1][donkeyKongJr.getArea()[i].getColumna()] != null){
+                if(matriz[donkeyKongJr.getArea()[i].getFila()-1][donkeyKongJr.getArea()[i].getColumna()].getTipoEntidad() != Entidad.TipoEntidad.VACIO){
 
                     if(matriz[donkeyKongJr.getArea()[i].getFila()-1][donkeyKongJr.getArea()[i].getColumna()].getTipoEntidad() == Entidad.TipoEntidad.PLATAFORMA){
                         return true;
@@ -373,7 +383,7 @@ public class GameManager extends Thread{
                     cocodriloController.moverCocodrilos();
                     frutaController.actualizarFrutas();
                     //monoController.actualizarMono();
-
+                    //System.out.println("Posicion mono: " + donkeyKongJr.getPosicion().toString());
                     creadorDeMapa.crearLianas();
                     creadorDeMapa.crearAgua();
                     creadorDeMapa.crearPlataformas();

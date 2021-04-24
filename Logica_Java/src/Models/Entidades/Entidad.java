@@ -15,12 +15,17 @@ public class Entidad {
         MANZANA,
         MELOCOTON,
         AGUA,
-        TROFEO
+        TROFEO,
+        VACIO
     }
     protected TipoEntidad tipoEntidad;
     protected String id;
     protected volatile PuntoMatriz posicion; // posicion actual en la matriz
     protected volatile PuntoMatriz[] area;  // puntos en la matriz que representan el espacio de la entidad
+
+    public static Entidad crearEntidadVacia(){
+        return new Entidad("", new PuntoMatriz(0,0), new PuntoMatriz[0], TipoEntidad.VACIO);
+    }
 
     public Entidad(String id, PuntoMatriz posicion, PuntoMatriz[] area, TipoEntidad tipoEntidad) {
         this.id = id;

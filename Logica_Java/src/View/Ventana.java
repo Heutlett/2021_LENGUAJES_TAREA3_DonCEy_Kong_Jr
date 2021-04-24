@@ -249,44 +249,45 @@ public class Ventana extends JFrame {
         for(int fila = 0; fila < GameManager.TAMANO_MATRIZ; fila++){
             for(int columna = 0; columna < GameManager.TAMANO_MATRIZ; columna++){
 
-                if(gameManager.getMatriz()[fila][columna] == null && matrizButton[fila][columna] != null){
+                if(gameManager.getMatriz()[fila][columna].getTipoEntidad() == Entidad.TipoEntidad.VACIO
+                        && matrizButton[fila][columna] != null){
                     matrizButton[fila][columna].setId("vacio");
                 }
 
-                if(gameManager.getMatriz()[fila][columna] != null && matrizButton[fila][columna] != null){
+                if(gameManager.getMatriz()[fila][columna].getTipoEntidad() != Entidad.TipoEntidad.VACIO && matrizButton[fila][columna] != null){
 
-                    if(gameManager.getMatriz()[fila][columna] != null && gameManager.getMatriz()[fila][columna].getTipoEntidad() == Entidad.TipoEntidad.MONO){
+                    if(gameManager.getMatriz()[fila][columna].getTipoEntidad() != Entidad.TipoEntidad.VACIO && gameManager.getMatriz()[fila][columna].getTipoEntidad() == Entidad.TipoEntidad.MONO){
                         matrizButton[fila][columna].setBackground(Color.WHITE);
                     }
-                    if(gameManager.getMatriz()[fila][columna] != null && gameManager.getMatriz()[fila][columna].getTipoEntidad() == Entidad.TipoEntidad.PLATAFORMA){
+                    if(gameManager.getMatriz()[fila][columna].getTipoEntidad() != Entidad.TipoEntidad.VACIO && gameManager.getMatriz()[fila][columna].getTipoEntidad() == Entidad.TipoEntidad.PLATAFORMA){
                         matrizButton[fila][columna].setBackground(new Color( 226, 112, 41));
                     }
-                    if(gameManager.getMatriz()[fila][columna] != null && gameManager.getMatriz()[fila][columna].getTipoEntidad() == Entidad.TipoEntidad.LIANA){
+                    if(gameManager.getMatriz()[fila][columna].getTipoEntidad() != Entidad.TipoEntidad.VACIO && gameManager.getMatriz()[fila][columna].getTipoEntidad() == Entidad.TipoEntidad.LIANA){
                         matrizButton[fila][columna].setBackground(Color.ORANGE);
                     }
-                    if(gameManager.getMatriz()[fila][columna] != null && gameManager.getMatriz()[fila][columna].getTipoEntidad() == Entidad.TipoEntidad.AGUA){
+                    if(gameManager.getMatriz()[fila][columna].getTipoEntidad() != Entidad.TipoEntidad.VACIO && gameManager.getMatriz()[fila][columna].getTipoEntidad() == Entidad.TipoEntidad.AGUA){
                         matrizButton[fila][columna].setBackground(Color.CYAN);
                     }
-                    if(gameManager.getMatriz()[fila][columna] != null && gameManager.getMatriz()[fila][columna].getTipoEntidad() == Entidad.TipoEntidad.TROFEO){
+                    if(gameManager.getMatriz()[fila][columna].getTipoEntidad() != Entidad.TipoEntidad.VACIO && gameManager.getMatriz()[fila][columna].getTipoEntidad() == Entidad.TipoEntidad.TROFEO){
                         matrizButton[fila][columna].setBackground(Color.BLUE);
                     }
-                    if(gameManager.getMatriz()[fila][columna] != null && gameManager.getMatriz()[fila][columna].getTipoEntidad() == Entidad.TipoEntidad.COCODRILO_AZUL){
+                    if(gameManager.getMatriz()[fila][columna].getTipoEntidad() != Entidad.TipoEntidad.VACIO && gameManager.getMatriz()[fila][columna].getTipoEntidad() == Entidad.TipoEntidad.COCODRILO_AZUL){
                         matrizButton[fila][columna].setBackground(Color.BLUE);
                     }
-                    if(gameManager.getMatriz()[fila][columna] != null && gameManager.getMatriz()[fila][columna].getTipoEntidad() == Entidad.TipoEntidad.COCODRILO_ROJO){
+                    if(gameManager.getMatriz()[fila][columna].getTipoEntidad() != Entidad.TipoEntidad.VACIO && gameManager.getMatriz()[fila][columna].getTipoEntidad() == Entidad.TipoEntidad.COCODRILO_ROJO){
                         matrizButton[fila][columna].setBackground(Color.RED);
                     }
-                    if(gameManager.getMatriz()[fila][columna] != null && gameManager.getMatriz()[fila][columna].getTipoEntidad() == Entidad.TipoEntidad.BANANO){
+                    if(gameManager.getMatriz()[fila][columna].getTipoEntidad() != Entidad.TipoEntidad.VACIO && gameManager.getMatriz()[fila][columna].getTipoEntidad() == Entidad.TipoEntidad.BANANO){
                         matrizButton[fila][columna].setBackground(Color.YELLOW);
                     }
-                    if(gameManager.getMatriz()[fila][columna] != null && gameManager.getMatriz()[fila][columna].getTipoEntidad() == Entidad.TipoEntidad.MANZANA){
+                    if(gameManager.getMatriz()[fila][columna].getTipoEntidad() != Entidad.TipoEntidad.VACIO && gameManager.getMatriz()[fila][columna].getTipoEntidad() == Entidad.TipoEntidad.MANZANA){
                         matrizButton[fila][columna].setBackground(Color.RED);
                     }
-                    if(gameManager.getMatriz()[fila][columna] != null && gameManager.getMatriz()[fila][columna].getTipoEntidad() == Entidad.TipoEntidad.MELOCOTON){
+                    if(gameManager.getMatriz()[fila][columna].getTipoEntidad() != Entidad.TipoEntidad.VACIO && gameManager.getMatriz()[fila][columna].getTipoEntidad() == Entidad.TipoEntidad.MELOCOTON){
                         matrizButton[fila][columna].setBackground(Color.ORANGE);
                     }
 
-                    if(gameManager.getMatriz()[fila][columna] != null ){
+                    if(gameManager.getMatriz()[fila][columna].getTipoEntidad() != Entidad.TipoEntidad.VACIO ){
                         matrizButton[fila][columna].setId(gameManager.getMatriz()[fila][columna].getId());
                     }else{
                         matrizButton[fila][columna].setId("vacio");

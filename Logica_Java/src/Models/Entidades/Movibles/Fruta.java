@@ -27,6 +27,14 @@ public class Fruta extends EntidadMovible{
         count++;
     }
 
+    @Override
+    public String toString() {
+        return "Fruta{" +
+                "tipoEntidad=" + tipoEntidad +
+                ", id='" + id + '\'' +
+                ", posicion=" + posicion +
+                '}';
+    }
 
     public void actualizarArea(){
         //Fila 0
