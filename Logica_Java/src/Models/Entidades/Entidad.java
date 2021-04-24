@@ -19,8 +19,8 @@ public class Entidad {
     }
     protected TipoEntidad tipoEntidad;
     protected String id;
-    protected PuntoMatriz posicion; // posicion actual en la matriz
-    protected PuntoMatriz[] area;  // puntos en la matriz que representan el espacio de la entidad
+    protected volatile PuntoMatriz posicion; // posicion actual en la matriz
+    protected volatile PuntoMatriz[] area;  // puntos en la matriz que representan el espacio de la entidad
 
     public Entidad(String id, PuntoMatriz posicion, PuntoMatriz[] area, TipoEntidad tipoEntidad) {
         this.id = id;

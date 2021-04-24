@@ -205,8 +205,12 @@ public class MonoController {
         actualizarMono();
     }
 
-    private void actualizarMono(){
+    public void actualizarMono(){
+        //System.out.println("Actualizando mono: ");
+
+        //limpiarAreaAnteriorMono();
         for(int i = 0; i < donkeyKongJr.getArea().length; i++){
+            //System.out.println(donkeyKongJr.getArea()[i].toString());
             if(verificarLimitesPosicionMatriz(donkeyKongJr.getArea()[i])){
                 matriz[donkeyKongJr.getArea()[i].getFila()][donkeyKongJr.getArea()[i].getColumna()] = donkeyKongJr;
             }
@@ -219,7 +223,7 @@ public class MonoController {
     public void limpiarAreaAnteriorMono(){
         for(int i = 0; i < donkeyKongJr.getArea().length; i++){
 
-            if(verificarLimitesPosicionMatriz(donkeyKongJr.getArea()[i])){
+            if(verificarLimitesPosicionMatriz(donkeyKongJr.getArea()[i]) && donkeyKongJr.getArea()[i] != null){
                 matriz[donkeyKongJr.getArea()[i].getFila()][donkeyKongJr.getArea()[i].getColumna()] = null;
             }
 

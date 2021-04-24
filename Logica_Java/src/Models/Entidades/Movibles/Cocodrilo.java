@@ -1,6 +1,7 @@
 package Models.Entidades.Movibles;
 import Models.Entidades.Utils.PuntoMatriz;
 
+import java.util.Arrays;
 
 
 public class Cocodrilo extends EntidadMovible {
@@ -114,5 +115,16 @@ public class Cocodrilo extends EntidadMovible {
 
     public void setIdLiana(String idLiana) {
         this.idLiana = idLiana;
+    }
+
+    @Override
+    public String toString() {
+        return "Cocodrilo{" +
+                "tipoEntidad=" + tipoEntidad +
+                ", id='" + id + '\'' +
+                ", posicion=" + posicion +
+                ", area=" + Arrays.toString(area) +
+                ", idLiana='" + idLiana + '\'' +
+                '}';
     }
 }

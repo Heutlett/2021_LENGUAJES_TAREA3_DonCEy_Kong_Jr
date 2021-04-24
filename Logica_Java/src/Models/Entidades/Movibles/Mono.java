@@ -7,16 +7,16 @@ import Models.Entidades.Utils.PuntoMatriz;
 
 public class Mono extends EntidadMovible{
 
-    private boolean isOnLiana;
+    private volatile boolean isOnLiana;
     private boolean isOnTwoLianas;
-    private boolean isJumping;
+    private volatile boolean isJumping;
     public static Integer TAMANO_AREA = 16;
     private PuntoMatriz manoIzquierda;
     private PuntoMatriz manoDerecha;
-    private boolean isFalling;
+    private volatile boolean isFalling;
     private Integer puntuacion;
-    private boolean haPerdido;
-    private boolean haGanado;
+    private volatile boolean haPerdido;
+    private volatile boolean haGanado;
 
     public boolean isHaPerdido() {
         return haPerdido;

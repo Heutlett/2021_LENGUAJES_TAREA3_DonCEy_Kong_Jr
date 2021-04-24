@@ -8,24 +8,23 @@ import Models.Entidades.Movibles.Fruta;
 import Models.Entidades.Movibles.Mono;
 import Models.Entidades.Utils.PuntoMatriz;
 
-import javax.swing.*;
 import java.util.ArrayList;
 
 public class GameManager extends Thread{
 
-    private Entidad[][] matriz;
+    private volatile Entidad[][] matriz;
 
-    private Mono donkeyKongJr;
+    private volatile Mono donkeyKongJr;
     private EntidadEstatica trofeo;
-    private ArrayList<Cocodrilo> cocodrilos;
-    private ArrayList<Fruta> frutas;
-    private EntidadEstatica[] lianas;
-    private EntidadEstatica[] plataformas;
-    private EntidadEstatica[] agua;
+    private volatile ArrayList<Cocodrilo> cocodrilos;
+    private volatile ArrayList<Fruta> frutas;
+    private volatile EntidadEstatica[] lianas;
+    private volatile EntidadEstatica[] plataformas;
+    private volatile EntidadEstatica[] agua;
 
-    private MonoController monoController;
-    private CocodriloController cocodriloController;
-    private FrutaController frutaController;
+    private volatile MonoController monoController;
+    private volatile CocodriloController cocodriloController;
+    private volatile FrutaController frutaController;
 
     private String id;
     static int count = 0;
@@ -61,14 +60,13 @@ public class GameManager extends Thread{
 
         vidas = 1;
         setCondicionesIniciales();
-        new HiloCocodrilos().start();
+        new HiloMoverCocodrilosFrutas().start();
     }
 
     public void setCondicionesIniciales(){
         monoController.limpiarAreaAnteriorMono();
         donkeyKongJr.moverConPosicion(POSICION_INICIAL);
         contadorCaida = 0;
-        donkeyKongJr.setPuntuacion(0);
         donkeyKongJr.setHaGanado(false);
         donkeyKongJr.setHaPerdido(false);
         donkeyKongJr.setJumping(false);
@@ -89,7 +87,7 @@ public class GameManager extends Thread{
         if(vidas == 0){
             setCondicionesIniciales();
             vidas = 1;
-            nivel = 1;
+            nivel = 15;
             donkeyKongJr.setPuntuacion(0);  
         }else{
             monoController.limpiarAreaAnteriorMono();
@@ -128,21 +126,22 @@ public class GameManager extends Thread{
     public void crearCocodrilo(String idLiana){
 
         if(entidadSeleccionada != null && entidadSeleccionada == Entidad.TipoEntidad.COCODRILO_AZUL
-                || entidadSeleccionada == Entidad.TipoEntidad.COCODRILO_ROJO ){
+                || entidadSeleccionada == Entidad.TipoEntidad.COCODRILO_ROJO ) {
             Cocodrilo cocodrilo = new Cocodrilo(null, null, null, null, null, 0,
                     null);
             cocodrilo.setId("cocodrilo" + cocodrilos.size());
             EntidadEstatica liana = buscarLianaById(idLiana);
-            if(liana != null){
+            if (liana != null) {
                 cocodrilo.setPosicion(liana.getPosicion());
             }
             cocodrilo.direccionAreaAbajo();
             //La area se define en la clase COCODRILO
             cocodrilo.setTipoEntidad(entidadSeleccionada);
             cocodrilo.setDireccion(EntidadMovible.Direccion.ABAJO);
-            cocodrilo.setVelocidad(nivel);
+            //cocodrilo.setVelocidad(nivel);
             cocodrilo.setIdLiana(idLiana);
             cocodrilos.add(cocodrilo);
+            System.out.println(cocodrilo.toString());
         }
     }
 
@@ -171,7 +170,8 @@ public class GameManager extends Thread{
             for(int e = 0; e < TAMANO_MATRIZ; e++){
                 if(matriz[i][e] == null){
                     System.out.print(" ⬜ ");
-                }else{
+                }else if(matriz[i][e].getTipoEntidad() == Entidad.TipoEntidad.COCODRILO_AZUL
+                        || matriz[i][e].getTipoEntidad() == Entidad.TipoEntidad.COCODRILO_ROJO){
                     System.out.print(" ⬛ ");
                 }
             }
@@ -288,35 +288,29 @@ public class GameManager extends Thread{
     public void run() {
         while(true){
 
-            //if(!donkeyKongJr.isHaPerdido()){
-                if(!donkeyKongJr.isJumping() && !donkeyKongJr.isOnLiana() && !getMonoController().estaEnSuelo()
-                    && !verificarChoquePlataformaAbajo() ){
-                    //donkeyKongJr.setFalling(true);
-                    contadorCaida++;
-                    monoController.moverMono(EntidadMovible.Direccion.ABAJO);
-                    //donkeyKongJr.setFalling(true);
-                }else{
-                    if(contadorCaida >= MAXIMA_ALTURA_CAIDA && !donkeyKongJr.isOnLiana()){
-                        donkeyKongJr.setHaPerdido(true);
-                    }
-                    contadorCaida = 0;
+            if(donkeyKongJr.isHaGanado()){
+                setReinicioGanar();
+            }
+            if(donkeyKongJr.isHaPerdido()){
+                siHaPerdido();
+            }
+
+            if(!donkeyKongJr.isJumping() && !donkeyKongJr.isOnLiana() && !getMonoController().estaEnSuelo()
+                && !verificarChoquePlataformaAbajo() ){
+                contadorCaida++;
+                monoController.moverMono(EntidadMovible.Direccion.ABAJO);
+            }else{
+                if(contadorCaida >= MAXIMA_ALTURA_CAIDA && !donkeyKongJr.isOnLiana()){
+                    donkeyKongJr.setHaPerdido(true);
                 }
+                contadorCaida = 0;
+            }
 
-
-                //creadorDeMapa.crearAgua();
-
-                //actualizarMatriz();
-                try {
-                    sleep(20);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            //}else{
-                //start();
-                //break;
-            //}
-
-
+            try {
+                sleep(20);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -345,16 +339,14 @@ public class GameManager extends Thread{
         for(int i = 0; i < getDonkeyKongJr().getArea().length; i++){
             if(getDonkeyKongJr().getArea()[i] != null){
 
-                if(matriz[donkeyKongJr.getArea()[i].getFila()+1][donkeyKongJr.getArea()[i].getColumna()] != null
-                        &&  (donkeyKongJr.getArea()[i].getFila()+1) >= 0 && (donkeyKongJr.getArea()[i].getFila()+1) < TAMANO_MATRIZ
-                        &&  donkeyKongJr.getArea()[i].getColumna() >= 0 && donkeyKongJr.getArea()[i].getColumna() < TAMANO_MATRIZ){
+                if((donkeyKongJr.getArea()[i].getFila()+1) >= 0 && (donkeyKongJr.getArea()[i].getFila()+1) < TAMANO_MATRIZ
+                        &&  donkeyKongJr.getArea()[i].getColumna() >= 0 && donkeyKongJr.getArea()[i].getColumna() < TAMANO_MATRIZ && matriz[donkeyKongJr.getArea()[i].getFila()+1][donkeyKongJr.getArea()[i].getColumna()] != null
+                        ){
 
                     if(matriz[donkeyKongJr.getArea()[i].getFila()+1][donkeyKongJr.getArea()[i].getColumna()].getTipoEntidad() == Entidad.TipoEntidad.PLATAFORMA){
                         return true;
                     }
-
                 }
-
             }
         }
         return false;
@@ -368,21 +360,38 @@ public class GameManager extends Thread{
         this.nivel = nivel;
     }
 
-    class HiloCocodrilos extends Thread {
+    class HiloMoverCocodrilosFrutas extends Thread {
 
         @Override
         public void run() {
-            while (!donkeyKongJr.isHaPerdido()) {
+            while (true) {
 
-                cocodriloController.moverCocodrilos();
-                frutaController.actualizarFrutas();
+                if(!donkeyKongJr.isHaPerdido()) {
+
+                    //matriz = new Entidad[TAMANO_MATRIZ][TAMANO_MATRIZ];
+
+                    cocodriloController.moverCocodrilos();
+                    frutaController.actualizarFrutas();
+                    //monoController.actualizarMono();
+
+                    creadorDeMapa.crearLianas();
+                    creadorDeMapa.crearAgua();
+                    creadorDeMapa.crearPlataformas();
+                    creadorDeMapa.crearTrofeo();
 
 
-                try {
-                    sleep(150 - nivel * 30);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    try {
+                        if(250 - nivel * 30 > 10){
+                            sleep(250 - nivel * 10);
+                        }else{
+                            sleep(20);
+                        }
+
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
+
             }
         }
     }

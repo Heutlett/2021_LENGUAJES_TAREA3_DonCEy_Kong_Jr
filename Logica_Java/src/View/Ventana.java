@@ -1,20 +1,18 @@
 package View;
 import Controller.GameManager;
-import Controller.MonoController;
 import Models.Entidades.Entidad;
 import Models.Entidades.Movibles.EntidadMovible;
 import Models.Entidades.Movibles.Fruta;
 import Models.Entidades.Utils.PuntoMatriz;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
 public class Ventana extends JFrame {
 
-    private GameManager gameManager;
+    private volatile GameManager gameManager;
     private CampoBoton[][] matrizButton;
     private JPanel panel;
     private Integer WIDTH = 1020;
@@ -46,7 +44,7 @@ public class Ventana extends JFrame {
 
         //botonCocodriloAzul = new JButton("Cocodrilo rojo")
 
-        new Hilo().start();
+        new HiloVentana().start();
     }
 
     private void initComponents(){
@@ -203,7 +201,7 @@ public class Ventana extends JFrame {
 
     private void generarEntidad(CampoBoton boton){
 
-        System.out.println(boton.getFila() + " , " + boton.getColumna() );
+        //System.out.println(boton.getFila() + " , " + boton.getColumna() );
 
         if(boton.getId().contains("fruta")){
             Fruta fruta = gameManager.getFrutaController().buscarFrutaById(boton.getId());
@@ -215,7 +213,10 @@ public class Ventana extends JFrame {
 
         }
         if(boton.getId().contains("liana")){
+            //System.out.println("Cantidad de cocodrilos: " + gameManager.getCocodrilos().size());
             gameManager.crearCocodrilo(boton.getId());
+            //System.out.println("Se ha creado un cocodrilo, total: " + gameManager.getCocodrilos().size());
+            //gameManager.imprimirMatriz();
         }
         if(boton.getId().equals("vacio")){
 
@@ -244,11 +245,6 @@ public class Ventana extends JFrame {
     }
 
     private void actualizarMatrizInterfaz(){
-        /*
-        if(gameManager.getDonkeyKongJr().isHaPerdido()){
-             gameManager.setCondicionesIniciales();
-             return;
-        }*/
 
         for(int fila = 0; fila < GameManager.TAMANO_MATRIZ; fila++){
             for(int columna = 0; columna < GameManager.TAMANO_MATRIZ; columna++){
@@ -304,32 +300,27 @@ public class Ventana extends JFrame {
         }
     }
 
-    public class Hilo extends Thread{
+    public class HiloVentana extends Thread{
 
         @Override
         public void run() {
             while (true){
                 try {
-                    sleep(10);
+                    sleep(30);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
                 // SI GANA
                 if(gameManager.getDonkeyKongJr().isHaGanado()){
                     pressed.clear();
-                    gameManager.setReinicioGanar();
                 }
                 if(gameManager.getDonkeyKongJr().isHaPerdido()){
                     pressed.clear();
-                    gameManager.siHaPerdido();
                 }
                 labelPuntuacion.setText("Puntuacion: " + gameManager.getDonkeyKongJr().getPuntuacion());
                 labelVidas.setText("Vidas: " + gameManager.getVidas());
                 labelNivel.setText("Nivel: " + gameManager.getNivel());
                 actualizarMatrizInterfaz();
-                gameManager.getCreadorDeMapa().crearLianas();
-                gameManager.getCreadorDeMapa().crearAgua();
-                gameManager.getCreadorDeMapa().crearPlataformas();
 
             }
         }
