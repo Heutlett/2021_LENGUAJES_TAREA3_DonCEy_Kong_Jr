@@ -309,7 +309,7 @@ public class GameManager extends Thread{
 
                     try {
                         if(250 - nivel * 30 > 10){
-                            sleep(250 - nivel * 30);
+                            sleep(250 - nivel * 50);
                         }else{
                             sleep(20);
                         }
