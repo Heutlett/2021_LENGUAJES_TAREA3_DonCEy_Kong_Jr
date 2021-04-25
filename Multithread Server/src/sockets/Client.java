@@ -14,7 +14,7 @@ class Client {
     {
         // establish a connection by providing host and port
         // number
-        try (Socket socket = new Socket("localhost", 80)) {
+        try (Socket socket = new Socket("localhost", 9090)) {
 
             // writing to server
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
@@ -46,7 +46,7 @@ class Client {
 //            // test
 //            System.out.println("☯ Testing...");
             String json1;
-//
+////
 //            json1 = "{\"username\": \"Jugador1\",\"type\": \"player\"}";
 //            out.println(json1);
 //            out.flush();
@@ -59,12 +59,12 @@ class Client {
 //            System.out.println("● Server replied: " + in.readLine());
 //
 //            Thread.sleep(2500);
-//            json1 = "{\"username\": \"Spectator1\",\"type\": \"viewer\"}";
-//            out.println(json1);
-//            out.flush();
-//            System.out.println("● Server replied: " + in.readLine());
-//            // analizar json
-//            out.println("1");
+            json1 = "{\"username\": \"Spectator1\",\"type\": \"viewer\"}";
+            out.println(json1);
+            out.flush();
+            System.out.println("● Server replied: " + in.readLine());
+            // analizar json
+            out.println("1");
 //
 //            Thread.sleep(2500);
 //            json1 = "{\"username\": \"Spectator2\",\"type\": \"viewer\"}";
@@ -73,12 +73,12 @@ class Client {
 //            System.out.println("● Server replied: " + in.readLine());
 //            out.println("1");
 //
-            Thread.sleep(2500);
-            json1 = "{\"username\": \"Spectator1.2\",\"type\": \"viewer\"}";
-            out.println(json1);
-            out.flush();
-            System.out.println("● Server replied: " + in.readLine());
-            out.println("1");
+//            Thread.sleep(2500);
+//            json1 = "{\"username\": \"Spectator1.2\",\"type\": \"viewer\"}";
+//            out.println(json1);
+//            out.flush();
+//            System.out.println("● Server replied: " + in.readLine());
+//            out.println("1");
 
 //            Thread.sleep(2500);
 //            json1 = "{\"username\": \"Spectator4\",\"type\": \"viewer\"}";

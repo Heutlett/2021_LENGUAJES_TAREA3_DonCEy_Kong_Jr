@@ -49,7 +49,12 @@ public class Room {
         // To remove a player.
         if (id == player.getId()) {
             // Disconnect everybody of the room.
-            player.getSocket().endConnection();
+            try {
+                player.getSocket().endConnection();
+            } catch (IOException e) {
+                e.printStackTrace();
+
+            }
             for (Guest viewer : viewers) { viewer.getSocket().endConnection(); }
             // Clear the room data.
             viewers.removeAll(viewers);

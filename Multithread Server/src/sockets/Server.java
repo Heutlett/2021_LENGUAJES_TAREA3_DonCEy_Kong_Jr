@@ -1,30 +1,23 @@
 package sockets;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import settings.Settings;
-
+import java.net.*;
+import java.io.*;
 import org.json.JSONObject;
 
-import java.io.InputStreamReader;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.PrintWriter;
 
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.net.SocketException;
-
-// Server class
+/**
+ * Clase principal que instancia un socket servidor, acepta una conexión
+ * de un cliente y le envía un entero y una cadena de caracteres.
+ */
 class Server {
-
+    // ATRIBUTES
     private static final Manager manager = new Manager();
 
     public static void main(String[] args)
     {
         ServerSocket server = null;
-
         try {
-
             // server is listening on port 1234
             server = new ServerSocket(Settings.serverPort);
             server.setReuseAddress(true);
@@ -35,10 +28,9 @@ class Server {
             // client request
             while (true) {
 
-                // socket object to receive incoming client
-                // requests
+                // Se acepata una conexión con un cliente. Esta llamada se queda
+                // bloqueada hasta que se arranque el cliente.
                 Socket client = server.accept();
-
 
                 // Displaying that new client is connected
                 // to server
@@ -89,125 +81,152 @@ class Server {
             this.myIP = clientSocket.getInetAddress().getHostAddress();
         }
 
-        /*
-         Funcion de loggeo para el cliente conectado.
-         Output: En caso de tener éxito, devuelve la sala a la que se agregó el cliente si es jugador,
-         si es espectador devuelve además el número correspondiente de espectador.
-         Si no hay espacio, devuelve "Rooms are full".
-         Si no hay partidas, en juego "No games".
+        /**
+         * Funcion que procesa el mensaje que se recibe del cliente
+         * y lo almacena en un buffer de entrada.
+         * Output: buffer de entrada con el mensaje leido.
          */
-        private String logIn(String json) throws IOException {
+        public String read() throws IOException {
+            // Se prepara el flujo de entrada de datos, es decir, la clase encargada de leer datos del socket.
+            DataInputStream bufferEntrada = new DataInputStream (clientSocket.getInputStream());
 
-            if (Server.manager.isFull()) return "Rooms are full";
-            // get the outputstream and inputstream of client
-            PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            // Se crea un dato a leer y se le dice que se rellene con el flujo de entrada de datos.
+            SocketData aux = new SocketData("");
+            aux.readObject (bufferEntrada);
+            System.out.printf("● Received: %s%n", aux);
 
-            JSONObject obj = new JSONObject(json);
-            username = obj.getString("username");
-            String type = obj.getString("type");
-            String s = "";
-            if (type.equalsIgnoreCase("player")) {
-                s = Server.manager.addPlayer(this); // Agregar a sala.
-                System.out.printf("☰ Update %s%n", Server.manager.getCurrentGames());
-                return s;
-            } else if (type.equalsIgnoreCase("viewer")){
-                if (Server.manager.isEmpty()) return "No games."; // Existen partidas en juego?
-                String currentGames = Server.manager.getCurrentGames();
-                System.out.printf("✘ Message to %s: %s.%n", username, currentGames);
-                out.println(currentGames); // Enviar partidas en juego.
-                out.flush();
-                s = Server.manager.addViewer(Integer.parseInt(in.readLine()), this); // Agregar a sala.
-                System.out.printf("☰ Update %s%n", Server.manager.getCurrentGames());
-                return s;
+            // Retorna el mensaje leido sin su tamano.
+            return aux.d;
+        }
+
+        /**
+         * Funcion que procesa el mensaje que se queire enviar al cliente y lo envia
+         * en un buffer de salida.
+         * Input: el mensaje que debe enviarse.
+         * Output: el mensaje parseado a buffer de salida.
+         */
+        public void send(String mensaje) throws IOException {
+            // Se prepara un flujo de salida de datos, es decir, la clase encargada de escribir datos en el socket.
+            PrintWriter reply = new PrintWriter(clientSocket.getOutputStream(), true);
+            // Se envía el dato.
+            reply.write(mensaje);
+            reply.flush();
+            System.out.printf("✘ Sent to %s: %s.%n", username, mensaje);
+        }
+
+        /**
+         * Funcion que controla y define la secuencia de acciones,
+         * para cada pedido del cliente.
+         */
+        private void procedure() throws IOException {
+            String message = read();
+            String reply = "Soy el chico de las poesias";
+            send(reply);
+            String reply2 = "Tu fiel admirador";
+            send(reply2);
+        }
+
+        /**
+         * Funcion bucle para que el thread del client handler se mantenga activo y
+         * constantemente recibiendo pedidos del cliente y respondiendo a ellos.
+         */
+        public void run() {
+            try {
+                while (true) {
+                    procedure(); // Llamar al método que maneja la secuencia de acciones.
+                    Thread.sleep(3000);
+                }
+            } catch (NullPointerException | InterruptedException | IOException e) {
+                e.printStackTrace();
+                System.out.println("▙ ERROR. Connection interrupted!");
+                try {
+                    LogOut(); // Remove client
+                } catch (IOException f) {
+                    f.printStackTrace();
+                    System.out.println("▙ ERROR. Couldn't log out!");
+                }
             }
-            System.out.println("▙ ERROR. Could not log in!%n");
-            return "I do not know what to do.";
-        }
-
-        private String gameProcedure(String json) {
-//            System.out.printf("✘ Message to %s: %s.%n", username, Server.manager.getCurrentGames());
-            String jsonMatrix = "";
-            System.out.print("➤ Updated Matrix because of player\n");
-            jsonMatrix = Server.manager.updateMatrix(json);
-            return jsonMatrix;
-        }
-        private String getMatrix(){
-            return "This is the last matrix";
+            finally {
+                try {
+                    clientSocket.close();
+                } catch (IOException e) { e.printStackTrace();
+                    System.out.printf("ꕥ Client has disconnected: %s\t%s%n", username, myIP);
+                }
+            }
         }
 
 
+
+        /**
+         * Funcion que remueve al cliente de la lista de
+         * participantes de la sala.
+         */
         private void LogOut() throws IOException {
             inRoom = false;
             isPlayer = false;
             Server.manager.removeSomeone(this.id);
         }
 
+        /**
+         * Funcion que cierra el socket del cliente.
+         */
         public void endConnection() throws IOException {
             clientSocket.close();
         }
 
-        public void run()
-        {
-            PrintWriter out = null;
-            BufferedReader in = null;
-            try {
-                // get the outputstream and inputstream of client
-                out = new PrintWriter(clientSocket.getOutputStream(), true);
-                in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-                String jsonIn;
-                String jsonOut;
 
-                while (true) {
-                    jsonIn = in.readLine();
-                    if (jsonIn.equals("exit")) break;
-                    System.out.printf("%n● Message from Cliente: %s%n",jsonIn);
-
-
-//                     Process Message.
-//                    jsonOut = (!inRoom) ? logIn(jsonIn) : gameProcedure(jsonIn);
-                    if (!inRoom) {
-                        jsonOut = logIn(jsonIn);
-                    }else{
-//                        System.out.printf("▙ Note: Already log in Host %d.%n", roomNumber);
-//                        jsonOut = logIn(jsonIn);
-                        jsonOut = (isPlayer) ? gameProcedure(jsonIn) : getMatrix();
-                    }
-
-
-                    // Reply to client.
-                    System.out.printf("✘ Message to %s: %s.%n", username, jsonOut);
-                    out.println(jsonOut);
-                    out.flush();
-                }
-                // Remove client from guestsArray.
-                LogOut();
-            }
-            catch (IOException | NullPointerException e) {
-                e.printStackTrace();
-                System.out.println("▙ ERROR. Connection interrupted!");
-                try {
-                    LogOut();
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
-                }
-            }
-            finally {
-                try {
-                    if (out != null) { out.close(); }
-                    if (in != null) {
-                        in.close();
-                        clientSocket.close();
-                        System.out.printf("ꕥ Client has disconnected: %s\t%s%n", username, myIP);
-                    }
-                }
-                catch (IOException e) {
-                    System.out.println("▙ ERROR. Client crashed!");
-                }
-            }
-        }
+//         Funcion de loggeo para el cliente conectado.
+//         Output: En caso de tener éxito, devuelve la sala a la que se agregó el cliente si es jugador,
+//         si es espectador devuelve además el número correspondiente de espectador.
+//         Si no hay espacio, devuelve "Rooms are full".
+//         Si no hay partidas, en juego "No games".
+//         */
+//        private String logIn(String json) throws IOException {
+//
+//            if (Server.manager.isFull()) return "Rooms are full";
+//            // get the outputstream and inputstream of client
+//            PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+//            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+//
+//            JSONObject obj = new JSONObject(json);
+//            username = obj.getString("username");
+//            String type = obj.getString("type");
+//            String s = "";
+//            if (type.equalsIgnoreCase("player")) {
+//                s = Server.manager.addPlayer(this); // Agregar a sala.
+//                System.out.printf("☰ Update %s%n", Server.manager.getCurrentGames());
+//                return s;
+//            } else if (type.equalsIgnoreCase("viewer")){
+//                if (Server.manager.isEmpty()) return "No games."; // Existen partidas en juego?
+//                String currentGames = Server.manager.getCurrentGames();
+//                System.out.printf("✘ Message to %s: %s.%n", username, currentGames);
+//                out.flush();
+//                out.write(currentGames); // Enviar partidas en juego.
+//
+//                s = Server.manager.addViewer(Integer.parseInt(in.readLine()), this); // Agregar a sala.
+//                System.out.printf("☰ Update %s%n", Server.manager.getCurrentGames());
+//                return s;
+//            }
+//            System.out.println("▙ ERROR. Could not log in!%n");
+//            return "I do not know what to do.";
+//        }
+//
+//        private String gameProcedure(String json) {
+////            System.out.printf("✘ Message to %s: %s.%n", username, Server.manager.getCurrentGames());
+//            String jsonMatrix = "";
+//            System.out.print("➤ Updated Matrix because of player\n");
+//            jsonMatrix = Server.manager.updateMatrix(json);
+//            return jsonMatrix;
+//        }
+//        private String getMatrix(){
+//            return "This is the last matrix";
+//        }
 
 
+
+
+
+        // Getters & Setters
         public String getUsername() {
             return username;
         }
@@ -233,7 +252,4 @@ class Server {
         }
 
     }
-
-
-
 }
