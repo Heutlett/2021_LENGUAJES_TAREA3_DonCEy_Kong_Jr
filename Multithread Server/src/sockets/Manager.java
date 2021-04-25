@@ -2,26 +2,40 @@ package sockets;
 
 import settings.Settings;
 
-import java.io.IOException;
+import org.json.JSONObject;
 import java.util.ArrayList;
 
+/**
+ * Clase Manager
+ * Es la clase principal que hace manejo de las peticiones, resolución
+ * y respuesta, así como el manejo de los miembros de la base de datos
+ * de las salas.
+ */
 public class Manager {
 
+    // Attributes
     private static final ArrayList<Room> rooms = new ArrayList<>();
 
+    // Constructor
     public Manager() {
         setRooms();
     }
 
-    // Funcion que inserta una cantidad fija de Host en la lista Rooms.
-    // Como maximunActiveRooms es 2, significa que solo existen 2 salas, es decir solo dos jugadores a la misma vez.
+    /**
+     * Funcion que inserta una cantidad fija de Salas en la lista Salas.
+     * Nota: maximunActiveRooms es 2, significa que solo existen 2 salas
+     * como maximo, es decir solo dos jugadores a la misma vez.
+     */
     private void setRooms() {
         for (int r = 0; r < Settings.maximumActiveRooms; ++r) {
             rooms.add(new Room(r+1));
         }
     }
 
-    // Funcion para verificar si hay espacio para un jugador.
+    /**
+     * Funcion para verificar si hay espacio para un jugador.
+     * @return boolean
+     */
     public boolean isEmpty() {
         for (Room room : rooms) {
             if (room.inGame())
@@ -30,7 +44,10 @@ public class Manager {
         return true;
     }
 
-    // Funcion que retorna si hay espacio para un espectador.
+    /**
+     * Funcion que retorna si hay espacio para un espectador.
+     * @return boolean
+     */
     public boolean isFull() {
         for (Room room : rooms) {
             if (!room.isFull())
@@ -39,67 +56,111 @@ public class Manager {
         return true;
     }
 
-    // Funcion que retorna los juegos en curso hasta el momento.
-    // Las salas que tengan como mínimo un jugador, son partidas en curso.
+    /**
+     * Funcion que retorna los juegos en curso hasta el momento.
+     * Nota: Las salas que tengan como mínimo un jugador, son partidas en curso.
+     * @return String
+     */
     public String getCurrentGames() {
-        if (isEmpty()) return "No games";
-
         StringBuilder str = new StringBuilder("[");
         for (int i = 0; i < rooms.size(); i++) {
-            if (i ==  rooms.size()-1){
-                str.append(Serializer.serializeRoom(rooms.get(i))).append("]");
-            } else{
-                str.append(Serializer.serializeRoom(rooms.get(i))).append(",");
-            }
+            if (i ==  rooms.size()-1){ str.append(Serializer.serializeRoom(rooms.get(i))).append("]"); }
+            else{ str.append(Serializer.serializeRoom(rooms.get(i))).append(","); }
         }
 //        System.out.println("JSON :" + str);
         return str.toString();
     }
 
+    /**
+     * Funcion que lee el json recibido y agrega al cliente
+     * a una sala, dependiendo de la informacion recibida.
+     * @param json String en formato json recibido del cliente.
+     * @param client Socket del cliente.
+     * @return int
+     */
+    public int addMember(String json, Server.ClientHandler client) {
+        JSONObject obj = new JSONObject(json); // Parse String to JSONObject.
+        // { "username":"Player1", "type":"player", "room":"2" }";
+        client.setUsername(obj.getString("username")); //Set nombre del miembro.
+        String type = obj.getString("type");
+        int room = obj.getInt("room")-1; // -1 por el indice de la sala.
 
-    public String addPlayer(Server.ClientHandler client) {
-        for (Room room : rooms){
-            if (!room.inGame()){
-                client.setRoomNumber(room.getRoomNumber());
-                client.setInRoom(true);
-
-                // Creo el perfil del jugador y lo agrego a la sala como jugador.
-                Guest player = new Guest(client.getClientId(),client.getUsername(), client.getRoomNumber(), client);
-                player.setInRoom(true);
-                client.setPlayer(true);
-                room.setPlayer(player);
-                return "You are host of room "+room.getRoomNumber();
-            }
+        if(type.equalsIgnoreCase("host")) {
+            client.setIsPlayer(true); // Si es jugador, true, sino false.
+            return addHost(room, client);
+        }else if (type.equalsIgnoreCase("guest")) {
+            if (isEmpty()) return 0;
+            return addGuest(room, client);
         }
-        return "All rooms full";
+        return 0;
     }
 
-
-    public String addViewer(int roomNumber, Server.ClientHandler client) {
-        Room room = rooms.get(roomNumber-1);
-        if (room.inGame()){
-            client.setRoomNumber(room.getRoomNumber());
-            client.setInRoom(true);
-            // Creo el perfil del espectador y lo agrego a la sala como espectador.
-            Guest viewer = new Guest(client.getClientId(),client.getUsername(), client.getRoomNumber(), client);
-            room.addViewer(viewer);
-            viewer.setInRoom(true);
-            return "You are the guest " + (room.getViewers().size()) + " in room " + room.getRoomNumber();
-        }
-        return "All rooms full";
+    /**
+     * Funcion que crea una instancia de la clase Miembro con los datos recibidos
+     * y la agrega como Host de la Sala en el numero de sala correspondiente.
+     * Output: 1 si tiene exito, 0 si la sala esta en partida.
+     * @param roomNumber Numero de sala.
+     * @param client Socket del cliente.
+     * @return int
+     */
+    private int addHost(int roomNumber, Server.ClientHandler client) {
+        Room room = rooms.get(roomNumber);
+        if (!room.inGame()) {
+            /* Se crea el perfil del host y lo agrego a la sala como host. */
+            client.setRoomNumber(roomNumber);
+            Member host = new Member(client);
+            room.setHost(host);
+            return 1;
+        } return 0;
     }
 
+    /**
+     * Funcion que crea una instancia de la clase Miembro con los datos recibidos
+     * y la agrega como Guest en el numero de sala correspondiente.
+     * Output: 1 si tiene exito, 0 si la sala esta llena.
+     * @param roomNumber Numero de sala.
+     * @param client Socket del cliente.
+     * @return int
+     */
+    private int addGuest(int roomNumber, Server.ClientHandler client) {
+        Room room = rooms.get(roomNumber);
+        if (!room.isFull()) {
+            /* Se crea el perfil del invitado y lo agrego a la sala como guest. */
+            client.setRoomNumber(roomNumber);
+            Member host = new Member(client);
+            room.addGuest(host);
+            return 1;
+        } return 0;
+    }
 
-    public void removeSomeone(int id) throws IOException {
+    /**
+     * Funcion que remueve a un miembro de la sala.
+     * Nota: Si el miembre es host, saca a todos de la sala.
+     * @param id ID del miembro que se debe remover.
+     */
+    public void removeMember(int id) {
         for (Room room : rooms)
-            if (room.contains(id)) room.removeSomebody(id);
+            if (room.contains(id)) room.removeMember(id);
     }
 
-
-    public String updateMatrix(String json){
-        // do something
-         return "This is a matrix, do with it whatever you pleased!";
+    /**
+     * Funciona que realiza una llamada a la logica y setea el valor
+     * recibido al atributo matrix. Es un sistema de caja negra.
+     * @param roomNumber Numero de sala
+     * @param k Tecla presionada.
+     */
+    public void updateMatrix(int roomNumber, String k) {
+        Room room = rooms.get(roomNumber);
+        room.updateMatrix(k);
     }
 
+    /**
+     * Retorna el atributo matrix.
+     * @return String
+     */
+    public String getMatrix(int roomNumber) {
+        Room room = rooms.get(roomNumber);
+        return room.getMatrix();
+    }
 
 }

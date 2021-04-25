@@ -106,7 +106,7 @@ int enviar(char* mensaje) {
     /* Antes de enviar el entero hay que transformalo a formato red */
     Aux = htonl (Longitud_Cadena);
     send (mySocket, (char *)&Aux, sizeof(Longitud_Cadena),0);
-    printf ("Sent: %lu", Longitud_Cadena-1);
+    printf ("\nSent: %lu", Longitud_Cadena-1);
 
     /* Se envía la cadena */
     send(mySocket, Cadena, Longitud_Cadena, 0);

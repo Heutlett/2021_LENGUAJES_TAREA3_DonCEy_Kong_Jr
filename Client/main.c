@@ -12,7 +12,7 @@ int main( )
 
 
     // Tests //
-    char str1[] = "{\"username\":\"Player1\",\"type\":\"player\"}";
+    char str1[] = "{\"username\":\"Mikael\",\"type\":\"host\",\"room\":2}";
     char str2[] = "IT IS ME";
     // Tests  //
 
@@ -23,15 +23,13 @@ int main( )
     enviar(str1); // json de login.
     escuchar(); // matrix inicial.
 
-    /// If player ///
+    /// If viewer ///
     while (1){
-        enviar("WA"); // como es jugador envia Keypressed.
-        escuchar(); // la matriz despues de actualizar con el movimiento nuevo.
-        sleep(1000);
+        enviar("S"); // como no es es jugador, no envia Keypressed.
+//        sleep(1000);
+        escuchar(); // la matriz que se actualizo antes.
+//        sleep(1000);
     }
-
-
-
 
 
 
