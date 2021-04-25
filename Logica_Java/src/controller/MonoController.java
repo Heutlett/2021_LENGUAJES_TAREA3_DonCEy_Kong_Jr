@@ -5,9 +5,11 @@ import models.entidades.movibles.EntidadMovible;
 import models.entidades.movibles.Fruta;
 import models.entidades.movibles.Mono;
 import models.entidades.utils.PuntoMatriz;
-
 import java.util.ArrayList;
 
+/**
+ * Controlador del mono, en esta clase se manejan todas las funciones del mono, como las colisiones y el movimiento.
+ */
 public class MonoController {
 
     private Mono donkeyKongJr;
@@ -16,13 +18,18 @@ public class MonoController {
     private FrutaController frutaController;
     private String idFrutaBorrar;
 
-
     public MonoController(Mono donkeyKongJr, Entidad[][] matriz, FrutaController frutaController){
         this.donkeyKongJr = donkeyKongJr;
         this.matriz = matriz;
         this.frutaController = frutaController;
     }
 
+    /**
+     * Funcion: reglasMoverDerecha
+     * Se verifica si es posible moverse hacia la derecha.
+     * @param direccion direccion hacia la que se va mover.
+     * @return retorna true si es posible moverse y false de lo contrario.
+     */
     private boolean reglasMoverDerecha(EntidadMovible.Direccion direccion){
 
         if((donkeyKongJr.getPosicion().getColumna()+donkeyKongJr.getLIMITE_DERECHA() < GameManager.TAMANO_MATRIZ)){
@@ -33,6 +40,13 @@ public class MonoController {
         return false;
 
     }
+
+    /**
+     * Funcion: reglasMoverIzquierda
+     * Se verifica si es posible moverse hacia la izquierda.
+     * @param direccion direccion hacia la que se va mover.
+     * @return retorna true si es posible moverse y false de lo contrario.
+     */
     private boolean reglasMoverIzquierda(EntidadMovible.Direccion direccion){
 
         if((donkeyKongJr.getPosicion().getColumna()-donkeyKongJr.getLIMITE_IZQUIERDA() > 0)){
@@ -43,7 +57,12 @@ public class MonoController {
         return false;
     }
 
-
+    /**
+     * Funcion: reglasMoverArriba
+     * Se verifica si es posible moverse hacia la arriba.
+     * @param direccion direccion hacia la que se va mover.
+     * @return retorna true si es posible moverse y false de lo contrario.
+     */
     private boolean reglasMoverArriba(EntidadMovible.Direccion direccion){
 
         if((donkeyKongJr.getPosicion().getFila()-3 > 0)){
@@ -53,6 +72,13 @@ public class MonoController {
         }
         return false;
     }
+
+    /**
+     * Funcion: reglasMoverAbajo
+     * Se verifica si es posible moverse hacia la abajo.
+     * @param direccion direccion hacia la que se va mover.
+     * @return retorna true si es posible moverse y false de lo contrario.
+     */
     private boolean reglasMoverAbajo(EntidadMovible.Direccion direccion){
 
         if((donkeyKongJr.getPosicion().getFila()+2 < GameManager.TAMANO_MATRIZ)){
@@ -63,6 +89,13 @@ public class MonoController {
         return false;
     }
 
+    /**
+     * Funcion: manejarColisiones
+     * Maneja las colisiones del mono con otra entidad, recibe una lista de entidades con las que esta colisionando
+     * y decide que hacer.
+     * @param listaEntidad lista de entidades con las que colisiono
+     * @return true si se puede mover hacia esa entidad y false de lo contrario
+     */
     private boolean manejarColisiones(ArrayList<Entidad.TipoEntidad> listaEntidad){
         if(listaEntidad.isEmpty()){
             donkeyKongJr.setOnLiana(false);
@@ -70,11 +103,7 @@ public class MonoController {
         }
         for(int i = 0; i < listaEntidad.size(); i++){
             Entidad.TipoEntidad tipoEntidad = listaEntidad.get(i);
-            /*
-            if(tipoEntidad == null){
-                donkeyKongJr.setOnLiana(false);
-                return true;
-            }*/
+
             switch (tipoEntidad){
                 case COCODRILO_AZUL:
                 case COCODRILO_ROJO:
@@ -97,21 +126,17 @@ public class MonoController {
                 case TROFEO:
                     donkeyKongJr.setHaGanado(true);
                     return false;
-
             }
-
         }
-
-
-
         return false;
     }
 
     /**
-     * Devuelve true si hay colisiones con plataformas al moverse a la izquierda
-     * @return
+     * Funcion: obtenerColisionAlMoverse
+     * Devuelve una lista con las entidades con las que esta colisionando el mono al moverse
+     * @param direccion direccion hacia la que se movera el mono
+     * @return una lista de entidades con las que colisionara al moverse
      */
-
     private ArrayList<Entidad.TipoEntidad> obtenerColisionAlMoverse(EntidadMovible.Direccion direccion){
 
         ArrayList<Entidad.TipoEntidad> listaTipoEntidades = new ArrayList<>();
@@ -159,29 +184,13 @@ public class MonoController {
         }
         return listaTipoEntidades;
     }
-/*
-    public ArrayList<Entidad.TipoEntidad> obtenerColisionesEstatico(){
-        ArrayList<Entidad.TipoEntidad> listaTipoEntidades = new ArrayList<>();
-        for(int i = 0; i < donkeyKongJr.getArea().length; i++){
-            PuntoMatriz p = donkeyKongJr.getArea()[i];
-            if(p != null && p.getColumna() >= 0 && p.getFila() >= 0
-                    &&  p.getColumna() < TAMANO_MATRIZ && p.getFila() < TAMANO_MATRIZ
-                    &&  p.getColumna() >= 0 && p.getFila() >= 0){
-                if(matriz[p.getFila()][p.getColumna()] != null){
 
-                    listaTipoEntidades.add(matriz[p.getFila()][p.getColumna()].getTipoEntidad());
-
-                }
-
-            }
-        }
-        return listaTipoEntidades;
-    }*/
-
+    /**
+     * Funcion: moverMono
+     * Mueve el mono hacia la direccion pasada por parametro
+     * @param direccion direccion hacia la que se movera el mono
+     */
     public void moverMono(EntidadMovible.Direccion direccion){
-        /**
-         * Antes de mover el mono se debe verificar si chocará con una pared, un mounstrou o una liana
-         */
         limpiarAreaAnteriorMono();
 
         if(direccion == EntidadMovible.Direccion.DERECHA && reglasMoverDerecha(direccion)){
@@ -203,12 +212,14 @@ public class MonoController {
         actualizarMono();
     }
 
+    /**
+     * Funcion: actualizarMono
+     * Actualiza la posicion del mono en la matriz principal del juego
+     */
     public void actualizarMono(){
-        //System.out.println("Actualizando mono: ");
 
         limpiarAreaAnteriorMono();
         for(int i = 0; i < donkeyKongJr.getArea().length; i++){
-            //System.out.println(donkeyKongJr.getArea()[i].toString());
             if(verificarLimitesPosicionMatriz(donkeyKongJr.getArea()[i]) && donkeyKongJr.getArea()[i] != null){
                 matriz[donkeyKongJr.getArea()[i].getFila()][donkeyKongJr.getArea()[i].getColumna()] = donkeyKongJr;
             }
@@ -216,6 +227,7 @@ public class MonoController {
     }
 
     /**
+     * Funcion: limpiarAreaAnteriorMono
      * Elimina de la matriz los puntos de la matriz donde estaba el area del mono para asignarlo a otra direccion
      */
     public void limpiarAreaAnteriorMono(){
@@ -229,9 +241,10 @@ public class MonoController {
     }
 
     /**
-     * Verifica si un punto esta fuera de la matriz
-     * @param posicion
-     * @return
+     * Funcion: verificarLimitesPosicionMatriz
+     * Verifica si un punto esta fuera de la matriz principal del juego
+     * @param posicion posicion que se verificara
+     * @return true si la posicion esta dentro de los limites y false de lo contrario
      */
     private boolean verificarLimitesPosicionMatriz(PuntoMatriz posicion){
 
@@ -245,6 +258,11 @@ public class MonoController {
         return false;
     }
 
+    /**
+     * Funcion: estaEnSuelo
+     * Verifica si el mono esta en el suelo, es decir esta sobre una plataforma y no brincando
+     * @return true si esta en el suelo y false de lo contrario
+     */
     public boolean estaEnSuelo(){
 
         PuntoMatriz posicionMono = donkeyKongJr.getPosicion();
@@ -254,18 +272,30 @@ public class MonoController {
                 && matriz[posicionMono.getFila()+2][posicionMono.getColumna()].getTipoEntidad() == Entidad.TipoEntidad.PLATAFORMA ){
 
             return true;
-
         }
         return false;
-
     }
 
+    /**
+     * Funcion: saltar
+     * Inicia el hilo encargado de hacer saltar al mono
+     * @param direccion direccion hacia donde saltara
+     */
     public void saltar(EntidadMovible.Direccion direccion) {
 
         new HiloSalto(direccion).start();
 
     }
 
+    /**
+     * ################################################################################################################
+     * THREADS HILOS THREADS HILOS THREADS HILOS THREADS HILOS THREADS HILOS THREADS HILOS THREADS HILOS THREADS HILOS
+     * ################################################################################################################
+     */
+
+    /**
+     * Hilo encargado de controlar el salto del mono
+     */
     public class HiloSalto extends Thread{
 
         private EntidadMovible.Direccion direccion;
@@ -295,11 +325,8 @@ public class MonoController {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-
             }
             donkeyKongJr.setJumping(false);
         }
-
     }
-
 }

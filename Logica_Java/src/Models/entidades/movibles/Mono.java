@@ -3,28 +3,18 @@ package models.entidades.movibles;
 import models.entidades.Entidad;
 import models.entidades.utils.PuntoMatriz;
 
-
-
 public class Mono extends EntidadMovible{
 
-    private volatile boolean isOnLiana;
+    private volatile Boolean isOnLiana;
     private boolean isOnTwoLianas;
-    private volatile boolean isJumping;
+    private volatile Boolean isJumping;
     public static Integer TAMANO_AREA = 16;
     private PuntoMatriz manoIzquierda;
     private PuntoMatriz manoDerecha;
-    private volatile boolean isFalling;
-    private Integer puntuacion;
-    private volatile boolean haPerdido;
-    private volatile boolean haGanado;
-
-    public boolean isHaPerdido() {
-        return haPerdido;
-    }
-
-    public void setHaPerdido(boolean haPerdido) {
-        this.haPerdido = haPerdido;
-    }
+    private volatile Boolean isFalling;
+    private volatile Integer puntuacion;
+    private volatile Boolean haPerdido;
+    private volatile Boolean haGanado;
 
     public Mono(String id, PuntoMatriz posicion, Direccion direccion, TipoEntidad tipoEntidad) {
         super(id, posicion, new PuntoMatriz[TAMANO_AREA],tipoEntidad, direccion);
@@ -42,8 +32,13 @@ public class Mono extends EntidadMovible{
         haGanado = false;
     }
 
+    /**
+     * Funcion: getColisionMono
+     * Verifica si el mono esta colisionado con la entidad pasada por parametro
+     * @param entidad entidad que se verificara si esta colisionando
+     * @return el tipo de la entidad que esta colisionando y null si no la esta colisionando
+     */
     public TipoEntidad getColisionMono(Entidad entidad){
-
 
         if(entidad != null && entidad.getArea() != null){
             PuntoMatriz[] area2 = entidad.getArea();
@@ -53,12 +48,10 @@ public class Mono extends EntidadMovible{
                     if(area2[i] != null && getArea()[e] != null
                             && area2[i].getFila() >= 0 && area2[i].getFila() < 100
                             && area2[i].getColumna() >= 0 && area2[i].getColumna() < 100
-
                             && getArea()[e] != null && getArea()[e].getFila() >= 0 && getArea()[e] != null
                             && getArea()[e].getFila() < 100
                             && getArea()[e] != null && getArea()[e].getColumna() >= 0 && getArea()[e] != null
                             && getArea()[e].getColumna() < 100){
-
 
                         if(area2[i].getFila() == getArea()[e].getFila()
                                 && area2[i].getColumna() == getArea()[e].getColumna()){
@@ -68,34 +61,13 @@ public class Mono extends EntidadMovible{
                 }
             }
         }
-
         return null;
     }
 
-    public boolean isHaGanado() {
-        return haGanado;
-    }
-
-    public void setHaGanado(boolean haGanado) {
-        this.haGanado = haGanado;
-    }
-
-    public boolean isOnTwoLianas() {
-        return isOnTwoLianas;
-    }
-
-    public void setOnTwoLianas(boolean onTwoLianas) {
-        isOnTwoLianas = onTwoLianas;
-    }
-
-    public boolean isJumping() {
-        return isJumping;
-    }
-
-    public void setJumping(boolean jumping) {
-        isJumping = jumping;
-    }
-
+    /**
+     * Funcion: direccionAreaDerecha
+     * Actualiza el area del mono cuando se mueve hacia la derecha
+     */
     public void direccionAreaDerecha(){
         this.area = new PuntoMatriz[TAMANO_AREA];
         actualizarDireccionCuerpo();
@@ -103,6 +75,10 @@ public class Mono extends EntidadMovible{
         actualizarDireccionIzquierda();
     }
 
+    /**
+     * Funcion: direccionAreaIzquierda
+     * Actualiza el area del mono cuando se mueve hacia la izquierda
+     */
     public void direccionAreaIzquierda(){
         this.area = new PuntoMatriz[TAMANO_AREA];
         actualizarDireccionCuerpo();
@@ -110,6 +86,10 @@ public class Mono extends EntidadMovible{
         actualizarDireccionIzquierda();
     }
 
+    /**
+     * Funcion: direccionAreaAbajo
+     * Actualiza el area del mono cuando se mueve hacia la abajo
+     */
     public void direccionAreaAbajo() {
         this.area = new PuntoMatriz[TAMANO_AREA];
         actualizarDireccionCuerpo();
@@ -117,6 +97,10 @@ public class Mono extends EntidadMovible{
         actualizarDireccionIzquierda();
     }
 
+    /**
+     * Funcion: direccionAreaArriba
+     * Actualiza el area del mono cuando se mueve hacia la arriba
+     */
     public void direccionAreaArriba() {
         this.area = new PuntoMatriz[TAMANO_AREA];
         actualizarDireccionCuerpo();
@@ -124,8 +108,10 @@ public class Mono extends EntidadMovible{
         actualizarDireccionIzquierda();
     }
 
-
-
+    /**
+     * Funcion: actualizarDireccionCuerpo
+     * Actualiza el area del cuerpo del mono
+     */
     private void actualizarDireccionCuerpo(){
         //Cuerpo
         this.area[5] = new PuntoMatriz(this.posicion.getFila()-1,this.posicion.getColumna());
@@ -141,13 +127,20 @@ public class Mono extends EntidadMovible{
 
     }
 
+    /**
+     * Funcion: actualizarDireccionDerecha
+     * Actualiza el area del mono cuando se mueve hacia la derecha
+     */
     private void actualizarDireccionDerecha(){
         //Brazo y pie derecho
         this.area[7] = new PuntoMatriz(this.posicion.getFila()-1,this.posicion.getColumna()+2);
         manoDerecha = this.area[7];
         this.area[15] = new PuntoMatriz(this.posicion.getFila()+1,this.posicion.getColumna()+2);
     }
-
+    /**
+     * Funcion: actualizarDireccionIzquierda
+     * Actualiza el area del mono cuando se mueve hacia la izquierda
+     */
     private void actualizarDireccionIzquierda(){
         //Brazo y pie izquierdo
         this.area[4] = new PuntoMatriz(this.posicion.getFila()-1,this.posicion.getColumna()-1);
@@ -160,6 +153,30 @@ public class Mono extends EntidadMovible{
      * #################################################################################################
      */
 
+    public boolean isHaGanado() {
+        return haGanado;
+    }
+
+    public void setHaGanado(boolean haGanado) {
+        this.haGanado = haGanado;
+    }
+
+    public boolean isJumping() {
+        return isJumping;
+    }
+
+    public void setJumping(boolean jumping) {
+        isJumping = jumping;
+    }
+
+    public boolean isHaPerdido() {
+        return haPerdido;
+    }
+
+    public void setHaPerdido(boolean haPerdido) {
+        this.haPerdido = haPerdido;
+    }
+
     public boolean isOnLiana() {
         return isOnLiana;
     }
@@ -168,28 +185,8 @@ public class Mono extends EntidadMovible{
         isOnLiana = onLiana;
     }
 
-    public PuntoMatriz getManoIzquierda() {
-        return manoIzquierda;
-    }
-
-    public void setManoIzquierda(PuntoMatriz manoIzquierda) {
-        this.manoIzquierda = manoIzquierda;
-    }
-
-    public PuntoMatriz getManoDerecha() {
-        return manoDerecha;
-    }
-
-    public void setManoDerecha(PuntoMatriz manoDerecha) {
-        this.manoDerecha = manoDerecha;
-    }
-
     public boolean isFalling() {
         return isFalling;
-    }
-
-    public void setFalling(boolean falling) {
-        isFalling = falling;
     }
 
     public Integer getPuntuacion() {
@@ -200,8 +197,6 @@ public class Mono extends EntidadMovible{
         this.puntuacion = puntuacion;
     }
 }
-
-
 
 // Cuerpo del mono
 //

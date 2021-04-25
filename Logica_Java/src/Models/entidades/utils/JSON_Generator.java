@@ -5,11 +5,14 @@ import models.entidades.Entidad;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-
+/**
+ * Generador de json para comunicarse con el cliente, se enviara json que contiene los estados necesarios que debe
+ * mostrar el cliente como la puntuacion, el nivel y las vidas y se envia la matriz principal del juego
+ */
 public class JSON_Generator {
 
-    public static String generateMatrizJSON(Entidad[][] matriz, int nivel, int puntuacion,
-                                            int vidas, boolean haGanado, boolean haPerdido){
+    public static String generateJSON(Entidad[][] matriz, int nivel, int puntuacion,
+                                      int vidas, boolean haGanado, boolean haPerdido){
 
         JSONObject obj = new JSONObject();
 
@@ -37,19 +40,7 @@ public class JSON_Generator {
             }
             matrizJSON.add(fila);
         }
-
         obj.put("matriz ",matrizJSON);
-
-
         return obj.toString();
     }
-
-    public static void main(String[] args) {
-
-        //generateMatrizJSON(null, 0,0,0,false, false);
-
-        //generateMatrizJSON();
-
-    }
-
 }

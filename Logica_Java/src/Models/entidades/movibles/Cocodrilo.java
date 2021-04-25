@@ -6,19 +6,19 @@ import java.util.Arrays;
 
 public class Cocodrilo extends EntidadMovible {
 
-    protected double velocidad;
     private String idLiana;
     public static Integer TAMANO_AREA = 32;
 
-    public Cocodrilo(String id, PuntoMatriz posicion, PuntoMatriz[] area, TipoEntidad tipoEntidad, Direccion direccion, double velocidad, String idLiana) {
+    public Cocodrilo(String id, PuntoMatriz posicion, PuntoMatriz[] area, TipoEntidad tipoEntidad, Direccion direccion, String idLiana) {
         super(id, posicion, area, tipoEntidad, direccion);
-        this.velocidad = velocidad;
         this.idLiana = idLiana;
     }
 
+    /**
+     * Funcion: actualizarDireccionCuerpo
+     * Actualiza el area del cuerpo del cocodrilo
+     */
     private void actualizarDireccionCuerpo(){
-
-
 
         //Fila 0
         this.area[0] = new PuntoMatriz(this.posicion.getFila()-4,this.posicion.getColumna()-1);
@@ -47,6 +47,10 @@ public class Cocodrilo extends EntidadMovible {
         this.area[16] = new PuntoMatriz(this.posicion.getFila()+3,this.posicion.getColumna());
     }
 
+    /**
+     * Funcion: actualizarDireccionArriba
+     * Actualiza el area del cocodrilo cuando se mueve hacia arriba
+     */
     private void actualizarDireccionArriba(){
         //Fila 1
         this.area[23] = new PuntoMatriz(this.posicion.getFila()-3,this.posicion.getColumna()-2);
@@ -61,6 +65,10 @@ public class Cocodrilo extends EntidadMovible {
         this.area[29] = new PuntoMatriz(this.posicion.getFila()+3,this.posicion.getColumna()-1);
     }
 
+    /**
+     * Funcion: actualizarDireccionAbajo
+     * Actualiza el area del cocodrilo cuando se mueve hacia abajo
+     */
     private void actualizarDireccionAbajo(){
         //Fila 0
         this.area[17] = new PuntoMatriz(this.posicion.getFila()-4,this.posicion.getColumna());
@@ -74,6 +82,10 @@ public class Cocodrilo extends EntidadMovible {
         this.area[22] = new PuntoMatriz(this.posicion.getFila()+2,this.posicion.getColumna()+1);
     }
 
+    /**
+     * Funcion: direccionAreaAbajo
+     * Actualiza el area del cocodrilo cuando se dirige hacia abajo
+     */
     @Override
     public void direccionAreaAbajo() {
         this.area = new PuntoMatriz[TAMANO_AREA];
@@ -81,13 +93,17 @@ public class Cocodrilo extends EntidadMovible {
         actualizarDireccionAbajo();
     }
 
+    /**
+     * Funcion: direccionAreaArriba
+     * Actualiza el area del cocodrilo cuando se dirige hacia arriba
+     */
     @Override
     protected void direccionAreaArriba() {
         this.area = new PuntoMatriz[TAMANO_AREA];
         actualizarDireccionCuerpo();
         actualizarDireccionArriba();
     }
-
+    
     @Override
     protected void direccionAreaIzquierda() {
     }
@@ -100,14 +116,6 @@ public class Cocodrilo extends EntidadMovible {
      * SETTERS AND GETTERS
      * #################################################################################################
      */
-
-    public double getVelocidad() {
-        return velocidad;
-    }
-
-    public void setVelocidad(double velocidad) {
-        this.velocidad = velocidad;
-    }
 
     public String getIdLiana() {
         return idLiana;

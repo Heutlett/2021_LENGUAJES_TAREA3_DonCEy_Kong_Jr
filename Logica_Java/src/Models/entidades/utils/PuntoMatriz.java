@@ -14,20 +14,17 @@ public class PuntoMatriz {
         this.columna = columna;
     }
 
+    /**#################################################################################################
+     * SETTERS AND GETTERS
+     * #################################################################################################
+     */
+
     public int getFila() {
         return fila;
     }
 
-    public void setFila(Integer fila) {
-        this.fila = fila;
-    }
-
     public int getColumna() {
         return columna;
-    }
-
-    public void setColumna(Integer columna) {
-        this.columna = columna;
     }
 
     @Override

@@ -4,10 +4,9 @@ import models.entidades.utils.PuntoMatriz;
 
 public class Fruta extends EntidadMovible{
 
-    private double puntos;
-    static int count = 0;
-    private int TAMANO_AREA = 30;
-
+    private Double puntos;
+    static Integer count = 0;
+    private Integer TAMANO_AREA = 30;
 
     public Fruta(PuntoMatriz posicion, PuntoMatriz[] area, TipoEntidad tipoEntidad, Direccion direccion, double puntos) {
         super("", posicion, area, tipoEntidad, direccion);
@@ -20,22 +19,16 @@ public class Fruta extends EntidadMovible{
         if(tipoEntidad == TipoEntidad.MELOCOTON){
             id = "fruta_banano" + count;
         }
-
         this.puntos = puntos;
         this.area = new PuntoMatriz[30];
         actualizarArea();
         count++;
     }
 
-    @Override
-    public String toString() {
-        return "Fruta{" +
-                "tipoEntidad=" + tipoEntidad +
-                ", id='" + id + '\'' +
-                ", posicion=" + posicion +
-                '}';
-    }
-
+    /**
+     * Funcion: actualizarArea
+     * Actualiza el area de la fruta
+     */
     public void actualizarArea(){
         //Fila 0
         this.area[0] = new PuntoMatriz(this.posicion.getFila()-2,this.posicion.getColumna()-2);
@@ -75,7 +68,6 @@ public class Fruta extends EntidadMovible{
         this.area[29] = new PuntoMatriz(this.posicion.getFila()+3,this.posicion.getColumna()+2);
     }
 
-
     @Override
     protected void direccionAreaAbajo() {
 
@@ -105,8 +97,12 @@ public class Fruta extends EntidadMovible{
         return puntos;
     }
 
-    public void setPuntos(double puntos) {
-        this.puntos = puntos;
+    @Override
+    public String toString() {
+        return "Fruta{" +
+                "tipoEntidad=" + tipoEntidad +
+                ", id='" + id + '\'' +
+                ", posicion=" + posicion +
+                '}';
     }
-
 }

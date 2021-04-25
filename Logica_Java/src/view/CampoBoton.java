@@ -2,6 +2,9 @@ package view;
 
 import javax.swing.*;
 
+/**
+ * Encapsula un JBUTTON para que actue como casilla de la matriz en la interfaz del servidor
+ */
 public class CampoBoton extends JButton {
     /**
      * El id es "vacio" en caso de que no haya una entidad
@@ -16,6 +19,11 @@ public class CampoBoton extends JButton {
         this.id = id;
     }
 
+    /**#################################################################################################
+     * SETTERS AND GETTERS
+     * #################################################################################################
+     */
+
     public Integer getFila() {
         return fila;
     }
@@ -28,15 +36,8 @@ public class CampoBoton extends JButton {
         this.id = id;
     }
 
-    public void setFila(Integer fila) {
-        this.fila = fila;
-    }
-
     public Integer getColumna() {
         return columna;
     }
 
-    public void setColumna(Integer columna) {
-        this.columna = columna;
-    }
 }

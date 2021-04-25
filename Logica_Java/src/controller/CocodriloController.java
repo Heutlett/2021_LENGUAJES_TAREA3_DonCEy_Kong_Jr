@@ -6,15 +6,18 @@ import models.entidades.movibles.Cocodrilo;
 import models.entidades.movibles.EntidadMovible;
 import models.entidades.movibles.Mono;
 import models.entidades.utils.PuntoMatriz;
-
 import java.util.ArrayList;
 
+/**
+ * Controlador de los cocodrilos, se encarga del funcionamiento de los cocodrilos, su creacion, movimiento y todas las
+ * funciones necesarias.
+ */
 public class CocodriloController {
 
     private Entidad[][] matriz;
     private ArrayList<Cocodrilo> cocodrilos;
     private EntidadEstatica[] lianas;
-    private int TAMANO_MATRIZ = 100;
+    private Integer TAMANO_MATRIZ = 100;
     private MonoController monoController;
     private Mono donkeyKongJr;
 
@@ -27,17 +30,27 @@ public class CocodriloController {
         this.donkeyKongJr = donkeyKongJr;
     }
 
+    /**
+     * Funcion: compararPosicion
+     * Compara dos puntos de la matriz
+     * @param posicion1 punto1
+     * @param posicion2 punto2
+     * @return true si coinciden y false de lo contrario
+     */
     private boolean compararPosicion(PuntoMatriz posicion1, PuntoMatriz posicion2){
 
         if(posicion1.getFila() == posicion2.getFila() && posicion1.getColumna() == posicion2.getColumna()){
             return true;
         }
-
         return false;
     }
 
+    /**
+     * Funcion: moverCocodrilosRojos
+     * Mueve los cocodrilos rojos
+     * @param cocodrilo cocodrilo que se movera
+     */
     private void moverCocodrilosRojos(Cocodrilo cocodrilo){
-
 
         if(cocodrilo.getDireccion() == EntidadMovible.Direccion.ARRIBA
                 && compararPosicion(cocodrilo.getPosicion(), buscarLianaById(cocodrilo.getIdLiana()).getPosicion())){
@@ -54,7 +67,6 @@ public class CocodriloController {
 
             PuntoMatriz nuevaPosicion = new PuntoMatriz(cocodrilo.getPosicion().getFila()+1,
                     cocodrilo.getPosicion().getColumna());
-
             cocodrilo.moverConPosicion(nuevaPosicion);
 
         }else if(cocodrilo.getDireccion() == EntidadMovible.Direccion.ARRIBA
@@ -62,13 +74,15 @@ public class CocodriloController {
 
             PuntoMatriz nuevaPosicion = new PuntoMatriz(cocodrilo.getPosicion().getFila() - 1,
                     cocodrilo.getPosicion().getColumna());
-
             cocodrilo.moverConPosicion(nuevaPosicion);
         }
     }
 
-
-
+    /**
+     * Funcion: moverCocodrilosAzules
+     * Mueve los cocodrilos azules
+     * @param cocodrilo cocodrilo que se movera
+     */
     private void moverCocodrilosAzules(Cocodrilo cocodrilo){
 
         if(cocodrilo.getDireccion() == EntidadMovible.Direccion.ABAJO){
@@ -77,28 +91,22 @@ public class CocodriloController {
                     cocodrilo.getPosicion().getColumna());
 
             cocodrilo.moverConPosicion(nuevaPosicion);
-
         }
-
-
         if(cocodrilo.getPosicion().getFila() > TAMANO_MATRIZ){
             cocodrilos.remove(cocodrilo);
         }
-
-
     }
 
+    /**
+     * Funcion: moverCocodrilos
+     * Mueve todos los cocodrilos
+     */
     public void moverCocodrilos(){
-
-        /**
-         * FALTA VALIDAR QUE TIPO DE COCODRILO SE MUEVEEE
-         */
 
         limpiarAreaAnteriorCocodrilos();
 
         for(int e = 0; e < cocodrilos.size(); e++) {
             Cocodrilo cocodrilo = cocodrilos.get(e);
-
 
             try{
                 Entidad.TipoEntidad colision = donkeyKongJr.getColisionMono(cocodrilo);
@@ -115,32 +123,17 @@ public class CocodriloController {
             }else{
                 moverCocodrilosAzules(cocodrilo);
             }
-
-
-
         }
-
         actualizarCocodrilos();
-/*
-        ArrayList<Entidad.TipoEntidad> listaColisiones = monoController.obtenerColisionesEstatico();
-
-        // Verifica si colisionó con el mono
-        if(listaColisiones.contains(Entidad.TipoEntidad.COCODRILO_ROJO)
-                || listaColisiones.contains(Entidad.TipoEntidad.COCODRILO_AZUL)){
-
-            donkeyKongJr.setHaPerdido(true);
-        }
-        /
- */
     }
 
-
+    /**
+     * Funcion: actualizarCocodrilos
+     * Actualiza todos los cocodrilos en la matriz principal del juego
+     */
     private void actualizarCocodrilos(){
-        //System.out.println("Actualizando cocodrilos, lista de cocodrilos actual:");
-        //System.out.println("Tamaño lista: " + cocodrilos.size());
 
         for(int e = 0; e < cocodrilos.size(); e++){
-            //System.out.println(cocodrilos.get(e).toString());
             for(int i = 0; i < cocodrilos.get(e).getArea().length; i++){
                 if(cocodrilos.get(e) != null && cocodrilos.get(e).getArea() != null && verificarLimitesPosicionMatriz(cocodrilos.get(e).getArea()[i])
                         && cocodrilos.get(e).getArea()[i] != null){
@@ -151,6 +144,12 @@ public class CocodriloController {
         }
     }
 
+    /**
+     * Funcion: verificarLimitesPosicionMatriz
+     * Verifica si un punto se encuentra dentro de los limites la matriz principal del juego
+     * @param posicion posicion que se verificara
+     * @return true si se encuentra dentro de los limites permitidos y false de lo contrario
+     */
     private boolean verificarLimitesPosicionMatriz(PuntoMatriz posicion){
 
         if(posicion != null
@@ -163,6 +162,10 @@ public class CocodriloController {
         return false;
     }
 
+    /**
+     * Funcion: limpiarAreaAnteriorCocodrilos
+     * Limpia el area anterior de todos los cocodrilos en la matriz principal del juego
+     */
     public void limpiarAreaAnteriorCocodrilos(){
 
         try{
@@ -181,12 +184,14 @@ public class CocodriloController {
         }catch (Exception e){
             System.out.println(e.getStackTrace());
         }
-
-
-
     }
 
-
+    /**
+     * Funcion: buscarLianaById
+     * Busca una liana por id en el arreglo de lianas
+     * @param id id de la liana a buscar
+     * @return la liana si la encuentra y null si no la encuentra
+     */
     private EntidadEstatica buscarLianaById(String id){
         for(int i = 0; i < lianas.length; i++){
             if(lianas[i].getId().equals(id)){

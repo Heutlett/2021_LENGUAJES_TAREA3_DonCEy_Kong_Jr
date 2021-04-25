@@ -12,7 +12,6 @@ public class CreadorDeMapa {
     private EntidadEstatica[] agua;
     private EntidadEstatica trofeo;
 
-
     public CreadorDeMapa(Entidad[][] matriz, EntidadEstatica[] lianas, EntidadEstatica[] plataformas, EntidadEstatica[]
             agua, EntidadEstatica trofeo) {
         this.matriz = matriz;
@@ -31,7 +30,6 @@ public class CreadorDeMapa {
         crearAgua();
         crearTrofeo();
     }
-
 
     public void crearTrofeo(){
         EntidadEstatica trofeo = new EntidadEstatica(null, null, null, null);
@@ -61,7 +59,6 @@ public class CreadorDeMapa {
         for(int e = 0; e < trofeo.getArea().length; e++){
             matriz[ trofeo.getArea()[e].getFila()][trofeo.getArea()[e].getColumna()] = trofeo;
         }
-
     }
 
     public void crearPlataformas(){
@@ -111,7 +108,6 @@ public class CreadorDeMapa {
             plataforma.getArea()[contador] = new PuntoMatriz(12, i);
             contador++;
         }
-
         plataformas[0] = plataforma;
 
         EntidadEstatica plataforma1 = new EntidadEstatica(null, null, null, null);
@@ -129,7 +125,6 @@ public class CreadorDeMapa {
             plataforma1.getArea()[contador] = new PuntoMatriz(23, i);
             contador++;
         }
-
         plataformas[1] = plataforma1;
 
         EntidadEstatica plataforma2 = new EntidadEstatica(null, null, null, null);
@@ -147,11 +142,7 @@ public class CreadorDeMapa {
             plataforma2.getArea()[contador] = new PuntoMatriz(27, i);
             contador++;
         }
-
         plataformas[2] = plataforma2;
-
-
-
 
         EntidadEstatica plataforma3 = new EntidadEstatica(null, null, null, null);
         plataforma3.setId("plataforma3");
@@ -168,7 +159,6 @@ public class CreadorDeMapa {
             plataforma3.getArea()[contador] = new PuntoMatriz(46, i);
             contador++;
         }
-
         plataformas[3] = plataforma3;
 
         EntidadEstatica plataforma4 = new EntidadEstatica(null, null, null, null);
@@ -186,7 +176,6 @@ public class CreadorDeMapa {
             plataforma4.getArea()[contador] = new PuntoMatriz(57, i);
             contador++;
         }
-
         plataformas[4] = plataforma4;
 
         EntidadEstatica plataforma5 = new EntidadEstatica(null, null, null, null);
@@ -204,7 +193,6 @@ public class CreadorDeMapa {
             plataforma5.getArea()[contador] = new PuntoMatriz(65, i);
             contador++;
         }
-
         plataformas[5] = plataforma5;
 
         EntidadEstatica plataforma6 = new EntidadEstatica(null, null, null, null);
@@ -222,9 +210,7 @@ public class CreadorDeMapa {
             plataforma6.getArea()[contador] = new PuntoMatriz(95, i);
             contador++;
         }
-
         plataformas[6] = plataforma6;
-
 
         EntidadEstatica plataforma7 = new EntidadEstatica(null, null, null, null);
         plataforma7.setId("plataforma7");
@@ -257,9 +243,7 @@ public class CreadorDeMapa {
             plataforma7.getArea()[contador] = new PuntoMatriz(95, i);
             contador++;
         }
-
         plataformas[7] = plataforma7;
-
 
         EntidadEstatica plataforma8 = new EntidadEstatica(null, null, null, null);
         plataforma8.setId("plataforma8");
@@ -363,13 +347,8 @@ public class CreadorDeMapa {
             plataforma10.getArea()[contador] = new PuntoMatriz(81, i);
             contador++;
         }
-
         plataformas[10] = plataforma10;
-
-
     }
-
-
 
     private void crearLianaPrueba(){
 
@@ -566,9 +545,7 @@ public class CreadorDeMapa {
             liana13.getArea()[contador] = new PuntoMatriz(i, 42);
             contador++;
         }
-
         lianas[13] = liana13;
-
     }
 
     private void crearAguaPrueba(){
@@ -590,9 +567,6 @@ public class CreadorDeMapa {
             aguaNueva.getArea()[contador] = new PuntoMatriz(96, i);
             contador++;
         }
-
         agua[0] = aguaNueva;
-
     }
-
 }

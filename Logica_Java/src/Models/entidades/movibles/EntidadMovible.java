@@ -3,6 +3,9 @@ package models.entidades.movibles;
 import models.entidades.Entidad;
 import models.entidades.utils.PuntoMatriz;
 
+/**
+ * Clase para las entidades que se pueden mover como el mono, los cocodrilos y las frutas.
+ */
 public abstract class EntidadMovible extends Entidad {
     /**
      * Direccion hacia la que está apuntando el area
@@ -28,8 +31,9 @@ public abstract class EntidadMovible extends Entidad {
     }
 
     /**
+     * Funcion: moverConPosicion
      * Mueve la entidad a una nueva posicion y actualiza su area
-     * @param nuevaPosicion
+     * @param nuevaPosicion posicion hacia donde se movera la entidad
      */
     public void moverConPosicion(PuntoMatriz nuevaPosicion){
         this.posicion = nuevaPosicion;
@@ -37,30 +41,7 @@ public abstract class EntidadMovible extends Entidad {
     }
 
     /**
-     * Mueve la entidad hacia una direccion y actualiza el area
-     * @param direccion
-     *//*
-    public void moverConDireccion(Direccion direccion){
-
-        if(direccion == Direccion.DERECHA && (this.posicion.getColumna()+LIMITE_DERECHA < GameManager.TAMANO_MATRIZ) ){
-            this.direccion = direccion;
-            moverConPosicion(new PuntoMatriz(this.posicion.getFila(), this.posicion.getColumna()+1));
-        }
-        if(direccion == Direccion.IZQUIERDA && (this.posicion.getColumna()-LIMITE_IZQUIERDA > 0) ){
-            this.direccion = direccion;
-            moverConPosicion(new PuntoMatriz(this.posicion.getFila(), this.posicion.getColumna()-1));
-        }
-        if(direccion == Direccion.ARRIBA && (this.posicion.getFila()-2 > 0) ){
-            this.direccion = direccion;
-            moverConPosicion(new PuntoMatriz(this.posicion.getFila()-LIMITE_ARRIBA, this.posicion.getColumna()));
-        }
-        if(direccion == Direccion.ABAJO && (this.posicion.getFila()+2 < GameManager.TAMANO_MATRIZ) ){
-            this.direccion = direccion;
-            moverConPosicion(new PuntoMatriz(this.posicion.getFila()+LIMITE_ABAJO, this.posicion.getColumna()));
-        }
-    }*/
-
-    /**
+     * Funcion: actualizarArea
      * Actualiza el area de la entidad dependiendo de la direccion hacia la que debe apuntar
      */
     public void actualizarArea(){
@@ -94,38 +75,6 @@ public abstract class EntidadMovible extends Entidad {
 
     protected abstract void direccionAreaDerecha();
 
-    public Integer getLIMITE_DERECHA() {
-        return LIMITE_DERECHA;
-    }
-
-    public void setLIMITE_DERECHA(Integer LIMITE_DERECHA) {
-        this.LIMITE_DERECHA = LIMITE_DERECHA;
-    }
-
-    public Integer getLIMITE_IZQUIERDA() {
-        return LIMITE_IZQUIERDA;
-    }
-
-    public void setLIMITE_IZQUIERDA(Integer LIMITE_IZQUIERDA) {
-        this.LIMITE_IZQUIERDA = LIMITE_IZQUIERDA;
-    }
-
-    public Integer getLIMITE_ARRIBA() {
-        return LIMITE_ARRIBA;
-    }
-
-    public void setLIMITE_ARRIBA(Integer LIMITE_ARRIBA) {
-        this.LIMITE_ARRIBA = LIMITE_ARRIBA;
-    }
-
-    public Integer getLIMITE_ABAJO() {
-        return LIMITE_ABAJO;
-    }
-
-    public void setLIMITE_ABAJO(Integer LIMITE_ABAJO) {
-        this.LIMITE_ABAJO = LIMITE_ABAJO;
-    }
-
     /**#################################################################################################
      * SETTERS AND GETTERS
      * #################################################################################################
@@ -138,4 +87,21 @@ public abstract class EntidadMovible extends Entidad {
     public void setDireccion(Direccion direccion) {
         this.direccion = direccion;
     }
+
+    public Integer getLIMITE_DERECHA() {
+        return LIMITE_DERECHA;
+    }
+
+    public Integer getLIMITE_IZQUIERDA() {
+        return LIMITE_IZQUIERDA;
+    }
+
+    public Integer getLIMITE_ARRIBA() {
+        return LIMITE_ARRIBA;
+    }
+
+    public Integer getLIMITE_ABAJO() {
+        return LIMITE_ABAJO;
+    }
+
 }

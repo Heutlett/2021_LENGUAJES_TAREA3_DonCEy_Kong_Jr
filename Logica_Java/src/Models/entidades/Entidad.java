@@ -34,6 +34,11 @@ public class Entidad {
         this.tipoEntidad = tipoEntidad;
     }
 
+    /**#################################################################################################
+     * SETTERS AND GETTERS
+     * #################################################################################################
+     */
+
     public TipoEntidad getTipoEntidad() {
         return tipoEntidad;
     }

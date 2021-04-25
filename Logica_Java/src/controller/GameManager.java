@@ -6,30 +6,48 @@ import models.entidades.movibles.Cocodrilo;
 import models.entidades.movibles.EntidadMovible;
 import models.entidades.movibles.Fruta;
 import models.entidades.movibles.Mono;
-import models.entidades.utils.JSON_Generator;
 import models.entidades.utils.PuntoMatriz;
-
 import java.util.ArrayList;
 
+/**
+ * Controlador principal del juego, en este se maneja toda la logica del juego como la creacion de entidades, el
+ * movimiento de las mismas, las condiciones de victoria y derrota.
+ */
 public class GameManager extends Thread{
 
+    /**
+     * Matriz principal que contiene todas las entidades del juego
+     */
     private volatile Entidad[][] matriz;
 
+    /**
+     * Contenedores para almacenar las entidades
+     */
     private volatile Mono donkeyKongJr;
-    private EntidadEstatica trofeo;
     private volatile ArrayList<Cocodrilo> cocodrilos;
     private volatile ArrayList<Fruta> frutas;
     private volatile EntidadEstatica[] lianas;
     private volatile EntidadEstatica[] plataformas;
     private volatile EntidadEstatica[] agua;
+    private volatile EntidadEstatica trofeo;
 
+    /**
+     * Controladores de las entidades
+     */
     private volatile MonoController monoController;
     private volatile CocodriloController cocodriloController;
     private volatile FrutaController frutaController;
 
-    private String id;
-    static int count = 0;
+    /**
+     * Controlador para crear y actualizar las estructuras bases del juego
+     */
+    public CreadorDeMapa creadorDeMapa;
 
+    /**
+     * Constantes y variables del controlador controlador principal GameManager
+     */
+    private String id;
+    public static int count = 0;
     private Entidad.TipoEntidad entidadSeleccionada;
     public static Integer TAMANO_MATRIZ = 100;
     public static PuntoMatriz POSICION_INICIAL = new PuntoMatriz(89,1);
@@ -37,8 +55,11 @@ public class GameManager extends Thread{
     private int nivel;
     private int vidas;
     private int MAXIMA_ALTURA_CAIDA = 20;
-    CreadorDeMapa creadorDeMapa;
 
+    /**
+     * Constructor del controlador principal, se instancian todos los objetos y variables necesarias para iniciar el
+     * juego
+     */
     public GameManager()
     {
         id = "gameManager" + count;
@@ -47,8 +68,8 @@ public class GameManager extends Thread{
 
         vidas = 1;
         nivel = 1;
-
         contadorCaida = 0;
+
         donkeyKongJr = new Mono("dkjr", POSICION_INICIAL, EntidadMovible.Direccion.DERECHA, Entidad.TipoEntidad.MONO);
         cocodrilos =  new ArrayList<>();
         frutas = new ArrayList<>();
@@ -57,17 +78,22 @@ public class GameManager extends Thread{
         agua = new EntidadEstatica[1];
         matriz = new Entidad[TAMANO_MATRIZ][TAMANO_MATRIZ];
         setearMatrizVacia();
+
         frutaController = new FrutaController(matriz, frutas);
         monoController = new MonoController(donkeyKongJr, matriz, frutaController);
         cocodriloController = new CocodriloController(matriz, cocodrilos, lianas, monoController, donkeyKongJr);
+
         creadorDeMapa = new CreadorDeMapa(matriz,lianas,plataformas,agua, trofeo);
         creadorDeMapa.inicializarMapa();
-
-
         setCondicionesIniciales();
+
         new HiloMoverCocodrilosFrutas().start();
     }
 
+    /**
+     * Funcion: setearMatrizVacia
+     * Inicializa la matriz llenando todos los campos como entidades vacias
+     */
     public void setearMatrizVacia(){
         for(int i = 0; i < TAMANO_MATRIZ; i++){
             for(int e = 0; e < TAMANO_MATRIZ; e++){
@@ -76,6 +102,10 @@ public class GameManager extends Thread{
         }
     }
 
+    /**
+     * Funcion: setCondicionesIniciales
+     * Se setean las condiciones iniciales del juego
+     */
     public void setCondicionesIniciales(){
         monoController.limpiarAreaAnteriorMono();
         donkeyKongJr.moverConPosicion(POSICION_INICIAL);
@@ -88,12 +118,12 @@ public class GameManager extends Thread{
         cocodrilos.clear();
         frutaController.limpiarAreaAnteriorFrutas();
         frutas.clear();
-
-
-        //actualizarMatriz();
     }
 
-
+    /**
+     * Funcion: siHaPerdido
+     * Se establecen las condiciones en el caso de que el jugador haya perdido
+     */
     public void siHaPerdido(){
         donkeyKongJr.setHaPerdido(false);
         vidas--;
@@ -108,39 +138,26 @@ public class GameManager extends Thread{
         }
     }
 
-
+    /**
+     * Funcion: setReinicioGanar
+     * Establece las condiciones cuando el jugador gana
+     */
     public void setReinicioGanar(){
         nivel++;
         vidas++;
         setCondicionesIniciales();
     }
 
-
-    public void actualizarMatriz(){
-        //actualizarMono();
-    }
-
-    public int getVidas() {
-        return vidas;
-    }
-
-    public static PuntoMatriz getPosicionInicial() {
-        return POSICION_INICIAL;
-    }
-
-    public static void setPosicionInicial(PuntoMatriz posicionInicial) {
-        POSICION_INICIAL = posicionInicial;
-    }
-
-    public void setVidas(int vidas) {
-        this.vidas = vidas;
-    }
-
+    /**
+     * Funcion: crearCocodrilo
+     * Crea un cocodrilo y lo agrega a la matriz
+     * @param idLiana liana donde se colocara el cocodrilo
+     */
     public void crearCocodrilo(String idLiana){
 
         if(entidadSeleccionada != null && entidadSeleccionada == Entidad.TipoEntidad.COCODRILO_AZUL
                 || entidadSeleccionada == Entidad.TipoEntidad.COCODRILO_ROJO ) {
-            Cocodrilo cocodrilo = new Cocodrilo(null, null, null, null, null, 0,
+            Cocodrilo cocodrilo = new Cocodrilo(null, null, null, null, null,
                     null);
             cocodrilo.setId("cocodrilo" + cocodrilos.size());
             EntidadEstatica liana = buscarLianaById(idLiana);
@@ -148,16 +165,20 @@ public class GameManager extends Thread{
                 cocodrilo.setPosicion(liana.getPosicion());
             }
             cocodrilo.direccionAreaAbajo();
-            //La area se define en la clase COCODRILO
             cocodrilo.setTipoEntidad(entidadSeleccionada);
             cocodrilo.setDireccion(EntidadMovible.Direccion.ABAJO);
-            //cocodrilo.setVelocidad(nivel);
             cocodrilo.setIdLiana(idLiana);
             cocodrilos.add(cocodrilo);
             System.out.println("Se ha creado un cocodrilo: " + cocodrilo.toStringCreado());
         }
     }
 
+    /**
+     * Funcion: crearFruta
+     * Crea una fruta y la agrega a la matriz
+     * @param posicion posicion donde se ubicara la fruta creada
+     * @param puntos puntos que otorgara la fruta creada
+     */
     public void crearFruta(PuntoMatriz posicion, int puntos) {
 
         if (entidadSeleccionada != null && entidadSeleccionada != Entidad.TipoEntidad.COCODRILO_AZUL
@@ -169,6 +190,12 @@ public class GameManager extends Thread{
         }
     }
 
+    /**
+     * Funcion: buscarLianaById
+     * Busca una liana con el id pasado por parametro en el arreglo de lianas
+     * @param id id de la fruta a buscar
+     * @return retorna la liana si la encuentra y si no la encuentra retorna null
+     */
     private EntidadEstatica buscarLianaById(String id){
         for(int i = 0; i < lianas.length; i++){
             if(lianas[i].getId().equals(id)){
@@ -178,127 +205,60 @@ public class GameManager extends Thread{
         return null;
     }
 
-    public void imprimirMatriz(){
+    /**
+     * Funcion: verificarChoquePlataformaArriba
+     * Devuelve true si el mono choca con una plataforma al brincar
+     * @return true si choca con una plataforma, false de lo contrario
+     */
+    public boolean verificarChoquePlataformaArriba(){
 
-        for(int i = 0; i < TAMANO_MATRIZ; i++){
-            for(int e = 0; e < TAMANO_MATRIZ; e++){
-                if(matriz[i][e].getTipoEntidad() == Entidad.TipoEntidad.VACIO){
-                    System.out.print(" ⬜ ");
-                }else if(matriz[i][e].getTipoEntidad() == Entidad.TipoEntidad.COCODRILO_AZUL
-                        || matriz[i][e].getTipoEntidad() == Entidad.TipoEntidad.COCODRILO_ROJO){
-                    System.out.print(" ⬛ ");
+        for(int i = 0; i < getDonkeyKongJr().getArea().length; i++){
+            if(getDonkeyKongJr().getArea()[i] != null){
+
+                if(matriz[donkeyKongJr.getArea()[i].getFila()-1][donkeyKongJr.getArea()[i].getColumna()].getTipoEntidad() != Entidad.TipoEntidad.VACIO){
+
+                    if(matriz[donkeyKongJr.getArea()[i].getFila()-1][donkeyKongJr.getArea()[i].getColumna()].getTipoEntidad() == Entidad.TipoEntidad.PLATAFORMA){
+                        return true;
+                    }
+
+                }
+
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Funcion: verificarChoquePlataformaAbajo
+     * Devuelve true si el mono choca con una plataforma al estar en el suelo
+     * @return true si choca con una plataforma, false de lo contrario
+     */
+    public boolean verificarChoquePlataformaAbajo(){
+        for(int i = 0; i < getDonkeyKongJr().getArea().length; i++){
+            if(getDonkeyKongJr().getArea()[i] != null){
+
+                if((donkeyKongJr.getArea()[i].getFila()+1) >= 0 && (donkeyKongJr.getArea()[i].getFila()+1) < TAMANO_MATRIZ
+                        &&  donkeyKongJr.getArea()[i].getColumna() >= 0 && donkeyKongJr.getArea()[i].getColumna() < TAMANO_MATRIZ && matriz[donkeyKongJr.getArea()[i].getFila()+1][donkeyKongJr.getArea()[i].getColumna()] != null
+                ){
+                    if(matriz[donkeyKongJr.getArea()[i].getFila()+1][donkeyKongJr.getArea()[i].getColumna()].getTipoEntidad() == Entidad.TipoEntidad.PLATAFORMA){
+                        return true;
+                    }
                 }
             }
-            System.out.println();
         }
-        System.out.println();
+        return false;
     }
 
-    public Entidad[][] getMatriz() {
-        return matriz;
-    }
+    /**
+     * ################################################################################################################
+     * THREADS HILOS THREADS HILOS THREADS HILOS THREADS HILOS THREADS HILOS THREADS HILOS THREADS HILOS THREADS HILOS
+     * ################################################################################################################
+     */
 
-    public Entidad.TipoEntidad getEntidadSeleccionada() {
-        return entidadSeleccionada;
-    }
-
-    public void setEntidadSeleccionada(Entidad.TipoEntidad entidadSeleccionada) {
-        this.entidadSeleccionada = entidadSeleccionada;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public Mono getDonkeyKongJr() {
-        return donkeyKongJr;
-    }
-
-    public void setDonkeyKongJr(Mono donkeyKongJr) {
-        this.donkeyKongJr = donkeyKongJr;
-    }
-
-
-    public ArrayList<Cocodrilo> getCocodrilos() {
-        return cocodrilos;
-    }
-
-    public void setCocodrilos(ArrayList<Cocodrilo> cocodrilos) {
-        this.cocodrilos = cocodrilos;
-    }
-
-    public ArrayList<Fruta> getFrutas() {
-        return frutas;
-    }
-
-    public void setFrutas(ArrayList<Fruta> frutas) {
-        this.frutas = frutas;
-    }
-
-    public EntidadEstatica[] getLianas() {
-        return lianas;
-    }
-
-    public void setLianas(EntidadEstatica[] lianas) {
-        this.lianas = lianas;
-    }
-
-    public EntidadEstatica[] getPlataformas() {
-        return plataformas;
-    }
-
-    public void setPlataformas(EntidadEstatica[] plataformas) {
-        this.plataformas = plataformas;
-    }
-
-    public void setMatriz(Entidad[][] matriz) {
-        this.matriz = matriz;
-    }
-
-    public MonoController getMonoController() {
-        return monoController;
-    }
-
-    public void setMonoController(MonoController monoController) {
-        this.monoController = monoController;
-    }
-
-    public int getContadorCaida() {
-        return contadorCaida;
-    }
-
-    public void setContadorCaida(int contadorCaida) {
-        this.contadorCaida = contadorCaida;
-    }
-
-    public CocodriloController getCocodriloController() {
-        return cocodriloController;
-    }
-
-    public void setCocodriloController(CocodriloController cocodriloController) {
-        this.cocodriloController = cocodriloController;
-    }
-
-    public FrutaController getFrutaController() {
-        return frutaController;
-    }
-
-    public void setFrutaController(FrutaController frutaController) {
-        this.frutaController = frutaController;
-    }
-
-    public String getIdGame(){
-        return id;
-    }
-
-    public CreadorDeMapa getCreadorDeMapa() {
-        return creadorDeMapa;
-    }
-
-    public void setCreadorDeMapa(CreadorDeMapa creadorDeMapa) {
-        this.creadorDeMapa = creadorDeMapa;
-    }
-
+    /**
+     * Hilo principal del controlador, se encarga de verificar los estados del mono como el salto, la gravedad,
+     * condiciones de victoria y derrota.
+     */
     public void run() {
         while(true){
 
@@ -329,51 +289,8 @@ public class GameManager extends Thread{
     }
 
     /**
-     * Devuelve true si choca con una plataforma
-     * @return
+     * Hilo controlador del movimiento de los cocodrilos y las frutas, se encarga de mover a los cocodrilos y las frutas
      */
-    public boolean verificarChoquePlataformaArriba(){
-
-        for(int i = 0; i < getDonkeyKongJr().getArea().length; i++){
-            if(getDonkeyKongJr().getArea()[i] != null){
-
-                if(matriz[donkeyKongJr.getArea()[i].getFila()-1][donkeyKongJr.getArea()[i].getColumna()].getTipoEntidad() != Entidad.TipoEntidad.VACIO){
-
-                    if(matriz[donkeyKongJr.getArea()[i].getFila()-1][donkeyKongJr.getArea()[i].getColumna()].getTipoEntidad() == Entidad.TipoEntidad.PLATAFORMA){
-                        return true;
-                    }
-
-                }
-
-            }
-        }
-        return false;
-    }
-    public boolean verificarChoquePlataformaAbajo(){
-        for(int i = 0; i < getDonkeyKongJr().getArea().length; i++){
-            if(getDonkeyKongJr().getArea()[i] != null){
-
-                if((donkeyKongJr.getArea()[i].getFila()+1) >= 0 && (donkeyKongJr.getArea()[i].getFila()+1) < TAMANO_MATRIZ
-                        &&  donkeyKongJr.getArea()[i].getColumna() >= 0 && donkeyKongJr.getArea()[i].getColumna() < TAMANO_MATRIZ && matriz[donkeyKongJr.getArea()[i].getFila()+1][donkeyKongJr.getArea()[i].getColumna()] != null
-                        ){
-
-                    if(matriz[donkeyKongJr.getArea()[i].getFila()+1][donkeyKongJr.getArea()[i].getColumna()].getTipoEntidad() == Entidad.TipoEntidad.PLATAFORMA){
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
-    public int getNivel() {
-        return nivel;
-    }
-
-    public void setNivel(int nivel) {
-        this.nivel = nivel;
-    }
-
     class HiloMoverCocodrilosFrutas extends Thread {
 
         @Override
@@ -382,20 +299,13 @@ public class GameManager extends Thread{
 
                 if(!donkeyKongJr.isHaPerdido()) {
 
-                    //matriz = new Entidad[TAMANO_MATRIZ][TAMANO_MATRIZ];
-
                     cocodriloController.moverCocodrilos();
                     frutaController.actualizarFrutas();
-                    //monoController.actualizarMono();
-                    //System.out.println("Posicion mono: " + donkeyKongJr.getPosicion().toString());
+
                     creadorDeMapa.crearLianas();
                     creadorDeMapa.crearAgua();
                     creadorDeMapa.crearPlataformas();
                     creadorDeMapa.crearTrofeo();
-                    //imprimirMatriz();
-
-                    //System.out.println(JSON_Generator.generateMatrizJSON(matriz,nivel, donkeyKongJr.getPuntuacion(),
-                    //        vidas, donkeyKongJr.isHaGanado(), donkeyKongJr.isHaPerdido()));
 
                     try {
                         if(250 - nivel * 30 > 10){
@@ -413,4 +323,69 @@ public class GameManager extends Thread{
         }
     }
 
+    /**
+     * Funcion: imprimirMatriz
+     * Imprime la matriz en la consola para hacer pruebas
+     */
+    public void imprimirMatriz(){
+
+        for(int i = 0; i < TAMANO_MATRIZ; i++){
+            for(int e = 0; e < TAMANO_MATRIZ; e++){
+                if(matriz[i][e].getTipoEntidad() == Entidad.TipoEntidad.VACIO){
+                    System.out.print(" ⬜ ");
+                }else if(matriz[i][e].getTipoEntidad() == Entidad.TipoEntidad.COCODRILO_AZUL
+                        || matriz[i][e].getTipoEntidad() == Entidad.TipoEntidad.COCODRILO_ROJO){
+                    System.out.print(" ⬛ ");
+                }
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+
+    /**
+     * ################################################################################################################
+     * SETTERS AND GETTERS
+     * ################################################################################################################
+     */
+
+    public int getVidas() {
+        return vidas;
+    }
+
+    public int getNivel() {
+        return nivel;
+    }
+
+    public Entidad[][] getMatriz() {
+        return matriz;
+    }
+
+    public Entidad.TipoEntidad getEntidadSeleccionada() {
+        return entidadSeleccionada;
+    }
+
+    public void setEntidadSeleccionada(Entidad.TipoEntidad entidadSeleccionada) {
+        this.entidadSeleccionada = entidadSeleccionada;
+    }
+
+    public Mono getDonkeyKongJr() {
+        return donkeyKongJr;
+    }
+
+    public MonoController getMonoController() {
+        return monoController;
+    }
+
+    public FrutaController getFrutaController() {
+        return frutaController;
+    }
+
+    public String getIdGame(){
+        return id;
+    }
+
+    public CreadorDeMapa getCreadorDeMapa() {
+        return creadorDeMapa;
+    }
 }

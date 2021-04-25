@@ -39,14 +39,14 @@ public class Ventana extends JFrame {
         panel.setFocusable(true);
         panel.setLayout(null);
         panel.addKeyListener(new MyKeyListener());
-
         initComponents();
-
-        //botonCocodriloAzul = new JButton("Cocodrilo rojo")
-
         new HiloVentana().start();
     }
 
+    /**
+     * Funcion: initComponents
+     * Inicializa todos los componentes de la interfaz grafica del servidor
+     */
     private void initComponents(){
         JLabel titulo = new JLabel("   servidor donkinkongJr: " + gameManager.getIdGame());
         titulo.setFont(new java.awt.Font("CONSOLAS", Font.BOLD, 31));
@@ -157,15 +157,22 @@ public class Ventana extends JFrame {
         panel.add(puntosEntry);
     }
 
+    /**
+     * Funcion: ejecuta
+     * Inicia la interfaz grafica
+     */
     private void ejecuta() {
         setSize(WIDTH, HEIGHT);
         add(panel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         initMatriz();
         setVisible(true);
-        //actualizarMatrizInterfaz();
     }
 
+    /**
+     * Funcion: initMatriz
+     * Inicializa la matriz de botones que se utiliza en la interfaz grafica
+     */
     private void initMatriz(){
         for(int fila = 0; fila < GameManager.TAMANO_MATRIZ; fila++){
             for(Integer columna = 0; columna < GameManager.TAMANO_MATRIZ; columna++){
@@ -174,11 +181,12 @@ public class Ventana extends JFrame {
         }
     }
 
+    /**
+     * Funcion: addButtonMatriz
+     * @param fila fila de la matriz donde se ubicara el boton
+     * @param columna columna de la matriz donde se ubicara el boton
+     */
     private void addButtonMatriz(Integer fila, Integer columna){
-
-        /**
-         * esto se quita, es para mover al mono pero solo deberia poder hacerlo el servidor
-         */
 
         CampoBoton boton = new CampoBoton(fila,columna,"vacio");
         boton.addKeyListener(new MyKeyListener());
@@ -189,7 +197,12 @@ public class Ventana extends JFrame {
         matrizButton[fila][columna] = boton;
     }
 
-
+    /**
+     * Funcion: isNumeric
+     * Verifica si una cadena es un numero entero
+     * @param cadena
+     * @return
+     */
     private static boolean isNumeric(String cadena){
         try {
             Integer.parseInt(cadena);
@@ -199,9 +212,13 @@ public class Ventana extends JFrame {
         }
     }
 
+    /**
+     * Funcion: generarEntidad
+     * Crea una entidad en el juego cuando se presiona un boton (campo) en el que es posible crear un cocodrilo como
+     * en las lianas o una fruta en cualquier casilla vacia.
+     * @param boton boton que se ha presionado para crear la entidad
+     */
     private void generarEntidad(CampoBoton boton){
-
-        //System.out.println(boton.getFila() + " , " + boton.getColumna() );
 
         if(boton.getId().contains("fruta")){
             Fruta fruta = gameManager.getFrutaController().buscarFrutaById(boton.getId());
@@ -213,10 +230,7 @@ public class Ventana extends JFrame {
 
         }
         if(boton.getId().contains("liana")){
-            //System.out.println("Cantidad de cocodrilos: " + gameManager.getCocodrilos().size());
             gameManager.crearCocodrilo(boton.getId());
-            //System.out.println("Se ha creado un cocodrilo, total: " + gameManager.getCocodrilos().size());
-            //gameManager.imprimirMatriz();
         }
         if(boton.getId().equals("vacio")){
 
@@ -237,13 +251,14 @@ public class Ventana extends JFrame {
                     JOptionPane.showMessageDialog(null, "error en el valor de los puntos",
                             "Aviso!", JOptionPane.INFORMATION_MESSAGE);
                 }
-
             }
-
         }
-
     }
 
+    /**
+     * Funcion: actualizarMatrizInterfaz
+     * Actualiza la matriz de botones de la interfaz grafica
+     */
     private void actualizarMatrizInterfaz(){
 
         for(int fila = 0; fila < GameManager.TAMANO_MATRIZ; fila++){
@@ -302,7 +317,12 @@ public class Ventana extends JFrame {
         }
     }
 
-    public void movingController(String command) {
+    /**
+     * Funcion: controladorDeMovimiento
+     * Maneja el movimiento del mono a partir de un comando de direccion en formato WASD
+     * @param command String que determina hacia donde se movera el mono  (W=ARRIBA, A=IZQUIERAD, D= DERECHA, S=ABAJO)
+     */
+    public void controladorDeMovimiento(String command) {
 
         if(command.equals("WD") && !gameManager.getDonkeyKongJr().isJumping()
                 && gameManager.getMonoController().estaEnSuelo()){
@@ -340,6 +360,16 @@ public class Ventana extends JFrame {
         }
     }
 
+    /**
+     * ################################################################################################################
+     * THREADS HILOS THREADS HILOS THREADS HILOS THREADS HILOS THREADS HILOS THREADS HILOS THREADS HILOS THREADS HILOS
+     * ################################################################################################################
+     */
+
+    /**
+     * Hilo de la ventana, se encarga de actualizar la matriz de botones, este hilo mantiene la interfaz grafica
+     * sincronizada con el controlador del juego, GameManager.
+     */
     public class HiloVentana extends Thread{
 
         @Override
@@ -366,6 +396,9 @@ public class Ventana extends JFrame {
         }
     }
 
+    /**
+     * Listener para mover al mono desde la interfaz del servidor con las teclas WASD
+     */
     public class MyKeyListener implements KeyListener {
         @Override
         public void keyTyped(KeyEvent e) {
@@ -395,20 +428,20 @@ public class Ventana extends JFrame {
             for(int i = 0; i < pressed.size(); i++){
 
                 if(pressed.contains("ARRIBA") && pressed.contains("DERECHA")){
-                    movingController("WD");
+                    controladorDeMovimiento("WD");
                 }if(pressed.contains("ARRIBA") && pressed.contains("IZQUIERDA")){
-                    movingController("WA");
+                    controladorDeMovimiento("WA");
                 }else if(pressed.get(i).equals("ARRIBA")) {
-                    movingController("W");
+                    controladorDeMovimiento("W");
                 }
                 if(pressed.get(i).equals("ABAJO")){
-                    movingController("S");
+                    controladorDeMovimiento("S");
                 }
                 if(pressed.get(i).equals("DERECHA")){
-                    movingController("D");
+                    controladorDeMovimiento("D");
                 }
                 if(pressed.get(i).equals("IZQUIERDA")){
-                    movingController("A");
+                    controladorDeMovimiento("A");
                 }
             }
         }
@@ -437,8 +470,6 @@ public class Ventana extends JFrame {
             }
         }
     }
-
-
 
     public static void main(String[] args) {
 
