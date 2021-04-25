@@ -394,8 +394,8 @@ public class GameManager extends Thread{
                     creadorDeMapa.crearTrofeo();
                     //imprimirMatriz();
 
-                    System.out.println(JSON_Generator.generateMatrizJSON(matriz,nivel, donkeyKongJr.getPuntuacion(),
-                            vidas, donkeyKongJr.isHaGanado(), donkeyKongJr.isHaPerdido()));
+                    //System.out.println(JSON_Generator.generateMatrizJSON(matriz,nivel, donkeyKongJr.getPuntuacion(),
+                    //        vidas, donkeyKongJr.isHaGanado(), donkeyKongJr.isHaPerdido()));
 
                     try {
                         if(250 - nivel * 30 > 10){

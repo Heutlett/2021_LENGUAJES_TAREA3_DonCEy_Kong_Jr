@@ -267,7 +267,7 @@ public class Ventana extends JFrame {
                         matrizButton[fila][columna].setBackground(Color.ORANGE);
                     }
                     if(gameManager.getMatriz()[fila][columna].getTipoEntidad() != Entidad.TipoEntidad.VACIO && gameManager.getMatriz()[fila][columna].getTipoEntidad() == Entidad.TipoEntidad.AGUA){
-                        matrizButton[fila][columna].setBackground(Color.CYAN);
+                        matrizButton[fila][columna].setBackground(Color.BLUE);
                     }
                     if(gameManager.getMatriz()[fila][columna].getTipoEntidad() != Entidad.TipoEntidad.VACIO && gameManager.getMatriz()[fila][columna].getTipoEntidad() == Entidad.TipoEntidad.TROFEO){
                         matrizButton[fila][columna].setBackground(Color.BLUE);
@@ -285,7 +285,7 @@ public class Ventana extends JFrame {
                         matrizButton[fila][columna].setBackground(Color.RED);
                     }
                     if(gameManager.getMatriz()[fila][columna].getTipoEntidad() != Entidad.TipoEntidad.VACIO && gameManager.getMatriz()[fila][columna].getTipoEntidad() == Entidad.TipoEntidad.MELOCOTON){
-                        matrizButton[fila][columna].setBackground(Color.ORANGE);
+                        matrizButton[fila][columna].setBackground(new Color(158, 74, 15));
                     }
 
                     if(gameManager.getMatriz()[fila][columna].getTipoEntidad() != Entidad.TipoEntidad.VACIO ){
@@ -299,6 +299,44 @@ public class Ventana extends JFrame {
                 }
 
             }
+        }
+    }
+
+    public void movingController(String command) {
+
+        if(command.equals("WD") && !gameManager.getDonkeyKongJr().isJumping()
+                && gameManager.getMonoController().estaEnSuelo()){
+            gameManager.getDonkeyKongJr().setJumping(true);
+            gameManager.getMonoController().saltar(EntidadMovible.Direccion.DERECHA);
+
+        }if(command.equals("WA") && !gameManager.getDonkeyKongJr().isJumping()
+                && gameManager.getMonoController().estaEnSuelo()){
+            gameManager.getDonkeyKongJr().setJumping(true);
+            gameManager.getMonoController().saltar(EntidadMovible.Direccion.IZQUIERDA);
+
+        }else if(command.equals("W") && !gameManager.getDonkeyKongJr().isJumping()
+                && gameManager.getMonoController().estaEnSuelo()) {
+
+            gameManager.getDonkeyKongJr().setJumping(true);
+            gameManager.getMonoController().saltar(null);
+        }else if(command.equals("W") && gameManager.getDonkeyKongJr().isOnLiana()
+                && !gameManager.verificarChoquePlataformaArriba()){
+            gameManager.getMonoController().moverMono(EntidadMovible.Direccion.ARRIBA);
+        }
+        if(command.equals("S") && gameManager.getDonkeyKongJr().isOnLiana()
+                && !gameManager.verificarChoquePlataformaAbajo()){
+            gameManager.getMonoController().moverMono(EntidadMovible.Direccion.ABAJO);
+        }
+        if(command.equals("D") && !gameManager.getDonkeyKongJr().isJumping()
+                && !gameManager.getDonkeyKongJr().isFalling()){
+            gameManager.getMonoController().moverMono(EntidadMovible.Direccion.DERECHA);
+        }
+        if(command.equals("A") && !gameManager.getDonkeyKongJr().isJumping()
+                && !gameManager.getDonkeyKongJr().isFalling()){
+            gameManager.getMonoController().moverMono(EntidadMovible.Direccion.IZQUIERDA);
+        }
+        if(gameManager.getDonkeyKongJr().isOnLiana()){
+            gameManager.getCreadorDeMapa().crearLianas();
         }
     }
 
@@ -356,47 +394,24 @@ public class Ventana extends JFrame {
 
             for(int i = 0; i < pressed.size(); i++){
 
-                if(pressed.contains("ARRIBA") && pressed.contains("DERECHA") && !gameManager.getDonkeyKongJr().isJumping()
-                        && gameManager.getMonoController().estaEnSuelo()){
-                    gameManager.getDonkeyKongJr().setJumping(true);
-                    gameManager.getMonoController().saltar(EntidadMovible.Direccion.DERECHA);
-
-                }if(pressed.contains("ARRIBA") && pressed.contains("IZQUIERDA") && !gameManager.getDonkeyKongJr().isJumping()
-                        && gameManager.getMonoController().estaEnSuelo()){
-                    gameManager.getDonkeyKongJr().setJumping(true);
-                    gameManager.getMonoController().saltar(EntidadMovible.Direccion.IZQUIERDA);
-
-                    //gameManager.getMonoController().moverMono(EntidadMovible.Direccion.ARRIBA);
-                }else if(pressed.get(i).equals("ARRIBA") && !gameManager.getDonkeyKongJr().isJumping()
-                        && gameManager.getMonoController().estaEnSuelo()) {
-
-                    gameManager.getDonkeyKongJr().setJumping(true);
-                    gameManager.getMonoController().saltar(null);
-                }else if(pressed.get(i).equals("ARRIBA") && gameManager.getDonkeyKongJr().isOnLiana()
-                        && !gameManager.verificarChoquePlataformaArriba()){
-                    gameManager.getMonoController().moverMono(EntidadMovible.Direccion.ARRIBA);
+                if(pressed.contains("ARRIBA") && pressed.contains("DERECHA")){
+                    movingController("WD");
+                }if(pressed.contains("ARRIBA") && pressed.contains("IZQUIERDA")){
+                    movingController("WA");
+                }else if(pressed.get(i).equals("ARRIBA")) {
+                    movingController("W");
                 }
-                if(pressed.get(i).equals("ABAJO") && gameManager.getDonkeyKongJr().isOnLiana()
-                        && !gameManager.verificarChoquePlataformaAbajo()){
-                    gameManager.getMonoController().moverMono(EntidadMovible.Direccion.ABAJO);
+                if(pressed.get(i).equals("ABAJO")){
+                    movingController("S");
                 }
-                if(pressed.get(i).equals("DERECHA") && !gameManager.getDonkeyKongJr().isJumping()
-                        && !gameManager.getDonkeyKongJr().isFalling()){
-                    gameManager.getMonoController().moverMono(EntidadMovible.Direccion.DERECHA);
+                if(pressed.get(i).equals("DERECHA")){
+                    movingController("D");
                 }
-                if(pressed.get(i).equals("IZQUIERDA") && !gameManager.getDonkeyKongJr().isJumping()
-                        && !gameManager.getDonkeyKongJr().isFalling()){
-                    gameManager.getMonoController().moverMono(EntidadMovible.Direccion.IZQUIERDA);
+                if(pressed.get(i).equals("IZQUIERDA")){
+                    movingController("A");
                 }
-                if(gameManager.getDonkeyKongJr().isOnLiana()){
-                    gameManager.getCreadorDeMapa().crearLianas();
-                }
-                //actualizarMatrizInterfaz();
             }
-            //actualizarMatrizInterfaz();
         }
-
-
 
         @Override
         public void keyPressed(KeyEvent e) {
