@@ -1,0 +1,12 @@
+//
+// Created by andre on 25/4/2021.
+//
+
+#ifndef CLIENTE_GAMECONTROLLER_H
+#define CLIENTE_GAMECONTROLLER_H
+
+
+
+
+
+#endif //CLIENTE_GAMECONTROLLER_H

@@ -12,6 +12,7 @@ int init_lobby() {
     al_init_image_addon();
     al_init_primitives_addon();
     m_initC();
+    init_jController();
 
 
     Lobbydisplay = al_create_display(620,700);
@@ -21,7 +22,13 @@ int init_lobby() {
     Lobbyfont1 = al_load_ttf_font("../resources/bahnschrift.ttf",60,0);
     Lobbyfont2 = al_load_ttf_font("../resources/bahnschrift.ttf",30,0);
     Lobbybackground = al_load_bitmap("../resources/lobbyBG.png");
+    LobbyminiBG = al_load_bitmap("../resources/miniBG.jpeg");
     LobbySelector = al_load_bitmap("../resources/flecha.png");
+
+    title1 = al_map_rgb(255,20,10);
+    title2 = al_map_rgb(0,100,255);
+    cl_on = al_map_rgb(100,0,255);
+    cl_off = al_map_rgb(40,0,98);
 
     al_start_timer(Lobbytimer);
 
@@ -34,8 +41,11 @@ int init_lobby() {
 }
 
 int run_lobby(){
-    //running = true;
+
     while (Lobbyrunning) {
+
+        jsonRoomParser(0);
+        jsonRoomParser(1);
 
         ALLEGRO_EVENT event;
         al_wait_for_event(Lobbyqueue, &event);
@@ -47,6 +57,10 @@ int run_lobby(){
         if(event.type == ALLEGRO_EVENT_TIMER){
             al_clear_to_color(al_map_rgb_f(0,0,0));
             al_draw_bitmap(Lobbybackground,10,12,0);
+
+            al_draw_bitmap(LobbyminiBG,100,450,0);
+            al_draw_bitmap(LobbyminiBG,420,450,0);
+
             al_draw_rectangle(50,400,250,675, al_map_rgb(0,100,255),5);
             al_draw_rectangle(370,400,570,675, al_map_rgb(0,100,255),5);
 
@@ -61,15 +75,41 @@ int run_lobby(){
             //*****************************************
 
 
-            al_draw_text(Lobbyfont1, al_map_rgb(255,20,10),100,300,0,"Seleccione Sala");
+            al_draw_text(Lobbyfont1, title1,100,300,0,"Seleccione Sala");
 
-            al_draw_text(Lobbyfont2, al_map_rgb(0,100,255),95,400,0,"Juego 1");
-            al_draw_text(Lobbyfont2, al_map_rgb(100,0,255),100,560,0,"Jugar");
-            al_draw_text(Lobbyfont2, al_map_rgb(100,0,255),100,610,0,"Observar");
+            al_draw_text(Lobbyfont2, title2,95,400,0,"Juego 1");
+            al_draw_text(Lobbyfont2, title2,415,400,0,"Juego 2");
 
-            al_draw_text(Lobbyfont2, al_map_rgb(0,100,255),415,400,0,"Juego 2");
-            al_draw_text(Lobbyfont2, al_map_rgb(100,0,255),420,560,0,"Jugar");
-            al_draw_text(Lobbyfont2, al_map_rgb(100,0,255),420,610,0,"Observar");
+            al_draw_text(Lobbyfont2, cl_on,100,560,0,"Jugar");
+            al_draw_text(Lobbyfont2, cl_on,100,610,0,"Observar");
+
+
+            al_draw_text(Lobbyfont2, cl_on,420,560,0,"Jugar");
+            al_draw_text(Lobbyfont2, cl_on,420,610,0,"Observar");
+
+            if (strcmp(room1.player,"null")){
+                al_draw_text(Lobbyfont2, title1,90,460,0,room1.player);
+                al_draw_text(Lobbyfont2, cl_off,100,560,0,"Jugar");
+                m_bt[0][0] = 1;
+            }
+
+            if (strcmp(room2.player,"null")){
+                al_draw_text(Lobbyfont2, title1,410,460,0,room2.player);
+                al_draw_text(Lobbyfont2, cl_off,420,560,0,"Jugar");
+                m_bt[1][0] = 1;
+            }
+
+            if ((strcmp(room1.guest1,"null")) && (strcmp(room1.guest2,"null"))){
+                al_draw_text(Lobbyfont2, cl_off,100,610,0,"Observar");
+                m_bt[0][1] = 1;
+            }
+
+            if ((strcmp(room2.guest1,"null")) && (strcmp(room2.guest2,"null"))){
+                al_draw_text(Lobbyfont2, cl_off,420,610,0,"Observar");
+                m_bt[1][1] = 1;
+            }
+
+
 
             if(menu[mc_i][mc_j] == 1){
                 al_draw_bitmap(LobbySelector,60,565,0);
@@ -103,7 +143,9 @@ int run_lobby(){
                     m_Move(1);
                     break;
                 case ALLEGRO_KEY_ENTER:
-                    Lobbyrunning = false;
+                    if(!m_bt[mc_i][mc_j]){
+                        Lobbyrunning = false;
+                    }
                     break;
             }
         }

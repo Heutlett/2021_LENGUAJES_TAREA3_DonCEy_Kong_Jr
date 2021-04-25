@@ -12,6 +12,7 @@
 #include "allegro5/allegro_image.h"
 #include <allegro5/allegro_primitives.h>
 #include "../controllers/lobbyController.h"
+#include "../controllers/jsonController.h"
 
 static ALLEGRO_DISPLAY *Lobbydisplay;
 static ALLEGRO_EVENT_QUEUE *Lobbyqueue;
@@ -20,7 +21,14 @@ static ALLEGRO_FONT *Lobbyfont1;
 static ALLEGRO_FONT *Lobbyfont2;
 
 static ALLEGRO_BITMAP *Lobbybackground;
+static ALLEGRO_BITMAP *LobbyminiBG;
 static ALLEGRO_BITMAP *LobbySelector;
+
+static ALLEGRO_COLOR title1;
+static ALLEGRO_COLOR title2;
+static ALLEGRO_COLOR cl_on;
+static ALLEGRO_COLOR cl_off;
+
 
 static bool Lobbyrunning = true;
 

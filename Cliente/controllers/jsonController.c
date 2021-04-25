@@ -24,6 +24,41 @@ static void process_object(json_value* value, int depth)
     for (x = 0; x < length; x++) {
         print_depth_shift(depth);
         printf("object[%d].name = %s\n", x, value->u.object.values[x].name);
+        if (id == 0) {
+            printf("hey");
+            if (!strcmp(value->u.object.values[x].name, "roomNumber")) {
+                room1.number = value->u.object.values[x].value->u.integer;
+            }
+            if (!strcmp(value->u.object.values[x].name, "player")) {
+                strcpy(room1.player, value->u.object.values[x].value->u.string.ptr);
+            }
+            if (!strcmp(value->u.object.values[x].name, "guests")) {
+                if (value->u.object.values[x].value->u.array.length == 1){
+                    strcpy(room1.guest1, value->u.object.values[x].value->u.array.values[0]->u.string.ptr);
+                }
+                if (value->u.object.values[x].value->u.array.length == 2){
+                    strcpy(room1.guest1, value->u.object.values[x].value->u.array.values[0]->u.string.ptr);
+                    strcpy(room1.guest2, value->u.object.values[x].value->u.array.values[1]->u.string.ptr);
+                }
+            }
+        }
+        if (id == 1) {
+            if (!strcmp(value->u.object.values[x].name, "roomNumber")) {
+                room2.number = value->u.object.values[x].value->u.integer;
+            }
+            if (!strcmp(value->u.object.values[x].name, "player")) {
+                strcpy(room2.player, value->u.object.values[x].value->u.string.ptr);
+            }
+            if (!strcmp(value->u.object.values[x].name, "guests")) {
+                if (value->u.object.values[x].value->u.array.length == 1){
+                    strcpy(room2.guest1, value->u.object.values[x].value->u.array.values[0]->u.string.ptr);
+                }
+                if (value->u.object.values[x].value->u.array.length == 2){
+                    strcpy(room2.guest1, value->u.object.values[x].value->u.array.values[0]->u.string.ptr);
+                    strcpy(room2.guest2, value->u.object.values[x].value->u.array.values[1]->u.string.ptr);
+                }
+            }
+        }
         process_value(value->u.object.values[x].value, depth+1);
     }
 }
@@ -79,8 +114,11 @@ static void process_value(json_value* value, int depth)
     }
 }
 
-int jsonparser() {
-    printf("Hello, World!\n");
+int jsonRoomParser(int i) {
+
+    printf("JSON ROOM PARSER\n");
+
+    id = i;
 
     char* filename;
     FILE *fp;
@@ -133,11 +171,33 @@ int jsonparser() {
         exit(1);
     }
 
-    process_value(value, 0);
+    process_value(value->u.array.values[i], 1);
+
+
 
     json_value_free(value);
     free(file_contents);
 
 
     return 0;
+}
+
+void JL_printStructs(){
+    printf("\n***********\nROOM1\n\n");
+    printf("NUMB: %d\n", room1.number);
+    printf("NAME: "), printf(room1.player), printf("\n");
+    printf("GUE1: "), printf(room1.guest1), printf("\n");
+    printf("GUE1: "), printf(room1.guest2), printf("\n");
+    printf("\n***********\nROOM2\n\n");
+    printf("NUMB: %d\n", room2.number);
+    printf("NAME: "), printf(room2.player), printf("\n");
+    printf("GUE1: "), printf(room2.guest1), printf("\n");
+    printf("GUE1: "), printf(room2.guest2), printf("\n");
+}
+
+void init_jController(){
+    strcpy(room1.guest1,"null");
+    strcpy(room1.guest2,"null");
+    strcpy(room2.guest1,"null");
+    strcpy(room2.guest2,"null");
 }

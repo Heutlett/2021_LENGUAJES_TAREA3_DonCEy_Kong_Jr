@@ -10,8 +10,14 @@ int m_initC(){
     menu[1][0] = 3;
     menu[1][1] = 4;
 
+    m_bt[0][0] = 0;
+    m_bt[0][1] = 0;
+    m_bt[1][0] = 0;
+    m_bt[1][1] = 0;
+
     mc_i = 0;
     mc_j = 0;
+
 }
 
 int m_Move(int dir){

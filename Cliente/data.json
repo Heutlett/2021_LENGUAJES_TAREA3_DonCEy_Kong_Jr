@@ -1,1 +1,1 @@
-[{"roomNumber": 1, "player": "Jugador1", "guests": []}, {"roomNumber": 2, "player": null, "guests": []}]
+[{"roomNumber": 1, "player": "Jugador1", "guests": ["BOTS1","BOTS2"]}, {"roomNumber": 2, "player": "Jugador2", "guests": []}]

@@ -21,11 +21,27 @@ void create_grid(){
 
 int main() {
 
-    jsonparser();
+//    room1.number = 1;
+//    room2.number = 2;
+//
+//    strcpy(room1.player,"Jugador1");
+//    strcpy(room2.player,"Jugador2");
+//
+//    strcpy(room1.guest1,"BOT1");
+//    strcpy(room2.guest1,"BOT3");
+//
+//    strcpy(room1.guest2,"BOT2");
+//    strcpy(room2.guest2,"BOT4");
 
 
-//    init_lobby();
-//    run_lobby();
+//    jsonRoomParser(0);
+//    JL_printStructs();
+//    jsonRoomParser(1);
+//    JL_printStructs();
+
+
+    init_lobby();
+    run_lobby();
 //
 //    init_game();
 //    run();
