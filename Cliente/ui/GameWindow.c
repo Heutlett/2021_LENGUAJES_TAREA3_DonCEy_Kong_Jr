@@ -75,17 +75,17 @@ int run(){
         if (event.type == ALLEGRO_EVENT_KEY_DOWN || pressed){
             pressed = true;
             switch (event.keyboard.keycode){
-                case ALLEGRO_KEY_UP:
+                case ALLEGRO_KEY_W:
                     set_yMonkey(get_yMonkey()-4);
                     break;
-                case ALLEGRO_KEY_DOWN:
+                case ALLEGRO_KEY_S:
                     set_yMonkey(get_yMonkey()+4);
                     break;
-                case ALLEGRO_KEY_RIGHT:
+                case ALLEGRO_KEY_D:
                     set_monkeyAction(1);
                     set_xMonkey(get_xMonkey()+4);
                     break;
-                case ALLEGRO_KEY_LEFT:
+                case ALLEGRO_KEY_A:
                     set_monkeyAction(2);
                     set_xMonkey(get_xMonkey()-4);
                     break;

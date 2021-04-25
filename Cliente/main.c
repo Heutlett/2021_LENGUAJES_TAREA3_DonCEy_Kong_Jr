@@ -1,9 +1,11 @@
 
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
+#include "controllers/jsonController.h"
 #include "ui/GameWindow.h"
 #include "ui/LobbyWindow.h"
 #include "sockets/socket.h"
+#include "controllers/lobbyController.h"
 #include "stdio.h"
 
 
@@ -19,9 +21,12 @@ void create_grid(){
 
 int main() {
 
-    init_lobby();
-    run_lobby();
+    jsonparser();
 
+
+//    init_lobby();
+//    run_lobby();
+//
 //    init_game();
 //    run();
 
