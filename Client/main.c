@@ -17,12 +17,21 @@ int main( )
     // Tests  //
 
 
+    /// Log in ///
+    enviar("join");
+    escuchar(); // cuartos disponibles.
+    enviar(str1); // json de login.
+    escuchar(); // matrix inicial.
+
+    /// If player ///
     while (1){
-        enviar(str2);
-        escuchar();
-        escuchar();
-        sleep(3000);
+        enviar("WA"); // como es jugador envia Keypressed.
+        escuchar(); // la matriz despues de actualizar con el movimiento nuevo.
+        sleep(1000);
     }
+
+
+
 
 
 

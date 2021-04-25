@@ -93,7 +93,7 @@ class Server {
             // Se crea un dato a leer y se le dice que se rellene con el flujo de entrada de datos.
             SocketData aux = new SocketData("");
             aux.readObject (bufferEntrada);
-            System.out.printf("● Received: %s%n", aux);
+            System.out.printf("● Received: %s%n", aux.d);
 
             // Retorna el mensaje leido sin su tamano.
             return aux.d;
@@ -119,11 +119,34 @@ class Server {
          * para cada pedido del cliente.
          */
         private void procedure() throws IOException {
-            String message = read();
-            String reply = "Soy el chico de las poesias";
-            send(reply);
-            String reply2 = "Tu fiel admirador";
-            send(reply2);
+            String m;
+            if  (!inRoom) {
+                // 1.  Se lee un string "join"
+                read();
+
+                // 2. Se responde con la lista de cuartos.
+                m = "[{\"roomNumber\": 1,\"player\": \"Jugador1\",\"guests\": []}, { \"roomNumber\": 2, \"player\": null, \"guests\": []}]";
+                send(m);
+
+                // 3. Se lee la sala que se quiere y se logea al invitado.
+                // Log IN  . . .   logIn(read());
+                read();
+
+                // 4. Se manda la matrix inicial.
+                m = "Init matrix";
+                send(m);
+                inRoom = true;
+            }
+       // CICLOOOO
+            isPlayer=true; //(suponiendo que es player)
+            m = "Ultima matriz que se actualizo antes";
+            if (isPlayer) {
+                read();
+                // do something...
+                m = "Updated Matrix con el nuevo movimiento";
+            }
+            send(m);
+       /// CICLOOOO
         }
 
         /**
@@ -134,9 +157,9 @@ class Server {
             try {
                 while (true) {
                     procedure(); // Llamar al método que maneja la secuencia de acciones.
-                    Thread.sleep(3000);
+                    Thread.sleep(1000);
                 }
-            } catch (NullPointerException | InterruptedException | IOException e) {
+            } catch (NullPointerException | IOException | InterruptedException e) {
                 e.printStackTrace();
                 System.out.println("▙ ERROR. Connection interrupted!");
                 try {
