@@ -51,7 +51,7 @@ public class GameManager extends Thread{
     public static int count = 0;
     private Entidad.TipoEntidad entidadSeleccionada;
     public static Integer TAMANO_MATRIZ = 100;
-    public static PuntoMatriz POSICION_INICIAL = new PuntoMatriz(89,1);
+    public static PuntoMatriz POSICION_INICIAL = new PuntoMatriz(79,1);
     private int contadorCaida;
     private int nivel;
     private int vidas;
@@ -64,7 +64,7 @@ public class GameManager extends Thread{
     public GameManager()
     {
         id = "gameManager" + count;
-        System.out.println("Se ha creado un nuevo juego, asignado a: gamenager" + count);
+        System.out.println("Se ha creado un nuevo juego, asignado a: " + id);
         count++;
 
         vidas = 1;
@@ -97,29 +97,32 @@ public class GameManager extends Thread{
      * @return matriz int
      */
     private int[][] generarMatrizPosicionesActuales(){
-
         int [][] matrizPos = new int[TAMANO_MATRIZ][TAMANO_MATRIZ];
+        try{
+            matrizPos[donkeyKongJr.getPosicion().getFila()][donkeyKongJr.getPosicion().getColumna()] = 1;
 
-        matrizPos[donkeyKongJr.getPosicion().getFila()][donkeyKongJr.getPosicion().getColumna()] = 1;
+            for (Cocodrilo cocodrilo : cocodrilos) {
+                if (cocodrilo.getTipoEntidad() == Entidad.TipoEntidad.COCODRILO_ROJO) {
+                    matrizPos[cocodrilo.getPosicion().getFila()][cocodrilo.getPosicion().getColumna()] = 2;
+                } else {
+                    matrizPos[cocodrilo.getPosicion().getFila()][cocodrilo.getPosicion().getColumna()] = 3;
+                }
+            }
 
-        for (Cocodrilo cocodrilo : cocodrilos) {
-            if (cocodrilo.getTipoEntidad() == Entidad.TipoEntidad.COCODRILO_ROJO) {
-                matrizPos[cocodrilo.getPosicion().getFila()][cocodrilo.getPosicion().getColumna()] = 2;
-            } else {
-                matrizPos[cocodrilo.getPosicion().getFila()][cocodrilo.getPosicion().getColumna()] = 3;
+            for (Fruta fruta : frutas) {
+                if (fruta.getTipoEntidad() == Entidad.TipoEntidad.BANANO) {
+                    matrizPos[fruta.getPosicion().getFila()][fruta.getPosicion().getColumna()] = 4;
+                }
+                if (fruta.getTipoEntidad() == Entidad.TipoEntidad.MANZANA) {
+                    matrizPos[fruta.getPosicion().getFila()][fruta.getPosicion().getColumna()] = 5;
+                }
+                if (fruta.getTipoEntidad() == Entidad.TipoEntidad.MELOCOTON) {
+                    matrizPos[fruta.getPosicion().getFila()][fruta.getPosicion().getColumna()] = 6;
+                }
             }
-        }
+            return matrizPos;
+        }catch (Exception e){
 
-        for (Fruta fruta : frutas) {
-            if (fruta.getTipoEntidad() == Entidad.TipoEntidad.BANANO) {
-                matrizPos[fruta.getPosicion().getFila()][fruta.getPosicion().getColumna()] = 4;
-            }
-            if (fruta.getTipoEntidad() == Entidad.TipoEntidad.MANZANA) {
-                matrizPos[fruta.getPosicion().getFila()][fruta.getPosicion().getColumna()] = 5;
-            }
-            if (fruta.getTipoEntidad() == Entidad.TipoEntidad.MELOCOTON) {
-                matrizPos[fruta.getPosicion().getFila()][fruta.getPosicion().getColumna()] = 6;
-            }
         }
         return matrizPos;
     }
@@ -142,6 +145,9 @@ public class GameManager extends Thread{
      * Se setean las condiciones iniciales del juego
      */
     public void setCondicionesIniciales(){
+        setearMatrizVacia();
+
+
         monoController.limpiarAreaAnteriorMono();
         donkeyKongJr.moverConPosicion(POSICION_INICIAL);
         contadorCaida = 0;
@@ -335,7 +341,7 @@ public class GameManager extends Thread{
         @Override
         public void run() {
             while (true) {
-                if(!donkeyKongJr.isHaPerdido()) {
+                 if(!donkeyKongJr.isHaPerdido()) {
 
                     cocodriloController.moverCocodrilos();
                     frutaController.actualizarFrutas();
@@ -346,10 +352,11 @@ public class GameManager extends Thread{
                     creadorDeMapa.crearTrofeo();
 
                     try {
-                        if(250 - nivel * 30 > 10){
-                            sleep(250 - nivel * 50);
-                        }else{
+                        if(250 - nivel * 30 < 20){
                             sleep(20);
+                        }else
+                        if(250 - nivel * 30 > 10){
+                            sleep(250 - nivel * 30);
                         }
 
                     } catch (InterruptedException e) {

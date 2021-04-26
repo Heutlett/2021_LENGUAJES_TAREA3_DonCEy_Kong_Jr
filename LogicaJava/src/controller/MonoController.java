@@ -113,12 +113,12 @@ public class MonoController {
                      */
                     donkeyKongJr.setHaPerdido(true);
                     return false;
-                case PLATAFORMA:
-                    return false;
                 case LIANA:
                     donkeyKongJr.setOnLiana(true);
                     donkeyKongJr.setJumping(false);
                     return true;
+                case PLATAFORMA:
+                    return false;
                 case BANANO:
                 case MELOCOTON:
                 case MANZANA:
