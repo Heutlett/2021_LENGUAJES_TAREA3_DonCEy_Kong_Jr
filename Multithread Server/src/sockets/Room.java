@@ -1,6 +1,7 @@
 package sockets;
 
 import settings.Settings;
+
 import java.util.ArrayList;
 
 /**
@@ -15,10 +16,12 @@ public class Room {
     private Member host = null;
     private final ArrayList<Member> guests = new ArrayList<>();
     private String matrix;
+    //private Ventana ventana;
 
     /* Constructor */
     public Room(int roomNumber) {
         this.roomNumber = roomNumber;
+        //ventana = new Ventana();
         this.matrix = "Init Matrix : "+ roomNumber; // Aquí debemos llamar a la matrix inicial.
     }
 

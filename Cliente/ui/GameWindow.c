@@ -42,8 +42,8 @@ int init_game() {
 
 int run(){
 
-//    enviar("127.0.0.1",9090,"join");
-//    reloadJFileRooms(escuchar(9090,"127.0.0.1"));
+    enviar("join");
+    reloadJFileRooms(escuchar());
 
     jsonMatrixParser();
     while (running) {
@@ -172,8 +172,8 @@ int run(){
         printf("\n");
 
 
-//        enviar("127.0.0.1",9090,"sendkey");
-//        reloadJFileRooms(escuchar(9090,"127.0.0.1"));
+        enviar("sendkey");
+        reloadJFileRooms(escuchar());
 
         strcpy(sendKey,"_");
 

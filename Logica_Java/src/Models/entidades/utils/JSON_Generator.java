@@ -2,8 +2,9 @@ package models.entidades.utils;
 
 import controller.GameManager;
 import models.entidades.Entidad;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 
 /**
  * Generador de json para comunicarse con el cliente, se enviara json que contiene los estados necesarios que debe

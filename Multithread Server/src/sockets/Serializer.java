@@ -3,6 +3,8 @@ package sockets;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
 
+
+
 /**
  * Clase Serializer
  * Parsea una clase a formato de strig JSON utilizando
@@ -14,8 +16,11 @@ public class Serializer {
         RoomSerializer roomSerializer = new RoomSerializer(room);
 
         try {
-            String jsonString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(roomSerializer);
-//            String jsonString = mapper.writeValueAsString(roomSerializer);
+            //String jsonString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(roomSerializer);
+
+
+
+            String jsonString = mapper.writeValueAsString(roomSerializer);
             return jsonString;
         } catch (Exception e) {
             e.printStackTrace();

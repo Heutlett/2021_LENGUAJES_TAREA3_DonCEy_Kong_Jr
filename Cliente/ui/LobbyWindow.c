@@ -42,14 +42,12 @@ int init_lobby() {
 
 int run_lobby(){
 
-//    enviar("127.0.0.1",9090,"join");
-//    reloadJFileRooms(escuchar(9090,"127.0.0.1"));
+    enviar("join");
+    reloadJFileRooms(escuchar());
     while (Lobbyrunning) {
-        reloadJFileRooms("[{\"roomNumber\": 1, \"player\": \"Jugador1\", \"guests\": [\"BOTS1\",\"BOTS2\"]}, {\"roomNumber\": 2, \"player\": \"null\", \"guests\": []}]"
-        );
 
-//        enviar("127.0.0.1",9090,"reload");
-//        reloadJFileRooms(escuchar(9090,"127.0.0.1"));
+        enviar("reload");
+        reloadJFileRooms(escuchar());
         jsonRoomParser(0);
         jsonRoomParser(1);
         //JL_printStructs();
@@ -163,15 +161,15 @@ int run_lobby(){
                 case ALLEGRO_KEY_ENTER:
                     if(!m_bt[mc_i][mc_j]){
                         setSendJson();
-                        char rslt[200] = "{\n""\t\"username \": \"";
+                        char rslt[200] = "{\"username\": \"";
                         strcat(rslt,m_player);
-                        strcat(rslt,"\",\n""\t\"type\": \"");
+                        strcat(rslt,"\","" \"type\": \"");
                         strcat(rslt,m_type);
-                        strcat(rslt,"\",\n""\t\"room\":");
+                        strcat(rslt,"\",""\"room\":");
                         strcat(rslt,m_room);
-                        strcat(rslt,"\"}");
+                        strcat(rslt,"}");
                         printf(rslt);
-                        //enviar("127.0.0.1",9090,rslt);
+                        enviar(rslt);
                         Lobbyrunning = false;
                         init_game();
                         run();

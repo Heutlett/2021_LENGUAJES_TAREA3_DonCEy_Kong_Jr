@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class Ventana extends JFrame {
 
     private volatile GameManager gameManager;
-    private CampoBoton[][] matrizButton;
+    private view.CampoBoton[][] matrizButton;
     private JPanel panel;
     private Integer WIDTH = 1020;
     private Integer HEIGHT = 820;
@@ -31,10 +31,10 @@ public class Ventana extends JFrame {
     private JLabel labelNivel;
     private int puntos = 0;
 
-    private Ventana() {
+    public Ventana() {
         super("DonkeyKongJr_Server_View");
         gameManager = new GameManager();
-        matrizButton = new CampoBoton[GameManager.TAMANO_MATRIZ][GameManager.TAMANO_MATRIZ];
+        matrizButton = new view.CampoBoton[GameManager.TAMANO_MATRIZ][GameManager.TAMANO_MATRIZ];
         pressed = new ArrayList<>();
         panel = new JPanel();
         panel.setFocusable(true);

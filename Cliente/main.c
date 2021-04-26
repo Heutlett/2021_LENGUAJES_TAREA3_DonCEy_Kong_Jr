@@ -8,6 +8,8 @@
 #include "controllers/lobbyController.h"
 #include "stdio.h"
 
+static char* serverIp = "127.0.0.1";
+int port = 9090;
 
 void create_grid(){
     for (int i=0;i<100;i++){
@@ -41,7 +43,7 @@ int main() {
 
 //    jsonMatrixParser();
     //JL_printStructs();
-
+    conectar(serverIp, port);
     init_lobby();
     run_lobby();
 

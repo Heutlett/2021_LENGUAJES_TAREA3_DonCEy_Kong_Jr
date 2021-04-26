@@ -79,16 +79,23 @@ public class Manager {
      * @return int
      */
     public int addMember(String json, Server.ClientHandler client) {
+
+        json = json.replaceAll(" ", "");
+        json = json.replaceAll("\n", "");
+        json = json.replaceAll("\t", "");
+
+        System.out.println("PRUEBA");
+        System.out.println(json);
         JSONObject obj = new JSONObject(json); // Parse String to JSONObject.
         // { "username":"Player1", "type":"player", "room":"2" }";
         client.setUsername(obj.getString("username")); //Set nombre del miembro.
         String type = obj.getString("type");
         int room = obj.getInt("room")-1; // -1 por el indice de la sala.
 
-        if(type.equalsIgnoreCase("host")) {
+        if(type.equalsIgnoreCase("player")) {
             client.setIsPlayer(true); // Si es jugador, true, sino false.
             return addHost(room, client);
-        }else if (type.equalsIgnoreCase("guest")) {
+        }else if (type.equalsIgnoreCase("viewer")) {
             if (isEmpty()) return 0;
             return addGuest(room, client);
         }

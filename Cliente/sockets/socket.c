@@ -1,187 +1,116 @@
 //
-// Created by andre on 24/4/2021.
+// Created by Jeykime on 4/24/2021.
 //
 
 #include "socket.h"
 
 #include <stdio.h>
-#include <stdlib.h>
+#include <winsock2.h>
 #include <windows.h>
 #include <io.h>
-//#include <winsock2.h>
-#include <ws2dnet.h>
 
+char Cadena[512];
 
-char SendBuff[512],RecvBuff[512];
+WSADATA wsaData;
+SOCKET mySocket;
+struct sockaddr_in server;
+struct hostent *hp;
+int resp;
 
 /**
- * Eschucha en un puerto
+ * Se conecta a un puerto.
+ * @param ip
+ * @param port
+ * @param message
+ * @return
+ */
+int conectar(char *ip, int port) {
+    //Inicializa la DLL de sockets
+    resp = WSAStartup(MAKEWORD(1, 0), &wsaData);
+    if (resp) {
+        printf("Failed to initialize socket.\n");
+        return -1;
+    }
+
+    // Se obtiene la IP del servidor. (para este caso es localhost)
+    hp = (struct hostent *) gethostbyname(ip);
+
+    if (!hp) {
+        printf("No server found.\n");
+        WSACleanup();
+        return -1;
+    }
+
+    // Creamos el socket...
+    mySocket = socket(AF_INET, SOCK_STREAM, 0);
+    if (mySocket == INVALID_SOCKET) {
+        printf("Failed to create socket.\n");
+        WSACleanup();
+        return -1;
+    }
+
+    memset(&server, 0, sizeof(server));
+    memcpy(&server.sin_addr, hp->h_addr, hp->h_length);
+    server.sin_family = hp->h_addrtype;
+    server.sin_port = htons(port);
+
+    // Nos conectamos con el servidor...
+    if (connect(mySocket, (struct sockaddr *) &server, sizeof(server)) == SOCKET_ERROR) {
+        printf("Failed to connect to the server.\n");
+        closesocket(mySocket);
+        WSACleanup();
+        return -1;
+    }
+    printf("Connection established with: %s\n", inet_ntoa(server.sin_addr));
+    return 0; // Return 0 para saber que se logro.
+}
+
+/**
+ * Eschucha en el puerto conectado.
  * @param puerto
  * @param ip
  * @return
  */
-char* escuchar(int puerto,char* ip){
-    WSADATA wsaData;
-    SOCKET conn_socket,comm_socket;
-    SOCKET comunicacion;
-    struct sockaddr_in server;
-    struct sockaddr_in client;
-    struct hostent *hp;
-    int resp,stsize;
-    char * respuesta;
-
-    //Inicializamos la DLL de sockets
-    resp=WSAStartup(MAKEWORD(1,0),&wsaData);
-    if(resp){
-        printf("Error al inicializar socket\n");
-        return resp;
-    }
-
-    //Obtenemos la IP que usará nuestro servidor...
-    // en este caso localhost indica nuestra propia máquina...
-    hp=(struct hostent *)gethostbyname(ip);
-
-    if(!hp){
-        printf("No se ha encontrado servidor...\n");
-        WSACleanup();return WSAGetLastError();
-    }
-
-    // Creamos el socket...
-    conn_socket=socket(AF_INET,SOCK_STREAM, 0);
-    if(conn_socket==INVALID_SOCKET) {
-        printf("Error al crear socket\n");
-        WSACleanup();return WSAGetLastError();
-    }
-
-    memset(&server, 0, sizeof(server)) ;
-    memcpy(&server.sin_addr, hp->h_addr, hp->h_length);
-    server.sin_family = hp->h_addrtype;
-    server.sin_port = htons(puerto);
-
-    // Asociamos ip y puerto al socket
-    resp=bind(conn_socket, (struct sockaddr *)&server, sizeof(server));
-    if(resp==SOCKET_ERROR){
-        printf("Error al asociar puerto e ip al socket\n");
-        closesocket(conn_socket);WSACleanup();
-        return WSAGetLastError();
-    }
-
-    if(listen(conn_socket, 1)==SOCKET_ERROR){
-        printf("Error al habilitar conexiones entrantes\n");
-        closesocket(conn_socket);WSACleanup();
-        return WSAGetLastError();
-    }
-
-    // Aceptamos conexiones entrantes
-    printf("Esperando conexiones entrantes... \n");
-    stsize=sizeof(struct sockaddr);
-    comm_socket=accept(conn_socket,(struct sockaddr *)&client,&stsize);
-    if(comm_socket==INVALID_SOCKET){
-        printf("Error al aceptar conexión entrante\n");
-        closesocket(conn_socket);WSACleanup();
-        return WSAGetLastError();
-    }
-    printf("Conexión entrante desde: %s\n", inet_ntoa(client.sin_addr));
-
-    // Como no vamos a aceptar más conexiones cerramos el socket escucha
-    closesocket(conn_socket);
-
-    strcpy(SendBuff,"Hola Cliente... .P");
-    //Enviamos y recibimos datos...
-//    printf("Enviando Mensaje... \n");
-//    send (comm_socket, SendBuff, sizeof(SendBuff), 0);
-//    printf("Datos enviados: %s \n", SendBuff);
-
-    printf("Recibiendo Mensaje... \n");
-    recv (comm_socket, RecvBuff, sizeof(RecvBuff), 0);
-    printf("Datos recibidos: %s \n", RecvBuff);
-
-
-    //getchar();
-
-    // Cerramos el socket de la comunicacion
-    closesocket(comm_socket);
-
-    // Cerramos liberia winsock
-    WSACleanup();
-    return RecvBuff;
+char* escuchar() {
+    memset(&Cadena[0], 0, sizeof(Cadena));
+    recv(mySocket, Cadena, sizeof(Cadena), 0);
+    printf("Rcvd: %s \n", Cadena);
+    // Return el buffer recibido.
+    return Cadena;
 }
 
 /**
- * Envia en un puerto
+ * Envia un mensaje al puerto conectado.
  * @param ip
  * @param puerto
  * @param mensaje
  * @return
  */
-int enviar(char *ip, int puerto, char* mensaje){
-    WSADATA wsaData;
-    SOCKET conn_socket;
-    struct sockaddr_in server;
-    struct hostent *hp;
-    int resp;
+int enviar(char* mensaje) {
 
-    //Inicializamos la DLL de sockets
-    resp=WSAStartup(MAKEWORD(1,0),&wsaData);
-    if(resp){
-        printf("Error al inicializar socket\n");
-        return -1;
-    }
+    /*
+     * Se va a enviar una cadena de x caracteres, incluido el \0. Previamente se
+     * envía un entero con el x.
+     */
+    int Aux;
 
-    //Obtenemos la IP del servidor... en este caso
-    // localhost indica nuestra propia máquina...
-    hp=(struct hostent *)gethostbyname(ip);
+    // Limpiar la Cadena.
+    memset(&Cadena[0], 0, sizeof(Cadena));
 
-    if(!hp){
-        printf("No se ha encontrado servidor...\n");
-        WSACleanup();return -1;
-    }
+    // Copiar mensaje en cadena.
+    strcpy (Cadena, mensaje);
 
-    // Creamos el socket...
-    conn_socket=socket(AF_INET,SOCK_STREAM, 0);
-    if(conn_socket==INVALID_SOCKET){
-        printf("Error al crear socket\n");
-        WSACleanup();return -1;
-    }
+    // Obtener bits del mensaje.
+    u_long Longitud_Cadena = strlen(Cadena)+1; // agrega el '\0'.
 
-    memset(&server, 0, sizeof(server)) ;
-    memcpy(&server.sin_addr, hp->h_addr, hp->h_length);
-    server.sin_family = hp->h_addrtype;
-    server.sin_port = htons(puerto);
+    /* Antes de enviar el entero hay que transformalo a formato red */
+    Aux = htonl (Longitud_Cadena);
+    send (mySocket, (char *)&Aux, sizeof(Longitud_Cadena),0);
+    printf ("\nSent: %lu", Longitud_Cadena-1);
 
-    // Nos conectamos con el servidor...
-    if(connect(conn_socket,(struct sockaddr *)&server,sizeof(server))==SOCKET_ERROR){
-        printf("Fallo al conectarse con el servidor\n");
-        closesocket(conn_socket);
-        WSACleanup();return -1;
-    }
+    /* Se envía la cadena */
+    send(mySocket, Cadena, Longitud_Cadena, 0);
+    printf(" - %s\n", Cadena);
 
-    printf("Conexión establecida con: %s\n", inet_ntoa(server.sin_addr));
-
-    strcpy(SendBuff,mensaje);
-    //Enviamos y recibimos datos...
-    printf("Enviando Mensaje... \n");
-    send(conn_socket,SendBuff,sizeof(SendBuff),0);
-    printf("Datos enviados: %s \n", SendBuff);
-
-
-    free(SendBuff);
-    free(mensaje);
-    free(&server);
-
-//    printf("Recibiendo Mensaje... \n");
-//    recv(conn_socket,RecvBuff, sizeof(RecvBuff), 0);
-//    printf("Datos recibidos: %s \n", RecvBuff);
-//
-    //  getchar();
-
-    // Cerramos el socket y liberamos la DLL de sockets
-    shutdown(conn_socket, SD_BOTH);
-
-    closesocket(conn_socket);
-
-    close(conn_socket);
-    WSACleanup();
-    free(&wsaData);
-    return 0;
+    return 0;  // Return 0 para saber que se logro.
 }
