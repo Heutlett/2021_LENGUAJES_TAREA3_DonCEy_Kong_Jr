@@ -1,0 +1,13 @@
+vacio: 0
+mono: 1
+
+cocodrilos:
+
+cocodrilo-rojo: 2
+cocodrilo-azul: 3
+
+frutas:
+
+banano: 4
+manzana: 5
+melocoton: 6
