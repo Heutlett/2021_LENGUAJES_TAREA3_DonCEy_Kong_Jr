@@ -3,6 +3,7 @@ import controller.GameManager;
 import models.entidades.Entidad;
 import models.entidades.movibles.EntidadMovible;
 import models.entidades.movibles.Fruta;
+import models.entidades.utils.JSON_Generator;
 import models.entidades.utils.PuntoMatriz;
 
 import javax.swing.*;
@@ -317,48 +318,7 @@ public class Ventana extends JFrame {
         }
     }
 
-    /**
-     * Funcion: controladorDeMovimiento
-     * Maneja el movimiento del mono a partir de un comando de direccion en formato WASD
-     * @param command String que determina hacia donde se movera el mono  (W=ARRIBA, A=IZQUIERAD, D= DERECHA, S=ABAJO)
-     */
-    public void controladorDeMovimiento(String command) {
 
-        if(command.equals("WD") && !gameManager.getDonkeyKongJr().isJumping()
-                && gameManager.getMonoController().estaEnSuelo()){
-            gameManager.getDonkeyKongJr().setJumping(true);
-            gameManager.getMonoController().saltar(EntidadMovible.Direccion.DERECHA);
-
-        }if(command.equals("WA") && !gameManager.getDonkeyKongJr().isJumping()
-                && gameManager.getMonoController().estaEnSuelo()){
-            gameManager.getDonkeyKongJr().setJumping(true);
-            gameManager.getMonoController().saltar(EntidadMovible.Direccion.IZQUIERDA);
-
-        }else if(command.equals("W") && !gameManager.getDonkeyKongJr().isJumping()
-                && gameManager.getMonoController().estaEnSuelo()) {
-
-            gameManager.getDonkeyKongJr().setJumping(true);
-            gameManager.getMonoController().saltar(null);
-        }else if(command.equals("W") && gameManager.getDonkeyKongJr().isOnLiana()
-                && !gameManager.verificarChoquePlataformaArriba()){
-            gameManager.getMonoController().moverMono(EntidadMovible.Direccion.ARRIBA);
-        }
-        if(command.equals("S") && gameManager.getDonkeyKongJr().isOnLiana()
-                && !gameManager.verificarChoquePlataformaAbajo()){
-            gameManager.getMonoController().moverMono(EntidadMovible.Direccion.ABAJO);
-        }
-        if(command.equals("D") && !gameManager.getDonkeyKongJr().isJumping()
-                && !gameManager.getDonkeyKongJr().isFalling()){
-            gameManager.getMonoController().moverMono(EntidadMovible.Direccion.DERECHA);
-        }
-        if(command.equals("A") && !gameManager.getDonkeyKongJr().isJumping()
-                && !gameManager.getDonkeyKongJr().isFalling()){
-            gameManager.getMonoController().moverMono(EntidadMovible.Direccion.IZQUIERDA);
-        }
-        if(gameManager.getDonkeyKongJr().isOnLiana()){
-            gameManager.getCreadorDeMapa().crearLianas();
-        }
-    }
 
     /**
      * ################################################################################################################
@@ -470,6 +430,69 @@ public class Ventana extends JFrame {
             }
         }
     }
+    /**
+     * ################################################################################################################
+     * API DE CONTROL PARA EL SERVIDOR
+     * ################################################################################################################
+     */
+
+    /**
+     * Funcion: controladorDeMovimiento
+     * Maneja el movimiento del mono a partir de un comando de direccion en formato WASD
+     * @param command String que determina hacia donde se movera el mono  (W=ARRIBA, A=IZQUIERAD, D= DERECHA, S=ABAJO)
+     */
+    public void controladorDeMovimiento(String command) {
+
+        if(command.equals("WD") && !gameManager.getDonkeyKongJr().isJumping()
+                && gameManager.getMonoController().estaEnSuelo()){
+            gameManager.getDonkeyKongJr().setJumping(true);
+            gameManager.getMonoController().saltar(EntidadMovible.Direccion.DERECHA);
+
+        }if(command.equals("WA") && !gameManager.getDonkeyKongJr().isJumping()
+                && gameManager.getMonoController().estaEnSuelo()){
+            gameManager.getDonkeyKongJr().setJumping(true);
+            gameManager.getMonoController().saltar(EntidadMovible.Direccion.IZQUIERDA);
+
+        }else if(command.equals("W") && !gameManager.getDonkeyKongJr().isJumping()
+                && gameManager.getMonoController().estaEnSuelo()) {
+
+            gameManager.getDonkeyKongJr().setJumping(true);
+            gameManager.getMonoController().saltar(null);
+        }else if(command.equals("W") && gameManager.getDonkeyKongJr().isOnLiana()
+                && !gameManager.verificarChoquePlataformaArriba()){
+            gameManager.getMonoController().moverMono(EntidadMovible.Direccion.ARRIBA);
+        }
+        if(command.equals("S") && gameManager.getDonkeyKongJr().isOnLiana()
+                && !gameManager.verificarChoquePlataformaAbajo()){
+            gameManager.getMonoController().moverMono(EntidadMovible.Direccion.ABAJO);
+        }
+        if(command.equals("D") && !gameManager.getDonkeyKongJr().isJumping()
+                && !gameManager.getDonkeyKongJr().isFalling()){
+            gameManager.getMonoController().moverMono(EntidadMovible.Direccion.DERECHA);
+        }
+        if(command.equals("A") && !gameManager.getDonkeyKongJr().isJumping()
+                && !gameManager.getDonkeyKongJr().isFalling()){
+            gameManager.getMonoController().moverMono(EntidadMovible.Direccion.IZQUIERDA);
+        }
+        if(gameManager.getDonkeyKongJr().isOnLiana()){
+            gameManager.getCreadorDeMapa().crearLianas();
+        }
+    }
+
+    /**
+     * Funcion: generarJSON
+     * Genera un JSON con la informacion actual del juego
+     * @return retorna un string en formato json de la informacion actual del juego
+     */
+
+    public String generarJSON(){
+
+        return gameManager.generateJSON();
+
+    }
+
+
+
 
     public static void main(String[] args) {
 

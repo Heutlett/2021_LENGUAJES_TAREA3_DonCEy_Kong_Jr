@@ -6,6 +6,7 @@ import models.entidades.movibles.Cocodrilo;
 import models.entidades.movibles.EntidadMovible;
 import models.entidades.movibles.Fruta;
 import models.entidades.movibles.Mono;
+import models.entidades.utils.JSON_Generator;
 import models.entidades.utils.PuntoMatriz;
 import java.util.ArrayList;
 
@@ -89,6 +90,40 @@ public class GameManager extends Thread{
 
         new HiloMoverCocodrilosFrutas().start();
     }
+
+    /**
+     * Funcion: generarMatrizPosicionesActuales
+     * Genera una matriz de enteros con las posiciones actuales de cada entidad para pasarla al cliente en formato json
+     * @return matriz int
+     */
+    private int[][] generarMatrizPosicionesActuales(){
+
+        int [][] matrizPos = new int[TAMANO_MATRIZ][TAMANO_MATRIZ];
+
+        matrizPos[donkeyKongJr.getPosicion().getFila()][donkeyKongJr.getPosicion().getColumna()] = 1;
+
+        for (Cocodrilo cocodrilo : cocodrilos) {
+            if (cocodrilo.getTipoEntidad() == Entidad.TipoEntidad.COCODRILO_ROJO) {
+                matrizPos[cocodrilo.getPosicion().getFila()][cocodrilo.getPosicion().getColumna()] = 2;
+            } else {
+                matrizPos[cocodrilo.getPosicion().getFila()][cocodrilo.getPosicion().getColumna()] = 3;
+            }
+        }
+
+        for (Fruta fruta : frutas) {
+            if (fruta.getTipoEntidad() == Entidad.TipoEntidad.BANANO) {
+                matrizPos[fruta.getPosicion().getFila()][fruta.getPosicion().getColumna()] = 4;
+            }
+            if (fruta.getTipoEntidad() == Entidad.TipoEntidad.MANZANA) {
+                matrizPos[fruta.getPosicion().getFila()][fruta.getPosicion().getColumna()] = 5;
+            }
+            if (fruta.getTipoEntidad() == Entidad.TipoEntidad.MELOCOTON) {
+                matrizPos[fruta.getPosicion().getFila()][fruta.getPosicion().getColumna()] = 6;
+            }
+        }
+        return matrizPos;
+    }
+
 
     /**
      * Funcion: setearMatrizVacia
@@ -249,6 +284,10 @@ public class GameManager extends Thread{
         return false;
     }
 
+    public String generateJSON(){
+        return JSON_Generator.generateJSON(generarMatrizPosicionesActuales(), nivel, donkeyKongJr.getPuntuacion(), vidas, donkeyKongJr.isHaGanado(), donkeyKongJr.isHaPerdido());
+    }
+
     /**
      * ################################################################################################################
      * THREADS HILOS THREADS HILOS THREADS HILOS THREADS HILOS THREADS HILOS THREADS HILOS THREADS HILOS THREADS HILOS
@@ -296,7 +335,6 @@ public class GameManager extends Thread{
         @Override
         public void run() {
             while (true) {
-
                 if(!donkeyKongJr.isHaPerdido()) {
 
                     cocodriloController.moverCocodrilos();
