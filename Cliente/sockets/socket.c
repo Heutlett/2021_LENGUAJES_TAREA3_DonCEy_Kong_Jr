@@ -75,19 +75,19 @@ int conectar(char *ip, int port) {
 char* escuchar() {
     memset(&Cadena[0], 0, sizeof(Cadena));
     recv(mySocket, Cadena, sizeof(Cadena), 0);
-    printf("Rcvd: %s \n", Cadena);
+    //printf("Rcvd: %s \n", Cadena);
     // Return el buffer recibido.
     return Cadena;
 }
 
 char* escuchar2() {
     memset(&Cadena[0], 0, sizeof(Cadena));
-    printf("PRUEBAAAAAAAAA: %s \n", Cadena);
+    //printf("PRUEBAAAAAAAAA: %s \n", Cadena);
     recv(mySocket, Cadena, sizeof(Cadena), 0);
     char * token  = strtok(Cadena, "}");
     strcpy(Cadena, token);
     strcat(Cadena, "}");
-    printf("Rcvd: %s \n", Cadena);
+    //printf("Rcvd: %s \n", Cadena);
     // Return el buffer recibido.
     return Cadena;
 }
@@ -119,11 +119,11 @@ int enviar(char* mensaje) {
     /* Antes de enviar el entero hay que transformalo a formato red */
     Aux = htonl (Longitud_Cadena);
     send (mySocket, (char *)&Aux, sizeof(Longitud_Cadena),0);
-    printf ("\nSent: %lu", Longitud_Cadena-1);
+    //printf ("\nSent: %lu", Longitud_Cadena-1);
 
     /* Se envía la cadena */
     send(mySocket, Cadena, Longitud_Cadena, 0);
-    printf(" - %s\n", Cadena);
+    //printf(" - %s\n", Cadena);
 
     return 0;  // Return 0 para saber que se logro.
 }

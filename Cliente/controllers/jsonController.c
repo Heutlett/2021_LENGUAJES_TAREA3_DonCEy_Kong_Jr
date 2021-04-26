@@ -23,9 +23,8 @@ static void process_object1(json_value* value, int depth)
     length = value->u.object.length;
     for (x = 0; x < length; x++) {
         print_depth_shift(depth);
-        printf("object[%d].name = %s\n", x, value->u.object.values[x].name);
+        //printf("object[%d].name = %s\n", x, value->u.object.values[x].name);
         if (id == 0) {
-            printf("hey");
             if (!strcmp(value->u.object.values[x].name, "roomNumber")) {
                 room1.number = value->u.object.values[x].value->u.integer;
             }
@@ -59,7 +58,7 @@ static void process_object1(json_value* value, int depth)
                 }
             }
         }
-        process_value(value->u.object.values[x].value, depth+1);
+        //process_value(value->u.object.values[x].value, depth+1);
     }
 }
 
@@ -98,7 +97,6 @@ static void process_object2(json_value* value, int depth)
             }
         }
 
-        //process_value(value->u.object.values[x].value, depth+1);
     }
 }
 
@@ -338,10 +336,10 @@ void reloadJFileRooms(char* json_file[]){
         return;
     }
 
-    printf("tamano: %d,  %s",strlen(json_file), json_file);
+    //printf("tamano: %d,  %s",strlen(json_file), json_file);
 
     if ( fwrite(json_file, sizeof(char), strlen(json_file), fp) != 1 ) {
-        fprintf(stderr, "Unable to write content of %s\n", filename);
+        //fprintf(stderr, "Unable to write content of %s\n", filename);
         fclose(fp);
         return;
     }

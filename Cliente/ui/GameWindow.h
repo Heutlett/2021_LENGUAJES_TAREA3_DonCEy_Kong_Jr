@@ -47,6 +47,8 @@ static int d;
 
 static int viewer;
 
+static int rev;
+
 static char sendKey[5];
 
 int init_game();

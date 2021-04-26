@@ -11,6 +11,8 @@ int init_game() {
     s=0;
     d=0;
 
+    rev = 0;
+
     strcpy(level,"Nivel: ");
     strcpy(health,"Vidas: ");
     strcpy(points,"Puntos: ");
@@ -61,6 +63,8 @@ int run(){
         }
 
         if (event.type == ALLEGRO_EVENT_TIMER) {
+
+            rev++;
 
             al_draw_bitmap(background, 0, 0, 0);
 
@@ -164,7 +168,7 @@ int run(){
                     break;
             }
         }
-        if(!viewer){
+        if((rev%3)==0){
             if (a) {
                 strcpy(sendKey, "A");
             }
@@ -184,8 +188,8 @@ int run(){
                 strcpy(sendKey, "WD");
             }
         }
-        printf(sendKey);
-        printf("\n");
+        //printf(sendKey);
+        //printf("\n");
 
 
         enviar(sendKey);

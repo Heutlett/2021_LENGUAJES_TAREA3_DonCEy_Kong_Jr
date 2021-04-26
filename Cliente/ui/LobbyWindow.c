@@ -140,6 +140,7 @@ int run_lobby(){
                 al_draw_bitmap(LobbySelector,380,615,0);
             }
 
+            printf(timer);
             al_flip_display();
 
         }
