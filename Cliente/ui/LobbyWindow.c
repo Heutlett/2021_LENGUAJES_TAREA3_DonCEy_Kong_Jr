@@ -160,7 +160,8 @@ int run_lobby(){
                     break;
                 case ALLEGRO_KEY_ENTER:
                     if(!m_bt[mc_i][mc_j]){
-                        if(!strcmp(m_room,"viewer")){viewer = 1;}
+                        Lobbyrunning = false;
+                        //if(!strcmp(m_type,"viewer")){viewer = 1;}
                         setSendJson();
                         char rslt[200] = "{\"username\": \"";
                         strcat(rslt,m_player);
@@ -171,9 +172,6 @@ int run_lobby(){
                         strcat(rslt,"}");
                         printf(rslt);
                         enviar(rslt);
-                        Lobbyrunning = false;
-                        init_game();
-                        run();
                     }
                     break;
             }
