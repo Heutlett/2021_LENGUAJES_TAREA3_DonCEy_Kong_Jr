@@ -49,7 +49,7 @@ public class Serializer {
         private void setGuests(Room room) {
             // Host
             if (room.getHost() == null) {
-                player = null;
+                player = "null";
             } else{
                 player = room.getHost().getName();
             }

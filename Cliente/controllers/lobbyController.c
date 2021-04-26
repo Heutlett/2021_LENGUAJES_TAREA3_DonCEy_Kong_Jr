@@ -18,6 +18,12 @@ int m_initC(){
     mc_i = 0;
     mc_j = 0;
 
+    espectadores[0] = "Espectador1";
+    espectadores[1] = "Espectador2";
+    espectadores[2] = "Espectador3";
+    espectadores[3] = "Espectador4";
+
+    e_cont =0;
 }
 
 int m_Move(int dir){
@@ -42,4 +48,26 @@ int m_printActual(){
     printf("%d",menu[mc_i][mc_j]);
 
     return 0;
+}
+
+void setSendJson(){
+    if(menu[mc_i][mc_j]<3){
+        if (menu[mc_i][mc_j] == 1){
+            m_player = "Jugador1";
+            m_room = "1";
+        }else{
+            m_player = "Jugador2";
+            m_room = "2";
+        }
+        m_type = "player";
+    }else{
+        if (menu[mc_i][mc_j] == 3){
+            m_room = "1";
+        } else{
+            m_room = "2";
+        }
+        m_player = espectadores[e_cont];
+        e_cont++;
+        m_type = "viewer";
+    }
 }

@@ -42,13 +42,21 @@ int init_lobby() {
 
 int run_lobby(){
 
+//    enviar("127.0.0.1",9090,"join");
+//    printf(escuchar(9090,"127.0.0.1"));
     while (Lobbyrunning) {
-
+        reloadJFileRooms("[{\"roomNumber\": 1, \"player\": \"Jugador1\", \"guests\": [\"BOTS1\",\"BOTS2\"]}, {\"roomNumber\": 2, \"player\": \"Jugador2\", \"guests\": []}]"
+        );
         jsonRoomParser(0);
         jsonRoomParser(1);
-
+        JL_printStructs();
         ALLEGRO_EVENT event;
         al_wait_for_event(Lobbyqueue, &event);
+
+//        enviar("127.0.0.1",9090,"reload");
+//        reloadJFileRooms(escuchar(9090,"127.0.0.1"));
+
+
 
         if(event.type == ALLEGRO_EVENT_DISPLAY_CLOSE){
             Lobbyrunning = false;
@@ -144,6 +152,15 @@ int run_lobby(){
                     break;
                 case ALLEGRO_KEY_ENTER:
                     if(!m_bt[mc_i][mc_j]){
+                        setSendJson();
+                        char rslt[200] = "{\n""\t\"username \": \"";
+                        strcat(rslt,m_player);
+                        strcat(rslt,"\",\n""\t\"type\": \"");
+                        strcat(rslt,m_type);
+                        strcat(rslt,"\",\n""\t\"room\":");
+                        strcat(rslt,m_room);
+                        strcat(rslt,"\"}");
+                        printf(rslt);
                         Lobbyrunning = false;
                     }
                     break;

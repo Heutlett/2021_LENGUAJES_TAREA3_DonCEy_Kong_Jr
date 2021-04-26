@@ -13,6 +13,7 @@
 #include <allegro5/allegro_primitives.h>
 #include "../controllers/lobbyController.h"
 #include "../controllers/jsonController.h"
+#include "../sockets/socket.h"
 
 static ALLEGRO_DISPLAY *Lobbydisplay;
 static ALLEGRO_EVENT_QUEUE *Lobbyqueue;

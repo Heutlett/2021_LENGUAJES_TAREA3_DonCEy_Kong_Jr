@@ -145,15 +145,9 @@ public class Server {
 
             /* Si el servidor está lleno o vacio, esperar petición del cliente para
              * volver a enviar los cuartos por si alguno se desocupó. */
-            if (Server.manager.isFull()) {
-                if (read().equals("reload"))
-                logInProcedure();
-                return;
-            }
+            String json;
+            json = logInProcedure_aux();
 
-            /* Este read recibe:
-             * { "username":"Player1", "type":"player", "room":"2" }"; */
-            String json = read();
             int result = manager.addMember(json, this);  // retorna 1 si tiene éxito, 0 si no.
 
             /* Si no se logra loggear se desconecta al cliente. */
@@ -164,9 +158,18 @@ public class Server {
             System.out.printf("☰ LoggedIn: %s%n", Server.manager.getCurrentGames());
 
             /* Este send retorna: Matriz inicial del juego. */
-//            send("Initial matrix");
             send(manager.getMatrix(roomNumber));
             isLoggedIn = true;
+        }
+        // Funcion recursiva.
+        private String logInProcedure_aux() throws IOException {
+            String json = read();
+            if (json.equals("reload")){
+                send(manager.getCurrentGames()); // send sala nuevamente.
+                return logInProcedure_aux();
+            }
+            /* Este read recibe: { "username":"Player1", "type":"player", "room":"2" }"; */
+            return json;
         }
 
         /**

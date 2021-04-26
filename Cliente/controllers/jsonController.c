@@ -14,7 +14,7 @@ static void print_depth_shift(int depth)
 
 static void process_value(json_value* value, int depth);
 
-static void process_object(json_value* value, int depth)
+static void process_object1(json_value* value, int depth)
 {
     int length, x;
     if (value == NULL) {
@@ -63,6 +63,47 @@ static void process_object(json_value* value, int depth)
     }
 }
 
+static void process_object2(json_value* value, int depth)
+{
+    int length, x;
+    if (value == NULL) {
+        return;
+    }
+    length = value->u.object.length;
+    for (x = 0; x < length; x++) {
+        print_depth_shift(depth);
+        printf("object[%d].name = %s\n", x, value->u.object.values[x].name);
+
+        printf("hey");
+        if (!strcmp(value->u.object.values[x].name, "vidas")) {
+            game1.hlth = value->u.object.values[x].value->u.integer;
+        }
+        if (!strcmp(value->u.object.values[x].name, "puntuacion")) {
+            game1.pts = value->u.object.values[x].value->u.integer;
+        }
+        if (!strcmp(value->u.object.values[x].name, "nivel")) {
+            game1.level = value->u.object.values[x].value->u.integer;
+        }
+        if (!strcmp(value->u.object.values[x].name, "haPerdido")) {
+            game1.lose = value->u.object.values[x].value->u.boolean;
+        }
+        if (!strcmp(value->u.object.values[x].name, "haGanado")) {
+            printf("AAAAAAAAAAAAAAAAAAAAA");
+            game1.win = value->u.object.values[x].value->u.boolean;
+        }
+        if (!strcmp(value->u.object.values[x].name, "matriz ")) {
+            printf("AAAAAAAAAAAAAAAAAAAAA");
+            for (int i = 0; i < 100; ++i) {
+                for (int j = 0; j < 100; ++j) {
+                    game1.matrix[i][j] = value->u.object.values[x].value->u.array.values[i]->u.array.values[j]->u.integer;
+                }
+            }
+        }
+
+        process_value(value->u.object.values[x].value, depth+1);
+    }
+}
+
 static void process_array(json_value* value, int depth)
 {
     int length, x;
@@ -75,9 +116,7 @@ static void process_array(json_value* value, int depth)
 
         process_value(value->u.array.values[x], depth);
 
-
     }
-
 }
 
 static void process_value(json_value* value, int depth)
@@ -94,7 +133,12 @@ static void process_value(json_value* value, int depth)
             printf("none\n");
             break;
         case json_object:
-            process_object(value, depth+1);
+            if (id_j == 1) {
+                process_object1(value, depth + 1);
+            } else {
+                printf("debug");
+                process_object2(value,depth + 1);
+            }
             break;
         case json_array:
             process_array(value, depth+1);
@@ -182,6 +226,72 @@ int jsonRoomParser(int i) {
     return 0;
 }
 
+int jsonMatrixParser() {
+
+    id_j = 2;
+    printf("JSON MATRIX PARSER\n");
+
+    char* filename;
+    FILE *fp;
+    struct stat filestatus;
+    int file_size;
+    char* file_contents;
+    json_char* json;
+    json_value* value;
+
+    filename = "../data.json";
+
+    if ( stat(filename, &filestatus) != 0) {
+        fprintf(stderr, "File %s not found\n", filename);
+        return 1;
+    }
+
+    file_size = filestatus.st_size;
+    file_contents = (char*)malloc(filestatus.st_size);
+    if ( file_contents == NULL) {
+        fprintf(stderr, "Memory error: unable to allocate %d bytes\n", file_size);
+        return 1;
+    }
+
+    fp = fopen(filename, "r+");
+    if (fp == NULL) {
+        fprintf(stderr, "Unable to open %s\n", filename);
+        fclose(fp);
+        free(file_contents);
+        return 1;
+    }
+    if ( fread(file_contents, file_size, 1, fp) != 1 ) {
+        fprintf(stderr, "Unable t read content of %s\n", filename);
+        fclose(fp);
+        free(file_contents);
+        return 1;
+    }
+    fclose(fp);
+
+    printf("%s\n", file_contents);
+
+    printf("--------------------------------\n\n");
+
+    json = (json_char*)file_contents;
+
+    value = json_parse(json,file_size);
+
+    if (value == NULL) {
+        fprintf(stderr, "Unable to parse data\n");
+        free(file_contents);
+        exit(1);
+    }
+
+    process_value(value, 0);
+
+
+    json_value_free(value);
+    free(file_contents);
+
+
+    return 0;
+}
+
 void JL_printStructs(){
     printf("\n***********\nROOM1\n\n");
     printf("NUMB: %d\n", room1.number);
@@ -193,6 +303,20 @@ void JL_printStructs(){
     printf("NAME: "), printf(room2.player), printf("\n");
     printf("GUE1: "), printf(room2.guest1), printf("\n");
     printf("GUE1: "), printf(room2.guest2), printf("\n");
+    printf("\n***********\nGAME\n\n");
+    printf("WIN?: %d\n", game1.win);
+    printf("LOSE: %d\n", game1.lose);
+    printf("LEVL: %d\n", game1.level);
+    printf("POTS: %d\n", game1.pts);
+    printf("HLTH: %d\n", game1.hlth);
+    printf("MTRX: \n");
+    for (int i = 0;i<100;i++){
+        printf("\n");
+        for (int j = 0; j < 100; ++j) {
+            printf("%d",game1.matrix[i][j]);
+        }
+    }
+    printf("\n-----------------");
 }
 
 void init_jController(){
@@ -200,4 +324,28 @@ void init_jController(){
     strcpy(room1.guest2,"null");
     strcpy(room2.guest1,"null");
     strcpy(room2.guest2,"null");
+}
+
+void reloadJFileRooms(char* json_file[]){
+    char* filename;
+    FILE *fp;
+
+
+    filename = "../data.json";
+
+    fp = fopen(filename, "w");
+    if (fp == NULL) {
+        fprintf(stderr, "Unable to open %s\n", filename);
+        fclose(fp);
+        return;
+    }
+
+    if ( fwrite(json_file, sizeof(char), strlen(json_file), fp) != 1 ) {
+        fprintf(stderr, "Unable to write content of %s\n", filename);
+        fclose(fp);
+        return;
+    }
+
+
+    fclose(fp);
 }

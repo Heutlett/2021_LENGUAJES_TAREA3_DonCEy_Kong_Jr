@@ -39,12 +39,25 @@ int main() {
 //    jsonRoomParser(1);
 //    JL_printStructs();
 
+    jsonMatrixParser();
+    JL_printStructs();
 
-    init_lobby();
-    run_lobby();
+//    init_lobby();
+//    run_lobby();
 //
 //    init_game();
 //    run();
+
+//    char rslt[200] = "{\n""\t\"username \": \"";
+//    strcat(rslt,"Jugador1");
+//    strcat(rslt,"\",\n""\t\"type\": \"");
+//    strcat(rslt,"viewer");
+//    strcat(rslt,"\",\n""\t\"room\": \"");
+//    strcat(rslt,"1");
+//    strcat(rslt,"\"}");
+//    printf(rslt);
+
+//    reloadJFileRooms("[{\"roomNumber\": 1, \"player\": \"Jugador1\", \"guests\": [\"BOTS1\",\"BOTS2\"]}, {\"roomNumber\": 2, \"player\": \"Jugador2\", \"guests\": []}]");
 
 //    start_connection();
 //    //sendMessage("{\"username\": \"Jugador1\",\"type\": \"player\"}");
@@ -53,6 +66,8 @@ int main() {
 
 //    enviar("127.0.0.1",80,"{\"username\": \"Jugador2\",\"type\": \"player\"}");
 //    escuchar(80,"127.0.0.1");
+
+//    [{"roomNumber": 1, "player": "Jugador1", "guests": ["BOTS1","BOTS2"]}, {"roomNumber": 2, "player": "Jugador2", "guests": []}]
 
     return 0;
 }
