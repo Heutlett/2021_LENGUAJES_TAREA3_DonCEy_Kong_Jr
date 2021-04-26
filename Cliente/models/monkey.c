@@ -34,19 +34,3 @@ void destroy_monkey(){
 void set_monkeyAction(int action){
     monkey_action = action;
 }
-
-void set_xMonkey(int x_){
-    Mx = x_;
-}
-
-void set_yMonkey(int y_){
-    My = y_;
-}
-
-int get_xMonkey(){
-    return Mx;
-}
-
-int get_yMonkey(){
-    return My;
-}

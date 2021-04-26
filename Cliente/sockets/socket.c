@@ -22,8 +22,7 @@ int resp;
  * Se conecta a un puerto.
  * @param ip
  * @param port
- * @param message
- * @return
+ * @return state
  */
 int conectar(char *ip, int port) {
     //Inicializa la DLL de sockets
@@ -68,9 +67,7 @@ int conectar(char *ip, int port) {
 
 /**
  * Eschucha en el puerto conectado.
- * @param puerto
- * @param ip
- * @return
+ * @return cadena
  */
 char* escuchar() {
     memset(&Cadena[0], 0, sizeof(Cadena));
@@ -80,9 +77,12 @@ char* escuchar() {
     return Cadena;
 }
 
+/**
+ * Eschucha en el puerto conectado.
+ * @return cadena
+ */
 char* escuchar2() {
     memset(&Cadena[0], 0, sizeof(Cadena));
-    //printf("PRUEBAAAAAAAAA: %s \n", Cadena);
     recv(mySocket, Cadena, sizeof(Cadena), 0);
     char * token  = strtok(Cadena, "}");
     strcpy(Cadena, token);
@@ -94,8 +94,6 @@ char* escuchar2() {
 
 /**
  * Envia un mensaje al puerto conectado.
- * @param ip
- * @param puerto
  * @param mensaje
  * @return
  */

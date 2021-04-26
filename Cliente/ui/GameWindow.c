@@ -94,27 +94,17 @@ int run(){
 
             }
 
-//            draw_kremlinXY(300, 400, 1);
-//            draw_kremlinXY(500, 400, 2);
-//
-//
-//            draw_fruitXY(310,100,1);
-//            draw_fruitXY(350,100,2);
-//            draw_fruitXY(390,100,3);
-            //draw_fruitXY(190,100,3);
 
 
 
             //*****************************************
 
-//            draw_monkey();
+
             itoa(game1.level, iLvl, 10);
             itoa(game1.hlth, iHlth, 10);
             itoa(game1.pts, iPts, 10);
 
-//            strcat(level,iLvl);
-//            strcat(health,iHlth);
-//            strcat(points,iPts);
+
 
             al_draw_filled_rectangle(15, 100, 150, 165, al_map_rgb(255, 255, 200));
             al_draw_text(font, al_map_rgb(255, 50, 0), 20, 100, 0, level);
@@ -127,32 +117,26 @@ int run(){
 
         }
 
-        if (event.type == ALLEGRO_EVENT_KEY_DOWN) { //|| pressed){
-//            pressed = true;
+        if (event.type == ALLEGRO_EVENT_KEY_DOWN) {
             switch (event.keyboard.keycode) {
                 case ALLEGRO_KEY_W:
                     w = 1;
-                    set_yMonkey(get_yMonkey() - 4);
                     break;
                 case ALLEGRO_KEY_S:
                     s = 1;
-                    set_yMonkey(get_yMonkey() + 4);
                     break;
                 case ALLEGRO_KEY_D:
                     d = 1;
                     set_monkeyAction(1);
-                    set_xMonkey(get_xMonkey() + 4);
                     break;
                 case ALLEGRO_KEY_A:
                     a = 1;
                     set_monkeyAction(2);
-                    set_xMonkey(get_xMonkey() - 4);
                     break;
             }
         }
 
         if (event.type == ALLEGRO_EVENT_KEY_UP) {
-//            pressed = false;
             switch (event.keyboard.keycode) {
                 case ALLEGRO_KEY_W:
                     w = 0;

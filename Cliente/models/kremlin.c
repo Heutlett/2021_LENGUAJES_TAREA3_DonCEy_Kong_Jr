@@ -38,27 +38,3 @@ void destroy_kremlin(){
     al_destroy_bitmap(kremlinBU);
     al_destroy_bitmap(kremlinBD);
 }
-
-void set_kremlinAction(int action){
-    kremlin_action = action;
-}
-
-void set_kremlinColor(int color){
-    kremlin_color = color;
-}
-
-void set_xKremlin(int x_){
-    Kx = x_;
-}
-
-void set_yKremlin(int y_){
-    Ky = y_;
-}
-
-int get_xKremlin(){
-    return Kx;
-}
-
-int get_yKremlin(){
-    return Ky;
-}
