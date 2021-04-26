@@ -32,13 +32,20 @@ static bool running = true;
 static bool pressed = false;
 
 
-static char xc[10];
-static char yc[10];
+static char level[10];
+static char health[10];
+static char points[15];
+
+static char iLvl[10];
+static char iHlth[10];
+static char iPts[10];
 
 static int w;
 static int a;
 static int s;
 static int d;
+
+static int viewer;
 
 static char sendKey[5];
 
