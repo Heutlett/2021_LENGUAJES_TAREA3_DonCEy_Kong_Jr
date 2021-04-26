@@ -46,8 +46,8 @@ int init_game() {
 
 int run(){
 
-//    enviar("join");
-//    reloadJFileRooms(escuchar2());
+    enviar("join");
+    reloadJFileRooms(escuchar2());
 
     jsonMatrixParser();
     while (running) {
@@ -188,8 +188,8 @@ int run(){
         printf("\n");
 
 
-//        enviar(sendKey);
-//        reloadJFileRooms(escuchar2());
+        enviar(sendKey);
+        reloadJFileRooms(escuchar2());
 
         strcpy(sendKey,"_");
 

@@ -43,12 +43,12 @@ int main() {
 
 //    jsonMatrixParser();
     //JL_printStructs();
-//    conectar(serverIp, port);
-//    init_lobby();
-//    run_lobby();
+    conectar(serverIp, port);
+    init_lobby();
+    run_lobby();
 
-    init_game();
-    run();
+//    init_game();
+//   run();
 
 
 //    reloadJFileRooms("[{\"roomNumber\": 1, \"player\": \"Jugador1\", \"guests\": [\"BOTS1\",\"BOTS2\"]}, {\"roomNumber\": 2, \"player\": \"Jugador2\", \"guests\": []}]"
