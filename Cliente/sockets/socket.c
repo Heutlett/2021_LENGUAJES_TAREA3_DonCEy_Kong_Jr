@@ -9,7 +9,7 @@
 #include <windows.h>
 #include <io.h>
 
-char Cadena[512];
+char Cadena[10000];
 
 WSADATA wsaData;
 SOCKET mySocket;

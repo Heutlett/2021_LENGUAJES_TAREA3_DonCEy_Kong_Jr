@@ -1,6 +1,7 @@
 package sockets;
 
 import settings.Settings;
+import view.Ventana;
 
 import java.util.ArrayList;
 
@@ -16,19 +17,28 @@ public class Room {
     private Member host = null;
     private final ArrayList<Member> guests = new ArrayList<>();
     private String matrix;
+    private Ventana ventana;
     //private Ventana ventana;
 
     /* Constructor */
     public Room(int roomNumber) {
         this.roomNumber = roomNumber;
-        //ventana = new Ventana();
-        this.matrix = "Init Matrix : "+ roomNumber; // Aquí debemos llamar a la matrix inicial.
+
+        ventana = new Ventana();
+
+        this.matrix = ventana.generarJSON(); // Aquí debemos llamar a la matrix inicial.
+    }
+
+    public void startVentana() {
+        ventana.ejecuta();
+        ventana.gameManager.start();
     }
 
     /* Methods */
 
     /**
      * Agrega una instancia de Member a la lista de invitados.
+     *
      * @param guest El miembro que se debe agregar.
      */
     public void addGuest(Member guest) {
@@ -85,7 +95,7 @@ public class Room {
      * @return String
      */
     public String getMatrix() {
-        return matrix;
+        return ventana.generarJSON();
     }
 
     /**
@@ -93,9 +103,10 @@ public class Room {
      * recibido al atributo matrix. Es un sistema de caja negra.
      * @param key Tecla presionada.
      */
-    public void updateMatrix(String key){
+    public void updateMatrix(String key) {
         // do something
-        matrix =  "Matrix with key pressed : "+ roomNumber;
+        ventana.controladorDeMovimiento(key);
+        matrix = ventana.generarJSON();
     }
 
 

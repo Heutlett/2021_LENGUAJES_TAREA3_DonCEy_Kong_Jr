@@ -1,8 +1,8 @@
 package sockets;
 
+import org.json.JSONObject;
 import settings.Settings;
 
-import org.json.JSONObject;
 import java.util.ArrayList;
 
 /**
@@ -117,6 +117,7 @@ public class Manager {
             client.setRoomNumber(roomNumber);
             Member host = new Member(client);
             room.setHost(host);
+            room.startVentana();
             return 1;
         } return 0;
     }

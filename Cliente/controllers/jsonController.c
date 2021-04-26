@@ -337,6 +337,8 @@ void reloadJFileRooms(char* json_file[]){
         return;
     }
 
+    printf("tamano: %d,  %s",strlen(json_file), json_file);
+
     if ( fwrite(json_file, sizeof(char), strlen(json_file), fp) != 1 ) {
         fprintf(stderr, "Unable to write content of %s\n", filename);
         fclose(fp);
