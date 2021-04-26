@@ -17,12 +17,14 @@
 #include <stdlib.h>
 #include "../controllers/jsonController.h"
 #include "../sockets/socket.h"
+#include "../controllers/lobbyController.h"
 
 //Variables graficas de ALLEGRO
 static ALLEGRO_DISPLAY *display;
 static ALLEGRO_EVENT_QUEUE *queue;
 static ALLEGRO_TIMER *timer;
 static ALLEGRO_FONT *font;
+static ALLEGRO_FONT *font2;
 
 static ALLEGRO_BITMAP *background;
 

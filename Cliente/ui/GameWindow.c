@@ -31,6 +31,7 @@ int init_game() {
     timer = al_create_timer(1.0/60);
 
     font = al_load_ttf_font("../resources/bahnschrift.ttf",20,0);
+    font2 = al_load_ttf_font("../resources/bahnschrift.ttf",15,0);
     background = al_load_bitmap("../resources/background.jpeg");
     init_monkey();
     init_kremlin();
@@ -75,6 +76,11 @@ int run(){
             for (int i = 0; i < game1.len; ++i) {
                 if (game1.matrix[i][0] == 1) {
                     draw_monkeyXY((game1.matrix[i][2] * 7) - 10, (game1.matrix[i][1] * 7) - 10);
+                    if (!strcmp(m_type,"viewer")) {
+                        al_draw_text(font, al_map_rgb(255, 255, 0), 5, 5, 0, m_player);
+                    }else{
+                        al_draw_text(font2, al_map_rgb(255, 255, 0),(game1.matrix[i][2] * 7) - 5 , (game1.matrix[i][1] * 7) - 35, 0, m_player);
+                    }
                 }
                 if (game1.matrix[i][0] == 2) {
                     draw_kremlinXY((game1.matrix[i][2] * 7) - 20, (game1.matrix[i][1] * 7) - 20, 1);
@@ -106,13 +112,16 @@ int run(){
 
 
 
-            al_draw_filled_rectangle(15, 100, 150, 165, al_map_rgb(255, 255, 200));
-            al_draw_text(font, al_map_rgb(255, 50, 0), 20, 100, 0, level);
-            al_draw_text(font, al_map_rgb(255, 50, 0), 80, 100, 0, iLvl);
-            al_draw_text(font, al_map_rgb(255, 50, 0), 20, 120, 0, health);
-            al_draw_text(font, al_map_rgb(255, 50, 0), 80, 120, 0, iHlth);
-            al_draw_text(font, al_map_rgb(255, 50, 0), 20, 140, 0, points);
-            al_draw_text(font, al_map_rgb(255, 50, 0), 90, 140, 0, iPts);
+            al_draw_filled_rectangle(540, 20, 690, 85, al_map_rgb(255, 255, 200));
+            al_draw_text(font, al_map_rgb(255, 50, 0), 545, 20, 0, level);
+            al_draw_text(font, al_map_rgb(255, 50, 0), 605, 20, 0, iLvl);
+            al_draw_text(font, al_map_rgb(255, 50, 0), 545, 40, 0, health);
+            al_draw_text(font, al_map_rgb(255, 50, 0), 605, 40, 0, iHlth);
+            al_draw_text(font, al_map_rgb(255, 50, 0), 545, 60, 0, points);
+            al_draw_text(font, al_map_rgb(255, 50, 0), 615, 60, 0, iPts);
+
+
+
             al_flip_display();
 
         }
@@ -191,5 +200,6 @@ int run(){
     destroy_fruit();
     al_destroy_bitmap(background);
     al_destroy_font(font);
+    al_destroy_font(font2);
     return 0;
 }
