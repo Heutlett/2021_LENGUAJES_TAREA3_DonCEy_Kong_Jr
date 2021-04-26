@@ -42,6 +42,8 @@ struct room room1, room2;
 
 struct game game1;
 
+json_char* jsonRead;
+
 /**
  * Imprime identaciones segun una profundidad.
  * @param depth
@@ -100,7 +102,7 @@ void JL_printStructs();
 void init_jController();
 
 /**
- * Recarga el archivo .json con una cadena de contenido dada.
+ * Recarga el valor del JSON con una cadena de contenido dada.
  * @param json_file
  */
 void reloadJFileRooms(char* json_file[]);

@@ -56,7 +56,6 @@ int run_lobby(){
 
 
 
-
         if(event.type == ALLEGRO_EVENT_DISPLAY_CLOSE){
             Lobbyrunning = false;
         }
