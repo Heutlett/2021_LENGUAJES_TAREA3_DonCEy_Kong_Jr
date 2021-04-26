@@ -93,6 +93,11 @@ int run_lobby(){
             al_draw_text(Lobbyfont2, cl_on,420,560,0,"Jugar");
             al_draw_text(Lobbyfont2, cl_on,420,610,0,"Observar");
 
+            m_bt[0][0] = 0;
+            m_bt[1][0] = 0;
+            m_bt[0][1] = 0;
+            m_bt[1][1] = 0;
+            
             if (strcmp(room1.player,"null")){
                 al_draw_text(Lobbyfont2, title1,90,460,0,room1.player);
                 al_draw_text(Lobbyfont2, cl_off,100,560,0,"Jugar");
