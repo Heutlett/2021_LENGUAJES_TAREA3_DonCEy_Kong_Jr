@@ -160,10 +160,10 @@ int run(){
             strcpy(sendKey,"D");
         }
         if(w){
+            strcpy(sendKey,"WA");
             strcpy(sendKey,"W");
         }
         if(w&&a){
-            strcpy(sendKey,"WA");
         }
         if(w&&d){
             strcpy(sendKey,"WD");
