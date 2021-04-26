@@ -14,6 +14,10 @@
 #include "../models/kremlin.h"
 #include "../models/fruit.h"
 #include "../models/key.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include "../controllers/jsonController.h"
+#include "../sockets/socket.h"
 
 
 static ALLEGRO_DISPLAY *display;
@@ -27,11 +31,16 @@ static ALLEGRO_BITMAP *background;
 static bool running = true;
 static bool pressed = false;
 
-//static float x = 20;
-//static float y = 615;
+
 static char xc[10];
 static char yc[10];
 
+static int w;
+static int a;
+static int s;
+static int d;
+
+static char sendKey[5];
 
 int init_game();
 int run();

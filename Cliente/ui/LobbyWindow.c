@@ -43,18 +43,19 @@ int init_lobby() {
 int run_lobby(){
 
 //    enviar("127.0.0.1",9090,"join");
-//    printf(escuchar(9090,"127.0.0.1"));
+//    reloadJFileRooms(escuchar(9090,"127.0.0.1"));
     while (Lobbyrunning) {
-        reloadJFileRooms("[{\"roomNumber\": 1, \"player\": \"Jugador1\", \"guests\": [\"BOTS1\",\"BOTS2\"]}, {\"roomNumber\": 2, \"player\": \"Jugador2\", \"guests\": []}]"
+        reloadJFileRooms("[{\"roomNumber\": 1, \"player\": \"Jugador1\", \"guests\": [\"BOTS1\",\"BOTS2\"]}, {\"roomNumber\": 2, \"player\": \"null\", \"guests\": []}]"
         );
-        jsonRoomParser(0);
-        jsonRoomParser(1);
-        JL_printStructs();
-        ALLEGRO_EVENT event;
-        al_wait_for_event(Lobbyqueue, &event);
 
 //        enviar("127.0.0.1",9090,"reload");
 //        reloadJFileRooms(escuchar(9090,"127.0.0.1"));
+        jsonRoomParser(0);
+        jsonRoomParser(1);
+        //JL_printStructs();
+        ALLEGRO_EVENT event;
+        al_wait_for_event(Lobbyqueue, &event);
+
 
 
 
@@ -100,16 +101,25 @@ int run_lobby(){
                 al_draw_text(Lobbyfont2, cl_off,100,560,0,"Jugar");
                 m_bt[0][0] = 1;
             }
+            if (!strcmp(room1.player,"null")){
+                al_draw_text(Lobbyfont2, cl_off,100,610,0,"Observar");
+                m_bt[1][0] = 1;
+            }
 
             if (strcmp(room2.player,"null")){
                 al_draw_text(Lobbyfont2, title1,410,460,0,room2.player);
                 al_draw_text(Lobbyfont2, cl_off,420,560,0,"Jugar");
-                m_bt[1][0] = 1;
+                m_bt[0][1] = 1;
+            }
+
+            if (!strcmp(room2.player,"null")){
+                al_draw_text(Lobbyfont2, cl_off,420,610,0,"Observar");
+                m_bt[1][1] = 1;
             }
 
             if ((strcmp(room1.guest1,"null")) && (strcmp(room1.guest2,"null"))){
                 al_draw_text(Lobbyfont2, cl_off,100,610,0,"Observar");
-                m_bt[0][1] = 1;
+                m_bt[1][0] = 1;
             }
 
             if ((strcmp(room2.guest1,"null")) && (strcmp(room2.guest2,"null"))){
@@ -161,7 +171,10 @@ int run_lobby(){
                         strcat(rslt,m_room);
                         strcat(rslt,"\"}");
                         printf(rslt);
+                        //enviar("127.0.0.1",9090,rslt);
                         Lobbyrunning = false;
+                        init_game();
+                        run();
                     }
                     break;
             }

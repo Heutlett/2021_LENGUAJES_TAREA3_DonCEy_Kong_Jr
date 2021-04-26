@@ -71,10 +71,9 @@ static void process_object2(json_value* value, int depth)
     }
     length = value->u.object.length;
     for (x = 0; x < length; x++) {
-        print_depth_shift(depth);
-        printf("object[%d].name = %s\n", x, value->u.object.values[x].name);
+        //print_depth_shift(depth);
+        //printf("object[%d].name = %s\n", x, value->u.object.values[x].name);
 
-        printf("hey");
         if (!strcmp(value->u.object.values[x].name, "vidas")) {
             game1.hlth = value->u.object.values[x].value->u.integer;
         }
@@ -88,11 +87,9 @@ static void process_object2(json_value* value, int depth)
             game1.lose = value->u.object.values[x].value->u.boolean;
         }
         if (!strcmp(value->u.object.values[x].name, "haGanado")) {
-            printf("AAAAAAAAAAAAAAAAAAAAA");
             game1.win = value->u.object.values[x].value->u.boolean;
         }
         if (!strcmp(value->u.object.values[x].name, "matriz ")) {
-            printf("AAAAAAAAAAAAAAAAAAAAA");
             for (int i = 0; i < 100; ++i) {
                 for (int j = 0; j < 100; ++j) {
                     game1.matrix[i][j] = value->u.object.values[x].value->u.array.values[i]->u.array.values[j]->u.integer;
@@ -100,7 +97,7 @@ static void process_object2(json_value* value, int depth)
             }
         }
 
-        process_value(value->u.object.values[x].value, depth+1);
+        //process_value(value->u.object.values[x].value, depth+1);
     }
 }
 
@@ -136,21 +133,20 @@ static void process_value(json_value* value, int depth)
             if (id_j == 1) {
                 process_object1(value, depth + 1);
             } else {
-                printf("debug");
                 process_object2(value,depth + 1);
             }
             break;
         case json_array:
-            process_array(value, depth+1);
+            //process_array(value, depth+1);
             break;
         case json_integer:
-            printf("int: %10" PRId64 "\n", value->u.integer);
+            //printf("int: %10" PRId64 "\n", value->u.integer);
             break;
         case json_double:
             printf("double: %f\n", value->u.dbl);
             break;
         case json_string:
-            printf("string: %s\n", value->u.string.ptr);
+            //printf("string: %s\n", value->u.string.ptr);
             break;
         case json_boolean:
             printf("bool: %d\n", value->u.boolean);
@@ -160,8 +156,9 @@ static void process_value(json_value* value, int depth)
 
 int jsonRoomParser(int i) {
 
-    printf("JSON ROOM PARSER\n");
+    //printf("JSON ROOM PARSER\n");
 
+    id_j =1;
     id = i;
 
     char* filename;
@@ -201,9 +198,9 @@ int jsonRoomParser(int i) {
     }
     fclose(fp);
 
-    printf("%s\n", file_contents);
+    //printf("%s\n", file_contents);
 
-    printf("--------------------------------\n\n");
+    //printf("--------------------------------\n\n");
 
     json = (json_char*)file_contents;
 
@@ -229,7 +226,7 @@ int jsonRoomParser(int i) {
 int jsonMatrixParser() {
 
     id_j = 2;
-    printf("JSON MATRIX PARSER\n");
+    //printf("JSON MATRIX PARSER\n");
 
     char* filename;
     FILE *fp;
@@ -268,9 +265,9 @@ int jsonMatrixParser() {
     }
     fclose(fp);
 
-    printf("%s\n", file_contents);
+    //printf("%s\n", file_contents);
 
-    printf("--------------------------------\n\n");
+    //printf("--------------------------------\n\n");
 
     json = (json_char*)file_contents;
 
@@ -303,20 +300,20 @@ void JL_printStructs(){
     printf("NAME: "), printf(room2.player), printf("\n");
     printf("GUE1: "), printf(room2.guest1), printf("\n");
     printf("GUE1: "), printf(room2.guest2), printf("\n");
-    printf("\n***********\nGAME\n\n");
-    printf("WIN?: %d\n", game1.win);
-    printf("LOSE: %d\n", game1.lose);
-    printf("LEVL: %d\n", game1.level);
-    printf("POTS: %d\n", game1.pts);
-    printf("HLTH: %d\n", game1.hlth);
-    printf("MTRX: \n");
-    for (int i = 0;i<100;i++){
-        printf("\n");
-        for (int j = 0; j < 100; ++j) {
-            printf("%d",game1.matrix[i][j]);
-        }
-    }
-    printf("\n-----------------");
+//    printf("\n***********\nGAME\n\n");
+//    printf("WIN?: %d\n", game1.win);
+//    printf("LOSE: %d\n", game1.lose);
+//    printf("LEVL: %d\n", game1.level);
+//    printf("POTS: %d\n", game1.pts);
+//    printf("HLTH: %d\n", game1.hlth);
+//    printf("MTRX: \n");
+//    for (int i = 0;i<100;i++){
+//        printf("\n");
+//        for (int j = 0; j < 100; ++j) {
+//            printf("%d",game1.matrix[i][j]);
+//        }
+//    }
+//    printf("\n-----------------");
 }
 
 void init_jController(){

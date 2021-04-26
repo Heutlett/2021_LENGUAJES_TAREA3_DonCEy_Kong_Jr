@@ -14,6 +14,7 @@
 #include "../controllers/lobbyController.h"
 #include "../controllers/jsonController.h"
 #include "../sockets/socket.h"
+#include "GameWindow.h"
 
 static ALLEGRO_DISPLAY *Lobbydisplay;
 static ALLEGRO_EVENT_QUEUE *Lobbyqueue;

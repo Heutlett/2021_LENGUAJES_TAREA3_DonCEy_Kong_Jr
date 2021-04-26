@@ -39,14 +39,19 @@ int main() {
 //    jsonRoomParser(1);
 //    JL_printStructs();
 
-    jsonMatrixParser();
-    JL_printStructs();
+//    jsonMatrixParser();
+    //JL_printStructs();
 
-//    init_lobby();
-//    run_lobby();
-//
-//    init_game();
-//    run();
+    init_lobby();
+    run_lobby();
+
+
+
+//    reloadJFileRooms("[{\"roomNumber\": 1, \"player\": \"Jugador1\", \"guests\": [\"BOTS1\",\"BOTS2\"]}, {\"roomNumber\": 2, \"player\": \"Jugador2\", \"guests\": []}]"
+//    );
+//    jsonRoomParser(0);
+//    jsonRoomParser(1);
+//    JL_printStructs();
 
 //    char rslt[200] = "{\n""\t\"username \": \"";
 //    strcat(rslt,"Jugador1");
