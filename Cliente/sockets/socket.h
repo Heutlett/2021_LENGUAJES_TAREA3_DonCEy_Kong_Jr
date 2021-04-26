@@ -8,6 +8,7 @@
 int conectar(char *ip, int port);
 char* escuchar();
 int enviar(char *mensaje);
+char* escuchar2();
 
 
 #endif //CLIENTE_SOCKET_H

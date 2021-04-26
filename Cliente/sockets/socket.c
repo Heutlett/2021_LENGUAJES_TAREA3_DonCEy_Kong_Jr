@@ -8,6 +8,7 @@
 #include <winsock2.h>
 #include <windows.h>
 #include <io.h>
+#include <string.h>
 
 char Cadena[10000];
 
@@ -74,6 +75,18 @@ int conectar(char *ip, int port) {
 char* escuchar() {
     memset(&Cadena[0], 0, sizeof(Cadena));
     recv(mySocket, Cadena, sizeof(Cadena), 0);
+    printf("Rcvd: %s \n", Cadena);
+    // Return el buffer recibido.
+    return Cadena;
+}
+
+char* escuchar2() {
+    memset(&Cadena[0], 0, sizeof(Cadena));
+    printf("PRUEBAAAAAAAAA: %s \n", Cadena);
+    recv(mySocket, Cadena, sizeof(Cadena), 0);
+    char * token  = strtok(Cadena, "}");
+    strcpy(Cadena, token);
+    strcat(Cadena, "}");
     printf("Rcvd: %s \n", Cadena);
     // Return el buffer recibido.
     return Cadena;
