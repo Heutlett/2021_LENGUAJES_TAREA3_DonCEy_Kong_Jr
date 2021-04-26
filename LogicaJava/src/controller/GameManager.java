@@ -210,7 +210,7 @@ public class GameManager extends Thread{
             cocodrilo.setDireccion(EntidadMovible.Direccion.ABAJO);
             cocodrilo.setIdLiana(idLiana);
             cocodrilos.add(cocodrilo);
-            System.out.println("Se ha creado un cocodrilo: " + cocodrilo.toStringCreado());
+            System.out.println("[" + id + "] Se ha creado un cocodrilo: " + cocodrilo.toStringCreado());
         }
     }
 
@@ -227,7 +227,7 @@ public class GameManager extends Thread{
             Fruta fruta = new Fruta(posicion, null, entidadSeleccionada, null, puntos);
             frutas.add(fruta);
             frutaController.actualizarFruta(fruta);
-            System.out.println("Se ha creado una fruta: " + fruta.toString());
+            System.out.println("[" + id + "] Se ha creado una fruta: " + fruta.toString());
         }
     }
 

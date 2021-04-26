@@ -84,8 +84,6 @@ public class Manager {
         json = json.replaceAll("\n", "");
         json = json.replaceAll("\t", "");
 
-        System.out.println("PRUEBA");
-        System.out.println(json);
         JSONObject obj = new JSONObject(json); // Parse String to JSONObject.
         // { "username":"Player1", "type":"player", "room":"2" }";
         client.setUsername(obj.getString("username")); //Set nombre del miembro.
