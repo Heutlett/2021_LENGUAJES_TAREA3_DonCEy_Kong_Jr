@@ -110,7 +110,7 @@ public class Server {
             // Se crea un dato a leer y se le dice que se rellene con el flujo de entrada de datos.
             SocketData aux = new SocketData("");
             aux.readObject (bufferEntrada);
-            System.out.printf("%n● Received: %s%n", aux.d);
+            //System.out.printf("%n● Received: %s%n", aux.d);
 
             // Retorna el mensaje leido sin su tamano.
             return aux.d;
@@ -128,7 +128,7 @@ public class Server {
             // Se envía el dato.
             reply.write(mensaje);
             reply.flush();
-            System.out.printf("✘ Sent to %s: %s.%n", username, mensaje);
+            //System.out.printf("✘ Sent to %s: %s.%n", username, mensaje);
         }
 
         /**
