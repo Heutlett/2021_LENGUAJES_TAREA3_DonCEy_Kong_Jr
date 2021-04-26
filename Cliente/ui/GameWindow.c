@@ -11,6 +11,10 @@ int init_game() {
     s=0;
     d=0;
 
+    strcpy(level,"Nivel: ");
+    strcpy(health,"Vidas: ");
+    strcpy(points,"Puntos: ");
+
     strcpy(sendKey,"_");
 
     al_init();
@@ -24,7 +28,7 @@ int init_game() {
     queue = al_create_event_queue();
     timer = al_create_timer(1.0/60);
 
-    font = al_load_ttf_font("../resources/bahnschrift.ttf",64,0);
+    font = al_load_ttf_font("../resources/bahnschrift.ttf",20,0);
     background = al_load_bitmap("../resources/background.jpeg");
     init_monkey();
     init_kremlin();
@@ -42,8 +46,8 @@ int init_game() {
 
 int run(){
 
-    enviar("join");
-    reloadJFileRooms(escuchar2());
+//    enviar("join");
+//    reloadJFileRooms(escuchar2());
 
     jsonMatrixParser();
     while (running) {
@@ -52,36 +56,36 @@ int run(){
         ALLEGRO_EVENT event;
         al_wait_for_event(queue, &event);
 
-        if(event.type == ALLEGRO_EVENT_DISPLAY_CLOSE){
+        if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
             running = false;
         }
 
-        if(event.type == ALLEGRO_EVENT_TIMER){
+        if (event.type == ALLEGRO_EVENT_TIMER) {
 
-            al_draw_bitmap(background,0,0,0);
+            al_draw_bitmap(background, 0, 0, 0);
 
 
             //Dibujar aqui*****************************
 
 
             for (int i = 0; i < game1.len; ++i) {
-                if(game1.matrix[i][0] == 1){
-                    draw_monkeyXY((game1.matrix[i][2]*7)-10,(game1.matrix[i][1]*7)-10);
+                if (game1.matrix[i][0] == 1) {
+                    draw_monkeyXY((game1.matrix[i][2] * 7) - 10, (game1.matrix[i][1] * 7) - 10);
                 }
-                if(game1.matrix[i][0] == 2){
-                    draw_kremlinXY((game1.matrix[i][2]*7)-20,(game1.matrix[i][1]*7)-20,1);
+                if (game1.matrix[i][0] == 2) {
+                    draw_kremlinXY((game1.matrix[i][2] * 7) - 20, (game1.matrix[i][1] * 7) - 20, 1);
                 }
-                if(game1.matrix[i][0] == 3){
-                    draw_kremlinXY((game1.matrix[i][2]*7)-20,(game1.matrix[i][1]*7)-20,2);
+                if (game1.matrix[i][0] == 3) {
+                    draw_kremlinXY((game1.matrix[i][2] * 7) - 20, (game1.matrix[i][1] * 7) - 20, 2);
                 }
-                if(game1.matrix[i][0] == 4){
-                    draw_fruitXY((game1.matrix[i][2]*7)-10,(game1.matrix[i][1]*7)-10,1);
+                if (game1.matrix[i][0] == 4) {
+                    draw_fruitXY((game1.matrix[i][2] * 7) - 10, (game1.matrix[i][1] * 7) - 10, 1);
                 }
-                if(game1.matrix[i][0] == 5){
-                    draw_fruitXY((game1.matrix[i][2]*7)-10,(game1.matrix[i][1]*7)-10,2);
+                if (game1.matrix[i][0] == 5) {
+                    draw_fruitXY((game1.matrix[i][2] * 7) - 10, (game1.matrix[i][1] * 7) - 10, 2);
                 }
-                if(game1.matrix[i][0] == 6){
-                    draw_fruitXY((game1.matrix[i][2]*7)-10,(game1.matrix[i][1]*7)-10,3);
+                if (game1.matrix[i][0] == 6) {
+                    draw_fruitXY((game1.matrix[i][2] * 7) - 10, (game1.matrix[i][1] * 7) - 10, 3);
                 }
 
             }
@@ -100,80 +104,92 @@ int run(){
             //*****************************************
 
 //            draw_monkey();
-            itoa(get_xMonkey()/7,xc,10);
-            itoa(get_yMonkey()/7,yc,10);
-            al_draw_text(font, al_map_rgb(0,255,0),20,20,0,xc);
-            al_draw_text(font, al_map_rgb(0,255,0),20,100,0,yc);
+            itoa(game1.level, iLvl, 10);
+            itoa(game1.hlth, iHlth, 10);
+            itoa(game1.pts, iPts, 10);
+
+//            strcat(level,iLvl);
+//            strcat(health,iHlth);
+//            strcat(points,iPts);
+
+            al_draw_filled_rectangle(15, 100, 150, 165, al_map_rgb(255, 255, 200));
+            al_draw_text(font, al_map_rgb(255, 50, 0), 20, 100, 0, level);
+            al_draw_text(font, al_map_rgb(255, 50, 0), 80, 100, 0, iLvl);
+            al_draw_text(font, al_map_rgb(255, 50, 0), 20, 120, 0, health);
+            al_draw_text(font, al_map_rgb(255, 50, 0), 80, 120, 0, iHlth);
+            al_draw_text(font, al_map_rgb(255, 50, 0), 20, 140, 0, points);
+            al_draw_text(font, al_map_rgb(255, 50, 0), 90, 140, 0, iPts);
             al_flip_display();
 
         }
 
-        if (event.type == ALLEGRO_EVENT_KEY_DOWN){ //|| pressed){
+        if (event.type == ALLEGRO_EVENT_KEY_DOWN) { //|| pressed){
 //            pressed = true;
-            switch (event.keyboard.keycode){
+            switch (event.keyboard.keycode) {
                 case ALLEGRO_KEY_W:
-                    w=1;
-                    set_yMonkey(get_yMonkey()-4);
+                    w = 1;
+                    set_yMonkey(get_yMonkey() - 4);
                     break;
                 case ALLEGRO_KEY_S:
-                    s=1;
-                    set_yMonkey(get_yMonkey()+4);
+                    s = 1;
+                    set_yMonkey(get_yMonkey() + 4);
                     break;
                 case ALLEGRO_KEY_D:
-                    d=1;
+                    d = 1;
                     set_monkeyAction(1);
-                    set_xMonkey(get_xMonkey()+4);
+                    set_xMonkey(get_xMonkey() + 4);
                     break;
                 case ALLEGRO_KEY_A:
-                    a=1;
+                    a = 1;
                     set_monkeyAction(2);
-                    set_xMonkey(get_xMonkey()-4);
+                    set_xMonkey(get_xMonkey() - 4);
                     break;
             }
         }
 
-        if (event.type == ALLEGRO_EVENT_KEY_UP){
+        if (event.type == ALLEGRO_EVENT_KEY_UP) {
 //            pressed = false;
-            switch (event.keyboard.keycode){
+            switch (event.keyboard.keycode) {
                 case ALLEGRO_KEY_W:
-                    w=0;
+                    w = 0;
                     break;
                 case ALLEGRO_KEY_S:
-                    s=0;
+                    s = 0;
                     break;
                 case ALLEGRO_KEY_D:
-                    d=0;
+                    d = 0;
                     break;
                 case ALLEGRO_KEY_A:
-                    a=0;
+                    a = 0;
                     break;
             }
         }
-
-        if(a){
-            strcpy(sendKey,"A");
-        }
-        if(s){
-            strcpy(sendKey,"S");
-        }
-        if(d){
-            strcpy(sendKey,"D");
-        }
-        if(w){
-            strcpy(sendKey,"W");
-        }
-        if(w&&a){
-            strcpy(sendKey,"WA");
-        }
-        if(w&&d){
-            strcpy(sendKey,"WD");
+        if(!viewer){
+            if (a) {
+                strcpy(sendKey, "A");
+            }
+            if (s) {
+                strcpy(sendKey, "S");
+            }
+            if (d) {
+                strcpy(sendKey, "D");
+            }
+            if (w) {
+                strcpy(sendKey, "W");
+            }
+            if (w && a) {
+                strcpy(sendKey, "WA");
+            }
+            if (w && d) {
+                strcpy(sendKey, "WD");
+            }
         }
         printf(sendKey);
         printf("\n");
 
 
-        enviar(sendKey);
-        reloadJFileRooms(escuchar2());
+//        enviar(sendKey);
+//        reloadJFileRooms(escuchar2());
 
         strcpy(sendKey,"_");
 
