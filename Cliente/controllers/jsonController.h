@@ -30,7 +30,8 @@ static struct game
     int level;
     int pts;
     int hlth;
-    int matrix[100][100];
+    int matrix[100][3];
+    int len;
 };
 
 struct room room1, room2;

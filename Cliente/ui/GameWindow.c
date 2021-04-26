@@ -63,27 +63,27 @@ int run(){
 
             //Dibujar aqui*****************************
 
-            for (int i = 0; i < 100; ++i) {
-                for (int j = 0; j < 100; ++j) {
-                    if(game1.matrix[j][i] == 1){
-                        draw_monkeyXY((i*7)-10,(j*7)-10);
-                    }
-                    if(game1.matrix[j][i] == 2){
-                        draw_kremlinXY((i*7)-20,(j*7)-20,1);
-                    }
-                    if(game1.matrix[j][i] == 3){
-                        draw_kremlinXY((i*7)-20,(j*7)-20,2);
-                    }
-                    if(game1.matrix[j][i] == 4){
-                        draw_fruitXY((i*7)-10,(j*7)-10,1);
-                    }
-                    if(game1.matrix[j][i] == 5){
-                        draw_fruitXY((i*7)-10,(j*7)-10,2);
-                    }
-                    if(game1.matrix[j][i] == 6){
-                        draw_fruitXY((i*7)-10,(j*7)-10,3);
-                    }
+
+            for (int i = 0; i < game1.len; ++i) {
+                if(game1.matrix[i][0] == 1){
+                    draw_monkeyXY((game1.matrix[i][2]*7)-10,(game1.matrix[i][1]*7)-10);
                 }
+                if(game1.matrix[i][0] == 2){
+                    draw_kremlinXY((game1.matrix[i][2]*7)-20,(game1.matrix[i][1]*7)-20,1);
+                }
+                if(game1.matrix[i][0] == 3){
+                    draw_kremlinXY((game1.matrix[i][2]*7)-20,(game1.matrix[i][1]*7)-20,2);
+                }
+                if(game1.matrix[i][0] == 4){
+                    draw_fruitXY((game1.matrix[i][2]*7)-10,(game1.matrix[i][1]*7)-10,1);
+                }
+                if(game1.matrix[i][0] == 5){
+                    draw_fruitXY((game1.matrix[i][2]*7)-10,(game1.matrix[i][1]*7)-10,2);
+                }
+                if(game1.matrix[i][0] == 6){
+                    draw_fruitXY((game1.matrix[i][2]*7)-10,(game1.matrix[i][1]*7)-10,3);
+                }
+
             }
 
 //            draw_kremlinXY(300, 400, 1);

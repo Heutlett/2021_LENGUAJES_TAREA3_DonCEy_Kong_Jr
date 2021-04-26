@@ -89,9 +89,10 @@ static void process_object2(json_value* value, int depth)
         if (!strcmp(value->u.object.values[x].name, "haGanado")) {
             game1.win = value->u.object.values[x].value->u.boolean;
         }
-        if (!strcmp(value->u.object.values[x].name, "matriz ")) {
-            for (int i = 0; i < 100; ++i) {
-                for (int j = 0; j < 100; ++j) {
+        if (!strcmp(value->u.object.values[x].name, "entidades ")) {
+            game1.len = value->u.object.values[x].value->u.array.length;
+            for (int i = 0; i < value->u.object.values[x].value->u.array.length; ++i) {
+                for (int j = 0; j < 3; ++j) {
                     game1.matrix[i][j] = value->u.object.values[x].value->u.array.values[i]->u.array.values[j]->u.integer;
                 }
             }
