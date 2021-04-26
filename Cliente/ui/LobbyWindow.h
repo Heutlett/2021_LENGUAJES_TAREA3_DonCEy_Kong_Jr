@@ -16,6 +16,7 @@
 #include "../sockets/socket.h"
 #include "GameWindow.h"
 
+//Variables de elementos graficos ALLEGRO
 static ALLEGRO_DISPLAY *Lobbydisplay;
 static ALLEGRO_EVENT_QUEUE *Lobbyqueue;
 static ALLEGRO_TIMER *Lobbytimer;
@@ -31,10 +32,18 @@ static ALLEGRO_COLOR title2;
 static ALLEGRO_COLOR cl_on;
 static ALLEGRO_COLOR cl_off;
 
-
+//Variable que indica si la ventana esta activa
 static bool Lobbyrunning = true;
 
+/**
+ * Inicializa las variables de la ventana lobby.
+ * @return state
+ */
 int init_lobby();
+
+/**
+ * Inicia la ejecucion de la ventana lobby.
+ */
 int run_lobby();
 
 #endif //CLIENTE_LOBBYWINDOW_H
