@@ -1,3 +1,6 @@
 Manifest-Version: 1.0
 Main-Class: Main
+Class-Path: jackson-annotations-2.10.0.pr2.jar jackson-core-2.10.0.pr2.j
+ ar jackson-databind-2.10.0.pr2.jar json-20190722.jar json-20210307.jar 
+ logicaDk.jar
 

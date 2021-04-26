@@ -1,0 +1,16 @@
+<component name="ArtifactManager">
+  <artifact build-on-make="true" name="ServidorDK">
+    <output-path>$PROJECT_DIR$/out/artifacts/ServidorDK</output-path>
+    <root id="root">
+      <element id="file-copy" path="$PROJECT_DIR$/libraries/logicaDk.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/libraries/json-20190722.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/libraries/json-20210307.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/libraries/jackson-core-2.10.0.pr2.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/libraries/jackson-databind-2.10.0.pr2.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/libraries/jackson-annotations-2.10.0.pr2.jar" />
+      <element id="archive" name="Multithread Server.jar">
+        <element id="module-output" name="Multithread Server" />
+      </element>
+    </root>
+  </artifact>
+</component>
