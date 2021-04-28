@@ -13,9 +13,13 @@ int init_game() {
 
     rev = 0;
 
+
     strcpy(level,"Nivel: ");
     strcpy(health,"Vidas: ");
     strcpy(points,"Puntos: ");
+
+    strcpy(espect,"Espectando a ");
+    strcat(espect,m_player);
 
     strcpy(sendKey,"_");
 
@@ -43,6 +47,7 @@ int init_game() {
     al_register_event_source(queue, al_get_keyboard_event_source());
     al_register_event_source(queue, al_get_display_event_source(display));
     al_register_event_source(queue, al_get_timer_event_source(timer));
+
 
     return 0;
 }
@@ -77,10 +82,11 @@ int run(){
                 if (game1.matrix[i][0] == 1) {
                     draw_monkeyXY((game1.matrix[i][2] * 7) - 10, (game1.matrix[i][1] * 7) - 10);
                     if (!strcmp(m_type,"viewer")) {
-                        al_draw_text(font, al_map_rgb(255, 255, 0), 5, 5, 0, m_player);
-                    }else{
-                        al_draw_text(font2, al_map_rgb(255, 255, 0),(game1.matrix[i][2] * 7) - 5 , (game1.matrix[i][1] * 7) - 35, 0, m_player);
+
+                        al_draw_text(font, al_map_rgb(255, 255, 0), 5, 5, 0, espect);
                     }
+                    al_draw_text(font2, al_map_rgb(255, 255, 0),(game1.matrix[i][2] * 7) - 5 , (game1.matrix[i][1] * 7) - 35, 0, m_player);
+
                 }
                 if (game1.matrix[i][0] == 2) {
                     draw_kremlinXY((game1.matrix[i][2] * 7) - 20, (game1.matrix[i][1] * 7) - 20, 1);

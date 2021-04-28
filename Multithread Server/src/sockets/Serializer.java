@@ -16,6 +16,7 @@ public class Serializer {
         RoomSerializer roomSerializer = new RoomSerializer(room);
 
         try {
+            
             //String jsonString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(roomSerializer);
 
 

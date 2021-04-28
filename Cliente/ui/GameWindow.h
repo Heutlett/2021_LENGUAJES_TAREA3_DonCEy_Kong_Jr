@@ -40,6 +40,8 @@ static char iLvl[10];
 static char iHlth[10];
 static char iPts[10];
 
+static char espect[25];
+
 static int w;
 static int a;
 static int s;

@@ -62,12 +62,12 @@ void setSendJson(){
         m_type = "player";
     }else{
         if (menu[mc_i][mc_j] == 3){
+            m_player = "Jugador1";
             m_room = "1";
         } else{
+            m_player = "Jugador2";
             m_room = "2";
         }
-        m_player = espectadores[e_cont];
-        e_cont++;
         m_type = "viewer";
     }
 }
