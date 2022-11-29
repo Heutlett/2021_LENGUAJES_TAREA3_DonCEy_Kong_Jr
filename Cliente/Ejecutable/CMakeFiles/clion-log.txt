@@ -1,0 +1,12 @@
+"C:\Program Files\JetBrains\CLion 2020.3.3\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Release -G "CodeBlocks - MinGW Makefiles" "C:\Users\carlo\OneDrive\Escritorio\version subir tarea 3\2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr\Cliente"
+-- The C compiler identification is GNU 8.1.0
+-- Check for working C compiler: C:/MinGW/mingw32/bin/gcc.exe
+-- Check for working C compiler: C:/MinGW/mingw32/bin/gcc.exe - works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Flags: -I
+-- Configuring done
+-- Generating done
+-- Build files have been written to: C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/Ejecutable

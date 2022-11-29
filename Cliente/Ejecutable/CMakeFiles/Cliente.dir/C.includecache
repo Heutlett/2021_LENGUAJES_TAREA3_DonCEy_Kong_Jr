@@ -1,0 +1,164 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/controllers/json.c
+json.h
+C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/controllers/json.h
+stdint.h
+-
+stdio.h
+-
+string.h
+-
+ctype.h
+-
+math.h
+-
+
+C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/controllers/json.h
+inttypes.h
+-
+stdlib.h
+-
+string.h
+-
+
+C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/controllers/jsonController.c
+jsonController.h
+C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/controllers/jsonController.h
+
+C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/controllers/jsonController.h
+stdio.h
+-
+stdlib.h
+-
+sys/stat.h
+-
+stdbool.h
+-
+json.h
+C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/controllers/json.h
+
+C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/controllers/lobbyController.c
+lobbyController.h
+C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/controllers/lobbyController.h
+
+C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/controllers/lobbyController.h
+stdio.h
+-
+jsonController.h
+C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/controllers/jsonController.h
+
+C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/main.c
+ui/GameWindow.h
+C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/ui/GameWindow.h
+ui/LobbyWindow.h
+C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/ui/LobbyWindow.h
+
+C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/models/fruit.c
+fruit.h
+C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/models/fruit.h
+
+C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/models/fruit.h
+allegro5/allegro.h
+-
+allegro5/allegro_image.h
+C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/models/allegro5/allegro_image.h
+
+C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/models/kremlin.c
+kremlin.h
+C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/models/kremlin.h
+
+C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/models/kremlin.h
+allegro5/allegro.h
+-
+allegro5/allegro_image.h
+C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/models/allegro5/allegro_image.h
+
+C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/models/monkey.c
+monkey.h
+C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/models/monkey.h
+
+C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/models/monkey.h
+allegro5/allegro.h
+-
+allegro5/allegro_image.h
+C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/models/allegro5/allegro_image.h
+
+C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/sockets/socket.c
+socket.h
+C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/sockets/socket.h
+stdio.h
+-
+winsock2.h
+-
+windows.h
+-
+io.h
+-
+string.h
+-
+
+C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/sockets/socket.h
+
+C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/ui/GameWindow.c
+GameWindow.h
+C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/ui/GameWindow.h
+
+C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/ui/GameWindow.h
+allegro5/allegro.h
+-
+allegro5/allegro_font.h
+-
+allegro5/allegro_ttf.h
+-
+allegro5/allegro_image.h
+C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/ui/allegro5/allegro_image.h
+allegro5/allegro_primitives.h
+-
+../models/monkey.h
+C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/models/monkey.h
+../models/kremlin.h
+C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/models/kremlin.h
+../models/fruit.h
+C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/models/fruit.h
+stdio.h
+-
+stdlib.h
+-
+../controllers/jsonController.h
+C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/controllers/jsonController.h
+../sockets/socket.h
+C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/sockets/socket.h
+../controllers/lobbyController.h
+C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/controllers/lobbyController.h
+
+C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/ui/LobbyWindow.c
+LobbyWindow.h
+C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/ui/LobbyWindow.h
+
+C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/ui/LobbyWindow.h
+allegro5/allegro.h
+-
+allegro5/allegro_font.h
+-
+allegro5/allegro_ttf.h
+-
+allegro5/allegro_image.h
+C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/ui/allegro5/allegro_image.h
+allegro5/allegro_primitives.h
+-
+../controllers/lobbyController.h
+C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/controllers/lobbyController.h
+../controllers/jsonController.h
+C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/controllers/jsonController.h
+../sockets/socket.h
+C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/sockets/socket.h
+GameWindow.h
+C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/ui/GameWindow.h
+

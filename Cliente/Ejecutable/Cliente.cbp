@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="Cliente"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/Ejecutable"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/MinGW/mingw32/bin/mingw32-make.exe -f &quot;C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/Ejecutable/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="C:/MinGW/mingw32/bin/mingw32-make.exe -f &quot;C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/Ejecutable/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/mingw32/bin/mingw32-make.exe -f &quot;C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/Ejecutable/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/mingw32/bin/mingw32-make.exe -f &quot;C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/Ejecutable/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Cliente">
+				<Option output="C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/Ejecutable/Cliente.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/Ejecutable"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="C:/MinGW/mingw32/bin/../lib/gcc/i686-w64-mingw32/8.1.0/include"/>
+					<Add directory="C:/MinGW/mingw32/bin/../lib/gcc/i686-w64-mingw32/8.1.0/include-fixed"/>
+					<Add directory="C:/MinGW/mingw32/bin/../lib/gcc/i686-w64-mingw32/8.1.0/../../../../i686-w64-mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW/mingw32/bin/mingw32-make.exe -f &quot;C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/Ejecutable/Makefile&quot;  VERBOSE=1 Cliente"/>
+					<CompileFile command="C:/MinGW/mingw32/bin/mingw32-make.exe -f &quot;C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/Ejecutable/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/mingw32/bin/mingw32-make.exe -f &quot;C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/Ejecutable/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/mingw32/bin/mingw32-make.exe -f &quot;C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/Ejecutable/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Cliente/fast">
+				<Option output="C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/Ejecutable/Cliente.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/Ejecutable"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="C:/MinGW/mingw32/bin/../lib/gcc/i686-w64-mingw32/8.1.0/include"/>
+					<Add directory="C:/MinGW/mingw32/bin/../lib/gcc/i686-w64-mingw32/8.1.0/include-fixed"/>
+					<Add directory="C:/MinGW/mingw32/bin/../lib/gcc/i686-w64-mingw32/8.1.0/../../../../i686-w64-mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW/mingw32/bin/mingw32-make.exe -f &quot;C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/Ejecutable/Makefile&quot;  VERBOSE=1 Cliente/fast"/>
+					<CompileFile command="C:/MinGW/mingw32/bin/mingw32-make.exe -f &quot;C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/Ejecutable/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/mingw32/bin/mingw32-make.exe -f &quot;C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/Ejecutable/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/mingw32/bin/mingw32-make.exe -f &quot;C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/Ejecutable/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/Ejecutable"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/MinGW/mingw32/bin/mingw32-make.exe -f &quot;C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/Ejecutable/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="C:/MinGW/mingw32/bin/mingw32-make.exe -f &quot;C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/Ejecutable/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/mingw32/bin/mingw32-make.exe -f &quot;C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/Ejecutable/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/mingw32/bin/mingw32-make.exe -f &quot;C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/Ejecutable/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/Ejecutable"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/MinGW/mingw32/bin/mingw32-make.exe -f &quot;C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/Ejecutable/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="C:/MinGW/mingw32/bin/mingw32-make.exe -f &quot;C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/Ejecutable/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/mingw32/bin/mingw32-make.exe -f &quot;C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/Ejecutable/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/mingw32/bin/mingw32-make.exe -f &quot;C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/Ejecutable/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/controllers/json.c">
+			<Option target="Cliente"/>
+		</Unit>
+		<Unit filename="C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/controllers/json.h">
+			<Option target="Cliente"/>
+		</Unit>
+		<Unit filename="C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/controllers/jsonController.c">
+			<Option target="Cliente"/>
+		</Unit>
+		<Unit filename="C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/controllers/jsonController.h">
+			<Option target="Cliente"/>
+		</Unit>
+		<Unit filename="C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/controllers/lobbyController.c">
+			<Option target="Cliente"/>
+		</Unit>
+		<Unit filename="C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/controllers/lobbyController.h">
+			<Option target="Cliente"/>
+		</Unit>
+		<Unit filename="C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/main.c">
+			<Option target="Cliente"/>
+		</Unit>
+		<Unit filename="C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/models/fruit.c">
+			<Option target="Cliente"/>
+		</Unit>
+		<Unit filename="C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/models/fruit.h">
+			<Option target="Cliente"/>
+		</Unit>
+		<Unit filename="C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/models/kremlin.c">
+			<Option target="Cliente"/>
+		</Unit>
+		<Unit filename="C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/models/kremlin.h">
+			<Option target="Cliente"/>
+		</Unit>
+		<Unit filename="C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/models/monkey.c">
+			<Option target="Cliente"/>
+		</Unit>
+		<Unit filename="C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/models/monkey.h">
+			<Option target="Cliente"/>
+		</Unit>
+		<Unit filename="C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/sockets/socket.c">
+			<Option target="Cliente"/>
+		</Unit>
+		<Unit filename="C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/sockets/socket.h">
+			<Option target="Cliente"/>
+		</Unit>
+		<Unit filename="C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/ui/GameWindow.c">
+			<Option target="Cliente"/>
+		</Unit>
+		<Unit filename="C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/ui/GameWindow.h">
+			<Option target="Cliente"/>
+		</Unit>
+		<Unit filename="C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/ui/LobbyWindow.c">
+			<Option target="Cliente"/>
+		</Unit>
+		<Unit filename="C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/ui/LobbyWindow.h">
+			<Option target="Cliente"/>
+		</Unit>
+		<Unit filename="C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

@@ -14,7 +14,7 @@ Go to the folder \2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr\Installation.
 
 ### b) Amazon Coretto:
 
-- Open the file "Amazon Coretto link.txt", open the link in your browser, download it, run it and select the installation route to the root of your drive C:\.
+- Open the file amazon-corretto-15.0.2.7.1-windows-x64.msi and select the installation route to the root of your drive C:\.
 
 ### c) MinGW
 

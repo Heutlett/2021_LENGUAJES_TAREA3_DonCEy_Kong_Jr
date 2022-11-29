@@ -1,0 +1,3 @@
+C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/Ejecutable/CMakeFiles/Cliente.dir
+C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/Ejecutable/CMakeFiles/edit_cache.dir
+C:/Users/carlo/OneDrive/Escritorio/version subir tarea 3/2021_LENGUAJES_TAREA3_DonCEy_Kong_Jr/Cliente/Ejecutable/CMakeFiles/rebuild_cache.dir
